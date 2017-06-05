@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Werewolf2</string>
+    <string name="app_name">Creatures Of The Night</string>
+    <color name="background_color">#FFFFFF</color>
+    <color name="button_clor">#107896</color>
+    <string name="button_width">200dp</string>
+    <string name="Host_Game_Button_Text">Host Game</string>
+    <string name="Join_Game_Button_Text">Join Game</string>
+    <string name="Help_Button_Text">How to Play</string>
 </resources>
