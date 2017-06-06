@@ -35,7 +35,7 @@ public class User {
     //perform role
     void performRole(String role, User target)
     {
-        //wolf
+        //wolf role
 
         //villiager
 
