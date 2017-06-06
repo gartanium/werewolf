@@ -11,15 +11,17 @@ public class User {
     private String _name;
     private boolean _immune;
     private boolean _actDone;
+    private User _target;
 
 
     //non-default constructor
-    public User(boolean alive, String role, String name, boolean immune, boolean actDone) {
+    public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target) {
         this._alive = alive;
         this._role = role;
         this._name = name;
         this._immune = immune;
         this._actDone = actDone;
+        this._target = target;
     }
 
     //default constructor
@@ -30,16 +32,24 @@ public class User {
         _name = "";
         _immune = false;
         _actDone = false;
+        _target = null;
     }
 
     //perform role
-    void performRole(String role, User target)
+    void performRole()
     {
         //wolf role
-
+        if (_role == "Wolf")
+        {
+            _target.setAlive(false);
+        }
         //villiager
 
         //doc
+        if (_role == "Doc")
+        {
+            _target.setImmune(true);
+        }
 
         return;
     }
@@ -85,6 +95,10 @@ public class User {
     public void setActDone(boolean actDone) {
         this._actDone = actDone;
     }
+
+    public User getTarget() { return _target; }
+
+    public void setTarget(User target) { this._target = target; }
 
 
 }
