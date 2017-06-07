@@ -14,4 +14,45 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void testUserIsAlive() {
+        User testObj = new User();
+
+        testObj.setAlive(true);
+
+        assertEquals(testObj.isAlive(), true);
+    }
+
+    @Test
+    public void testTargetObj() {
+        User testObj = new User();
+        User targetObj = new User();
+
+        assertEquals(true, targetObj.isAlive());
+
+        testObj.setRole("Wolf");
+
+        testObj.setTarget(targetObj);
+        testObj.performRole();
+
+        assertEquals(false, targetObj.isAlive());
+
+    }
+
+    @Test
+    public void testSetImmune() {
+        User testObj = new User();
+        testObj.setRole("Doc");
+
+        User target = new User();
+
+        testObj.setTarget(target);
+        testObj.performRole();
+
+        assertEquals(true, target.isImmune());
+
+    }
+
+
 }
