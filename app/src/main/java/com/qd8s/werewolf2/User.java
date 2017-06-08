@@ -39,7 +39,7 @@ public class User {
     void performRole()
     {
         //wolf role
-        if (_role == "Wolf")
+        if (_role == "Wolf"  && _target.isImmune())
         {
             _target.setAlive(false);
         }
