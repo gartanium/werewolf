@@ -6,4 +6,11 @@
     <string name="Host_Game_Button_Text">Host Game</string>
     <string name="Join_Game_Button_Text">Join Game</string>
     <string name="Help_Button_Text">How to Play</string>
+    <string name="Host_Game_Text">Host Game</string>
+    <string name="Join_Game_Text">Join Game</string>
+    <string name="How_To_Play">How to Play</string>
+    <string name="Enter_Town_Text">Enter Town</string>
+    <string name="Start_Game_Lobby_Text">Join Game</string>
+    <string name="Start_Game_Text">Ready</string>
+    <string name="Quit_Game_Text">Quit</string>
 </resources>
