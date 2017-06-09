@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qd8s.werewolf2.RoleDescription">
+    tools:context="com.qd8s.werewolf2.Activities.RoleDescription">
 
     <Button
         android:id="@+id/enterTownButton"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/default_button_width"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:onClick="startDayNight"

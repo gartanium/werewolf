@@ -1,9 +1,12 @@
-package com.qd8s.werewolf2;
+package com.qd8s.werewolf2.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.qd8s.werewolf2.Activities.GameLobby;
+import com.qd8s.werewolf2.R;
 
 public class HostGame extends AppCompatActivity {
 
