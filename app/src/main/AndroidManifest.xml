@@ -17,7 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".HostGame" />
-        <activity android:name=".JoinGameScreen"></activity>
+        <activity android:name=".JoinGame" />
+        <activity android:name=".GameLobby" />
+        <activity android:name=".DayNight"/>
+        <activity android:name=".RoleDescription"/>
     </application>
 
 </manifest>

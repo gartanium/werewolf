@@ -16,6 +16,5 @@ public class HostGame extends AppCompatActivity {
     public void startGameLobby(View view) {
         Intent intent = new Intent(this, GameLobby.class);
         startActivity(intent);
-
     }
 }
