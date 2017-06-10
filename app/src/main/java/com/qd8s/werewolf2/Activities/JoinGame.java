@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.qd8s.werewolf2.Activities.GameLobby;
+import com.qd8s.werewolf2.NoIdeaWhatToCallThisPackage.MasterList;
 import com.qd8s.werewolf2.R;
 
 public class JoinGame extends AppCompatActivity {
 
-
+    MasterList masterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,4 +23,9 @@ public class JoinGame extends AppCompatActivity {
         Intent intent = new Intent(this, GameLobby.class);
         startActivity(intent);
     }
+
+    public void updateMasterList(MasterList newList) {
+        masterList = newList;
+    }
+
 }

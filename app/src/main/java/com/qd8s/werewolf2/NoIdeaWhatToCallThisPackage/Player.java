@@ -12,6 +12,4 @@ public class Player {
     private PrivilegeLevel privilegeLevel;
     private boolean inGame;
 
-    // Privileges
-
 }

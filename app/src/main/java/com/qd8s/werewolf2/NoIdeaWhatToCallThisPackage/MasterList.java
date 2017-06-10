@@ -9,8 +9,8 @@ import java.util.List;
  */
 
 public class MasterList {
-    private List<Game> gameList;
 
+    private List<Game> gameList;
     public MasterList() {
         gameList = new ArrayList<Game>();
     }
