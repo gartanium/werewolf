@@ -11,5 +11,4 @@ public class Player {
     private String id;
     private PrivilegeLevel privilegeLevel;
     private boolean inGame;
-
 }

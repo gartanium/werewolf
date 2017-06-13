@@ -20,4 +20,6 @@ public class HostGame extends AppCompatActivity {
         Intent intent = new Intent(this, GameLobby.class);
         startActivity(intent);
     }
+
+
 }
