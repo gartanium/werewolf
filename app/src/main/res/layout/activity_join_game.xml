@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qd8s.werewolf2.Activities.JoinGame">
+    tools:context="com.qd8s.werewolf2.JoinGame">
 
     <Button
         android:id="@+id/startGameLobbyButton"
