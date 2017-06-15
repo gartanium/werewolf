@@ -13,4 +13,7 @@
     <string name="Start_Game_Lobby_Text">Join Game</string>
     <string name="Start_Game_Text">Ready</string>
     <string name="Quit_Game_Text">Quit</string>
+    <string name="Authenticate_Text">Authenticate</string>
+    <string name="Enter_Password_Text">Password</string>
+    <string name="Enter_Email_Text">Email</string>
 </resources>
