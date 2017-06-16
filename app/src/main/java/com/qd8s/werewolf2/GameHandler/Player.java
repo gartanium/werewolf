@@ -1,4 +1,4 @@
-package com.qd8s.werewolf2.NoIdeaWhatToCallThisPackage;
+package com.qd8s.werewolf2.GameHandler;
 
 /**
  * Created by Matthew on 6/9/2017.

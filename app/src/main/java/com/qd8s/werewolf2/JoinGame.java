@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.qd8s.werewolf2.NoIdeaWhatToCallThisPackage.MasterList;
+import com.qd8s.werewolf2.GameHandler.MasterList;
 
 public class JoinGame extends AppCompatActivity {
 
@@ -20,10 +20,6 @@ public class JoinGame extends AppCompatActivity {
     public void startGameLobby(View view) {
         Intent intent = new Intent(this, GameLobby.class);
         startActivity(intent);
-    }
-
-    public void updateMasterList(MasterList newList) {
-        masterList = newList;
     }
 
 }

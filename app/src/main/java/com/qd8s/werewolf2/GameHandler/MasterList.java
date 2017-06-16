@@ -1,4 +1,4 @@
-package com.qd8s.werewolf2.NoIdeaWhatToCallThisPackage;
+package com.qd8s.werewolf2.GameHandler;
 
 import java.util.ArrayList;
 import java.util.List;

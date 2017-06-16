@@ -5,17 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.qd8s.werewolf2.NoIdeaWhatToCallThisPackage.Lobby;
+import com.qd8s.werewolf2.GameHandler.Room;
 
 public class GameLobby extends AppCompatActivity {
 
-    private Lobby lobby;
+    /**
+     * _room contains all of the data for the players.
+     */
+    private Room _room;
 
+    /**
+     * When this activity is created, the user is added to the lobby.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
     }
+
 
     public void startRoleDescription(View view) {
 
@@ -24,10 +32,13 @@ public class GameLobby extends AppCompatActivity {
     }
 
     /**
-     * Updates the player's version of the lobby.
+     * Updates the player's version of the room.
      * The player is able to kick others if they are the host.
      */
-    public void updateLobby(Lobby lobby) {
+    public void updateLobby() {
+        // Load the Lobby from Firebase, into this activity.
+
+        // _room = room_from_firebase
 
     }
 }
