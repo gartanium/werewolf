@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.qd8s.werewolf2.GameHandler.Room;
+
+import org.w3c.dom.Text;
 
 public class HostGame extends AppCompatActivity {
 
@@ -25,11 +28,13 @@ public class HostGame extends AppCompatActivity {
         // Gson converts it into a Json string.
         String dataToFirebase =  gson.toJson(newRoom);
 
-       // String dataToFirebase = "Cruel world!";
+        // Gets the text from the textview. This is the room's name.
+        EditText gName = (EditText)findViewById(R.id.gameName);
+        String newRoomName = gName.getText().toString();
 
         // Now send the data up to Firebase!!
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("The Only Lobby That Matters");
+        DatabaseReference myRef = database.getReference(newRoomName);
         myRef.setValue(dataToFirebase);
 
     }

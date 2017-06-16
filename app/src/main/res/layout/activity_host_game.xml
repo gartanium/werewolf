@@ -17,12 +17,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <ListView
+    <EditText
+        android:id="@+id/gameName"
         android:layout_width="@dimen/default_button_width"
-        android:layout_height="@dimen/player_listview_height"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="@color/Player_Listview_Color"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/Enter_New_Game_Name_Text"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/startGameLobbyButton"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
