@@ -10,7 +10,7 @@ public class Game {
     // Contains a lobby with players.
     // Recognizes who the "Host" is
     // Returns true whether or not that players are "Playing the Game"
-    private Player host;
+    private Client host;
     private Room gameRoom;
 
 }

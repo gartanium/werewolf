@@ -17,4 +17,8 @@ public class Authentication extends AppCompatActivity {
 
     }
 
+    public void startGameMenu(View view) {
+
+    }
+
 }
