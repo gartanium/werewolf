@@ -7,6 +7,14 @@ import android.view.View;
 
 public class HostGame extends AppCompatActivity {
 
+    /**
+     * Publishes the Lobby to firebase.
+     */
+    protected void publishToFirebase() {
+        // Just freaking add the thing.
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
