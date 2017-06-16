@@ -1,0 +1,66 @@
+{
+  "project_info": {
+    "project_number": "262298295093",
+    "firebase_url": "https://werewolf-9697f.firebaseio.com",
+    "project_id": "werewolf-9697f",
+    "storage_bucket": "werewolf-9697f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262298295093:android:5224260b09537777",
+        "android_client_info": {
+          "package_name": "com.qd8s.werewolf2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262298295093-ipd6k8u13mm9s341ckmafouc01m7u5uh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qd8s.werewolf2",
+            "certificate_hash": "637f1aa2c0e38966c9488835a6e1d222acc906c9"
+          }
+        },
+        {
+          "client_id": "262298295093-cmmb8mpos0mt3usn7on5q5mha6ts5cqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qd8s.werewolf2",
+            "certificate_hash": "0559cd5328a97f56ae33b9076c9c4601de0c6674"
+          }
+        },
+        {
+          "client_id": "262298295093-psf6vgpr97itlqv2mn33gt6ki44kcmio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARtgRcHja26vPiQN-Od0d_TI-q0gSiwjM"
+        },
+        {
+          "current_key": "AIzaSyAgA1wZJMPREM5xJxmo337bLcSwk9_slWg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262298295093-psf6vgpr97itlqv2mn33gt6ki44kcmio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
