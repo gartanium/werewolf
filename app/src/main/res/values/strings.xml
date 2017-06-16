@@ -17,4 +17,5 @@
     <string name="Enter_Password_Text">Password</string>
     <string name="Enter_Email_Text">Email</string>
     <string name="Enter_New_Game_Name_Text">Game name</string>
+    <string name="Error_Msg">ERROR, AUTHENTICATION!</string>
 </resources>

@@ -26,7 +26,7 @@ public class RoomTest {
 
         for(int i = 0; i < maxLobbySize; i++)
         {
-            testObj.addPlayer(new Player());
+            testObj.addPlayer(new Client());
 
             int expected = i + 1;
             int actual = testObj.get_Player_Count();
@@ -42,14 +42,14 @@ public class RoomTest {
         Room testObj = new Room(maxLobbySize);
 
         for(int i = 0; i < maxLobbySize; i++) {
-            testObj.addPlayer(new Player());
+            testObj.addPlayer(new Client());
         }
 
         for(int i = maxLobbySize - 1; i > 0; i--) {
 
             // First get our player that is going to be removed.
-            List<Player> results = testObj.getPlayers();
-            Player toRemove = results.get(i);
+            List<Client> results = testObj.getPlayers();
+            Client toRemove = results.get(i);
 
             testObj.removePlayer(i);
 
@@ -78,7 +78,7 @@ public class RoomTest {
     @Test
     public void removePlayerExceptionTwo() throws Exception {
         Room testObj = new Room(5);
-        testObj.addPlayer(new Player());
+        testObj.addPlayer(new Client());
 
         try {
             testObj.removePlayer(1);
@@ -100,11 +100,11 @@ public class RoomTest {
 
         int maxLobbySize = 1;
         Room testObj = new Room(maxLobbySize);
-        testObj.addPlayer(new Player());
+        testObj.addPlayer(new Client());
 
         try {
 
-            testObj.addPlayer(new Player());
+            testObj.addPlayer(new Client());
         }
         catch (IllegalArgumentException exception)
         {

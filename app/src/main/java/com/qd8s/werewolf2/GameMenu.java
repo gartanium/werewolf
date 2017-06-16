@@ -4,22 +4,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.qd8s.werewolf2.GameHandler.Client;
 
-public class MainActivity extends AppCompatActivity {
+public class GameMenu extends AppCompatActivity {
+
+    Client client;
+    TextView welcomeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game_menu);
 
-        // Write a message to the database using Json
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference myRef = database.getReference("message");
+        Intent i = getIntent();
 
-        //myRef.setValue("Hello, World!");
+        client = i.getExtras().getParcelable("Client_Data");
+
+        welcomeView = (TextView)findViewById(R.id.welcomeView);
+        welcomeView.setText("Welcome, " + client.get_ID());
 
     }
 

@@ -3,4 +3,5 @@
     <dimen name="default_button_width">250dp</dimen>
     <dimen name="player_listview_height">300dp</dimen>
     <dimen name="Text_Box_Size">24sp</dimen>
+    <dimen name="Text_View_Font_Size">24sp</dimen>
 </resources>

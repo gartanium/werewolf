@@ -11,8 +11,30 @@ import android.os.Parcelable;
 public class Client implements Parcelable {
 
     private String id;
-    boolean isHost;
+    private boolean isHost;
     private boolean inGame;
+
+    /**
+     * Default constructor.
+     * Default Id is set to "John Doe".
+     * Is Host is set to false.
+     */
+    public Client() {
+        id = "John Doe";
+        isHost = false;
+        inGame = false;
+    }
+
+    /**
+     * Non default constructor.
+     * @param id Client ID.
+     * @param isHost Is Client the host?
+     */
+    public Client(String id, boolean isHost) {
+        this.id = id;
+        this.isHost = isHost;
+        this.inGame = false;
+    }
 
     protected Client(Parcel in) {
         id = in.readString();
@@ -47,6 +69,5 @@ public class Client implements Parcelable {
     public String get_ID() { return id;}
     public boolean is_Host() { return isHost;}
     public boolean is_InGame() { return inGame;}
-
 
 }
