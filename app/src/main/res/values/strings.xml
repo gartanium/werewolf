@@ -13,10 +13,8 @@
     <string name="Start_Game_Lobby_Text">Join Game</string>
     <string name="Start_Game_Text">Ready</string>
     <string name="Quit_Game_Text">Quit</string>
-    <string name="Authenticate_Text">Authenticate</string>
+    <string name="Authenticate_Text">Exsisting User</string>
     <string name="Enter_Password_Text">Password</string>
     <string name="Enter_Email_Text">Email</string>
-    <string name="Enter_New_Game_Name_Text">Game name</string>
-    <string name="Error_Msg">ERROR, AUTHENTICATION!</string>
-    <string name="Master_List_Name">Master_List</string>
+    <string name="auth_failed">login failed</string>
 </resources>
