@@ -53,7 +53,7 @@ public class Room {
      * Adds a client to the lobby. Throws an exception if there are to many players in the Room.
      * @param client
      */
-    public void addPlayer(Client client) throws IllegalArgumentException {
+    public void addClient(Client client) throws IllegalArgumentException {
 
         if (_maxPlayers == _clients.size()) {
 

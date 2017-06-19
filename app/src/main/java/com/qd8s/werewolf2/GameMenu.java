@@ -28,12 +28,20 @@ public class GameMenu extends AppCompatActivity {
     }
 
     public void startHostGame(View view) {
+        // Set the client as the host!
+        client.set_host(true);
+
         Intent intent = new Intent(this, HostGame.class);
+        intent.putExtra("Client_Data", client);
         startActivity(intent);
     }
 
     public void startJoinGame(View view) {
+        // Don't let the client be the host!
+        client.set_host(false);
+
         Intent intent = new Intent(this, JoinGame.class);
+        intent.putExtra("Client_Data", client);
         startActivity(intent);
     }
 

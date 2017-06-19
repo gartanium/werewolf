@@ -9,12 +9,12 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.qd8s.werewolf2.GameHandler.Client;
 import com.qd8s.werewolf2.GameHandler.Room;
-
-import org.w3c.dom.Text;
 
 public class HostGame extends AppCompatActivity {
 
+    private Client client;
     /**
      * Publishes the Lobby to firebase.
      */
@@ -23,6 +23,7 @@ public class HostGame extends AppCompatActivity {
         Integer maxRoomSize = R.integer.max_room_size;
 
         Room newRoom = new Room(maxRoomSize);
+        newRoom.addClient(client);
         Gson gson = new Gson();
 
         // Gson converts it into a Json string.
@@ -42,6 +43,7 @@ public class HostGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        client = getIntent().getExtras().getParcelable("Client_Data");
         setContentView(R.layout.activity_host_game);
     }
 

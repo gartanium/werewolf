@@ -70,4 +70,7 @@ public class Client implements Parcelable {
     public boolean is_Host() { return isHost;}
     public boolean is_InGame() { return inGame;}
 
+    public void set_host(boolean _host) {
+        this.isHost = true;
+    }
 }
