@@ -12,16 +12,18 @@ public class User {
     private boolean _immune;
     private boolean _actDone;
     private User _target;
+    private boolean _isAlpha;
 
 
     //non-default constructor
-    public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target) {
+    public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
         this._alive = alive;
         this._role = role;
         this._name = name;
         this._immune = immune;
         this._actDone = actDone;
         this._target = target;
+        this._isAlpha = isAlpha;
     }
 
     //default constructor
@@ -33,6 +35,7 @@ public class User {
         _immune = false;
         _actDone = false;
         _target = null;
+        _isAlpha = false;
     }
 
     //perform role
@@ -100,5 +103,7 @@ public class User {
 
     public void setTarget(User target) { this._target = target; }
 
+    public boolean getAlpha() { return _isAlpha; }
 
+    public void setAlpha(boolean isAlpha) { this._isAlpha = isAlpha; }
 }
