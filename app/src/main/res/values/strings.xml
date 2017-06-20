@@ -17,4 +17,7 @@
     <string name="Enter_Password_Text">Password</string>
     <string name="Enter_Email_Text">Email</string>
     <string name="auth_failed">login failed</string>
+    <string name="Error_Msg">ERROR</string>
+    <string name="Enter_New_Game_Name_Text" />
+    <string name="Master_List_Name">Master List</string>
 </resources>
