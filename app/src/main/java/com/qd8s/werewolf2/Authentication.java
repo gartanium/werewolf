@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.qd8s.werewolf2.GameHandler.Client;
 
 public class Authentication extends AppCompatActivity implements View.OnClickListener{
 
@@ -154,6 +155,8 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
 
     public void startGameMenu() {
         Intent intent = new Intent(this, GameMenu.class);
+        Client client = new Client();
+        intent.putExtra("Client_Data", client);
         startActivity(intent);
     }
 
@@ -162,10 +165,10 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
         int i = v.getId();
         if (i == R.id.newUser) {
             createAccount(userEmail.getText().toString(), userPassword.getText().toString());
-            //startGameMenu();
+            startGameMenu();
         } else if (i == R.id.Authenticate_Button) {
             signIn(userEmail.getText().toString(), userPassword.getText().toString());
-            //startGameMenu();
+            startGameMenu();
         }
     }
 
