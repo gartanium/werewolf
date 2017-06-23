@@ -36,12 +36,11 @@ public class Client implements Parcelable {
     /**
      * Non default constructor.
      * @param id Client ID.
-     * @param isHost Is Client the host?
      */
-    public Client(String id, boolean isHost) {
+    public Client(String id) {
         this.id = id;
-        this.isHost = isHost;
         this.inGame = false;
+        isHost = false;
     }
 
     protected Client(Parcel in) {
@@ -79,7 +78,7 @@ public class Client implements Parcelable {
     public boolean is_InGame() { return inGame;}
 
     public void set_host(boolean _host) {
-        this.isHost = true;
+        this.isHost = _host;
     }
 
     public boolean is_host() {

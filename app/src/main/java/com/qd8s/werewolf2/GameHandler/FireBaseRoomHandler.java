@@ -43,10 +43,14 @@ public class FireBaseRoomHandler {
                 // Join it.
 
         // For now, this code will implement the above until I can figure it out.
-        if(client.is_host())
+        if(client.is_host()) {
+            Log.v(TAG, "Client is hosting the game! " + client.get_ID());
             addRoom(client, roomID); // Adds a new room to firebase.
-        else
-            addEventListener(mRef);  // Sets this room's reference to Firebase's version on update.
+        }
+        else {
+            initializeJoinGameRoom(client);  // Sets this room's reference to Firebase's version on update.
+            addClientToRoom(client);
+        }
     }
 
     /**
@@ -54,17 +58,15 @@ public class FireBaseRoomHandler {
      * @param roomID Name of the new Room.
      */
     private void addRoom(Client client, String roomID) {
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference nextRef = database.getReference(roomID);
 
         mRoom = new Room(maxPlayers, roomID);
         mRoom.addClient(client);
 
         Gson gson = new Gson();
         String dataToFirebase = gson.toJson(mRoom);
-        nextRef.setValue(dataToFirebase);
+        mRef.setValue(dataToFirebase);
 
-        addEventListener(nextRef);
+        addEventListener(mRef);
     }
 
     /**
@@ -83,7 +85,7 @@ public class FireBaseRoomHandler {
                 Gson gson = new Gson();
                 mRoom = gson.fromJson(roomJson, Room.class);
 
-                Log.v(TAG, "Updating Room!");
+                Log.v(TAG, "Updating Room! Client Name: " + mRoom.getClients().get(0).get_ID());
                 // ...
             }
 
@@ -95,7 +97,37 @@ public class FireBaseRoomHandler {
             }
         };
 
+        // Attach the event listener!
         ref.addValueEventListener(roomListener);
 
     }
+
+    private void initializeJoinGameRoom(Client client) {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        //Room room. Get First time use.
+                        String roomJson = dataSnapshot.getValue(String.class);
+
+                        Gson gson = new Gson();
+                        mRoom = gson.fromJson(roomJson, Room.class);
+
+                        Log.v(TAG, "Updating Room! Client Name: " + mRoom.getClients().get(0).get_ID());
+                        // ...
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void addClientToRoom(Client client) {
+        mRoom.addClient(client);
+        mRef.setValue(mRoom);
+    }
+
+
 }

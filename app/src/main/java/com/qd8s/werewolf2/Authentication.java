@@ -155,7 +155,7 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
 
     public void startGameMenu() {
         Intent intent = new Intent(this, GameMenu.class);
-        Client client = new Client();
+        Client client = new Client(userEmail.getText().toString());
         intent.putExtra("Client_Data", client);
         startActivity(intent);
     }
