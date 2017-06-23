@@ -12,5 +12,7 @@ public class Game {
     // Returns true whether or not that players are "Playing the Game"
     private Client host;
     private Room gameRoom;
+    private boolean isDay;
+    private boolean isNight;
 
 }

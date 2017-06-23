@@ -54,7 +54,6 @@ public class User {
         return;
     }
 
-
     //getters and setters
     public boolean isAlive() {
         return _alive;

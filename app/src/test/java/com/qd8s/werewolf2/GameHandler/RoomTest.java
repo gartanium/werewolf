@@ -48,12 +48,12 @@ public class RoomTest {
         for(int i = maxLobbySize - 1; i > 0; i--) {
 
             // First get our player that is going to be removed.
-            List<Client> results = testObj.getPlayers();
+            List<Client> results = testObj.getClients();
             Client toRemove = results.get(i);
 
             testObj.removePlayer(i);
 
-            results = testObj.getPlayers();
+            results = testObj.getClients();
 
             Assert.assertFalse(results.contains(toRemove));
         }

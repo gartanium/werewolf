@@ -10,57 +10,70 @@ import java.util.List;
 public class Room {
 
 
-    // Contains a simple list of players.
-    private List<Client> _clients;
-
-    public int get_maxPlayers() {
-        return _maxPlayers;
-    }
-
-    private int _maxPlayers;
-
     /**
-     * Returns a list of players in the room.
+     * Returns a copy of the players data in the Room.
      * @return
      */
-    public List<Client> getPlayers() {
-        return new ArrayList<Client>(_clients);
-    }
+    public List<Client> getClients() { return new ArrayList<Client>(mClients); }
+    private List<Client> mClients;
 
     /**
      * Returns the number of players in the Lobby.
      * @return
      */
     public int get_Player_Count() {
-        return _clients.size();
+        return mClients.size();
     }
 
     /**
+     * Name of the Room.
+     * @return
+     */
+    public String getID() { return mID; }
+    private String mID;
+
+    /**
+     * Maximum number of players in the Lobby.
+     * @return
+     */
+    public int getMaxPlayers() {
+        return mMaxPlayers;
+    }
+    private int mMaxPlayers;
+
+    /**
      * Default constructor. Initializes lobby size to 0.
+     * Sets a default name.
      */
     public Room() {
-        _maxPlayers = 0;
-        _clients = new ArrayList<Client>();
+        mMaxPlayers = 0;
+        mClients = new ArrayList<Client>();
+        mID = "default_name";
     }
 
-    // Constructor that accepts a paramater for the maximum number of players.
-    public Room(int maxPlayers) {
-        _clients = new ArrayList<Client>();
-        _maxPlayers = maxPlayers;
+    /**
+     * Constructor that accepts a paramater for the maximum number of players.
+     * @param maxPlayers Maximum players permitted in the Room.
+     * @param ID ID (Name) Of the Room.
+     */
+    public Room(int maxPlayers, String ID) {
+        mClients = new ArrayList<Client>();
+        mMaxPlayers = maxPlayers;
+        mID = ID;
     }
 
     /**
      * Adds a client to the lobby. Throws an exception if there are to many players in the Room.
-     * @param client
+     * @param client client to add.
      */
     public void addClient(Client client) throws IllegalArgumentException {
 
-        if (_maxPlayers == _clients.size()) {
+        if (mMaxPlayers == mClients.size()) {
 
             throw new IllegalArgumentException("To many players in the Game Room!");
         }
         else
-            _clients.add(client);
+            mClients.add(client);
     }
 
     /**
@@ -68,7 +81,7 @@ public class Room {
      * @param client Client to remove from the Room
      */
     public void removePlayer(Client client) {
-        _clients.remove(client);
+        mClients.remove(client);
     }
 
     /**
@@ -77,14 +90,19 @@ public class Room {
      */
     public void removePlayer(int index) {
 
-        if(index >= _clients.size() || index < 0) {
+        if(index >= mClients.size() || index < 0) {
             throw new IndexOutOfBoundsException("Invalid Index!");
         }
         else
-            _clients.remove(index);
+            mClients.remove(index);
 
     }
 
-
-
+    /**
+     * Updates the room with a new list of clients!
+     * @param clients A list of clients.
+     */
+    public void updateRoom(List<Client> clients) {
+        mClients = clients;
+    }
 }
