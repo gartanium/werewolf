@@ -9,6 +9,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Matthew on 6/22/2017.
  * Description: FireBaseRoomHandler is a class for handeling the Client's local version of a Room,
@@ -36,10 +39,15 @@ public class FireBaseRoomHandler {
     private boolean mJoinRoom;
 
     // Max players in a room.
-    private final int maxPlayers = 12;
+    private final int mMaxPlayers = 12;
 
     // Tag for debugging.
     private static final String TAG = "FireBaseHandler";
+
+    /**
+     * @return A copy of the List of Clients in the Room.
+     */
+    public List<Client> getClients() { return new ArrayList<Client>(mRoom.getClients());}
 
     /**
      * A Firebase handler containing a Room.
@@ -70,7 +78,7 @@ public class FireBaseRoomHandler {
     private void hostRoom(Client client, String roomID) {
 
         // Create a new local Room.
-        mRoom = new Room(maxPlayers, roomID);
+        mRoom = new Room(mMaxPlayers, roomID);
         mRoom.addClient(client);
 
         // Serialize it.
@@ -125,7 +133,10 @@ public class FireBaseRoomHandler {
 
     }
 
-    // Add the client to the Firebase Room!
+    /**
+     * Add a client to the Room when joining it.
+     * @param client Client to be added.
+     */
     private void addClientToRoom(Client client) {
 
         // Change our local version first.
