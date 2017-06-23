@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 
 import java.util.HashMap;
@@ -16,14 +17,19 @@ import java.util.Map;
  * Created by Matthew on 6/22/2017.
  */
 
-public class FireBasePublisher {
+public class FireBaseRoomHandler {
 
-    private Map<DatabaseReference, Room> mRoomRefs;
+    DatabaseReference mRef;
+    Room mRoom;
+    
+    private static final String TAG = "FireBaseHandler";
 
-    private static final String TAG = "FireBasePublisher";
-
-    public FireBasePublisher() {
-        mRoomRefs = new HashMap<DatabaseReference, Room>();
+    public FireBaseRoomHandler() {
+        // Does the room exist?
+            // No?
+                // Create it, set the player as host!
+            // Yes?
+                // Join it.
 
     }
 
@@ -31,11 +37,23 @@ public class FireBasePublisher {
      * Add a room to FireBase.
      * @param room Room to add.
      */
-    public void addRoom(final Room room) {
+    private void addRoom(final Room room, Client client) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nextRef = database.getReference(room.getID());
-        mRoomRefs.put(nextRef, room);
+
+        Gson gson = new Gson();
+        String dataToFirebase = gson.toJson(room);
+        nextRef.setValue(dataToFirebase);
+
+        //mRoomRefs.put(nextRef, room);
         addEventListener(nextRef);
+    }
+
+    /**
+     * Add a client to FireBase
+     * @param client Client to add.
+     */
+    private void addClient(final Client client) {
 
     }
 
@@ -50,8 +68,13 @@ public class FireBasePublisher {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
                 //Post post = dataSnapshot.getValue(Post.class);
-                Room newRoom = dataSnapshot.getValue(Room.class);
-                mRoomRefs.get(ref).updateRoom(newRoom.getClients());
+                String roomJson = dataSnapshot.getValue(String.class);
+
+                Gson gson = new Gson();
+                Room newRoom = gson.fromJson(roomJson, Room.class);
+
+                mRoom.updateRoom(newRoom.getClients());
+
                 Log.v(TAG, "Updating Reference!");
                 // ...
             }
