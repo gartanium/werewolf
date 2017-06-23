@@ -13,7 +13,7 @@ import java.util.List;
  * Contains a refrence to every active game.
  */
 
-public class MasterList implements FireBasePublishable {
+public class MasterList {
 
     private List<Room> roomList;
 
@@ -48,26 +48,24 @@ public class MasterList implements FireBasePublishable {
         roomList.remove(room);
     }
 
-    @Override
-    public void publish() {
+   // @Override
+  //  public void publish() {
         // Publishes the lobby data to firebase.
         // Generate a Lobby, and add it to Firebase!
 
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
 
         // Gson converts it into a Json string.
-        String dataToFirebase =  gson.toJson(this);
+       // String dataToFirebase =  gson.toJson(this);
 
         // Now send the data up to Firebase!!
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(String.valueOf(R.string.Master_List_Name));
-        myRef.setValue(dataToFirebase);
+       // FirebaseDatabase database = FirebaseDatabase.getInstance();
+       // DatabaseReference myRef = database.getReference(String.valueOf(R.string.Master_List_Name));
+      //  myRef.setValue(dataToFirebase);
 
-    }
+    //}
 
-    @Override
-    public void pullData() {
-        // Pulls data from firebase.
 
-    }
+
+
 }

@@ -11,8 +11,16 @@ import android.os.Parcelable;
 public class Client implements Parcelable {
 
     private String id;
-    private boolean isHost;
+
     private boolean inGame;
+
+    private boolean isHost;
+    /**
+     * Sets the Client to be the host.
+     * @param value
+     */
+    private void setHost(boolean value) { isHost = value; }
+
 
     /**
      * Default constructor.
@@ -72,5 +80,9 @@ public class Client implements Parcelable {
 
     public void set_host(boolean _host) {
         this.isHost = true;
+    }
+
+    public boolean is_host() {
+        return isHost;
     }
 }

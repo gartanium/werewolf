@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,39 +23,48 @@ public class FireBaseRoomHandler {
     DatabaseReference mRef;
     Room mRoom;
 
+    // Max players in a room.
+    private final int maxPlayers = 12;
     private static final String TAG = "FireBaseHandler";
 
-    public FireBaseRoomHandler() {
+    /**
+     * A Firebase handler containing a Room.
+     * @param roomID ID of the room.
+     */
+    public FireBaseRoomHandler(Client client, String roomID) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mRef = database.getReference(roomID);
+
         // Does the room exist?
             // No?
                 // Create it, set the player as host!
             // Yes?
                 // Join it.
 
+        // For now, this code will implement the above until I can figure it out.
+        if(client.is_host())
+            addRoom(client, roomID); // Adds a new room to firebase.
+        else
+            addEventListener(mRef);  // Sets this room's reference to Firebase's version on update.
     }
 
     /**
      * Add a room to FireBase.
-     * @param room Room to add.
+     * @param roomID Name of the new Room.
      */
-    private void addRoom(final Room room, Client client) {
+    private void addRoom(Client client, String roomID) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference nextRef = database.getReference(room.getID());
+        DatabaseReference nextRef = database.getReference(roomID);
+
+        mRoom = new Room(maxPlayers, roomID);
+        mRoom.addClient(client);
 
         Gson gson = new Gson();
-        String dataToFirebase = gson.toJson(room);
+        String dataToFirebase = gson.toJson(mRoom);
         nextRef.setValue(dataToFirebase);
 
-        //mRoomRefs.put(nextRef, room);
         addEventListener(nextRef);
-    }
-
-    /**
-     * Add a client to FireBase
-     * @param client Client to add.
-     */
-    private void addClient(final Client client) {
-
     }
 
     /**
@@ -71,11 +81,9 @@ public class FireBaseRoomHandler {
                 String roomJson = dataSnapshot.getValue(String.class);
 
                 Gson gson = new Gson();
-                Room newRoom = gson.fromJson(roomJson, Room.class);
+                mRoom = gson.fromJson(roomJson, Room.class);
 
-                mRoom.updateRoom(newRoom.getClients());
-
-                Log.v(TAG, "Updating Reference!");
+                Log.v(TAG, "Updating Room!");
                 // ...
             }
 
@@ -88,6 +96,6 @@ public class FireBaseRoomHandler {
         };
 
         ref.addValueEventListener(roomListener);
-    }
 
+    }
 }

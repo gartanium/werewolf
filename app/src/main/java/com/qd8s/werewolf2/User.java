@@ -99,5 +99,4 @@ public class User {
 
     public void setTarget(User target) { this._target = target; }
 
-
 }
