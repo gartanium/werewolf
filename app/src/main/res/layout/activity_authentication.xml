@@ -24,29 +24,29 @@
         android:id="@+id/editText"
         android:layout_width="@dimen/default_button_width"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        tools:text="@string/Enter_Password_Text"
         android:layout_marginBottom="7dp"
-        app:layout_constraintBottom_toTopOf="@+id/newUser"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/Enter_Password_Text"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/newUser"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/editText2"
         android:layout_width="@dimen/default_button_width"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:text="@string/Enter_Email_Text"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/Enter_Email_Text"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/newUser"
