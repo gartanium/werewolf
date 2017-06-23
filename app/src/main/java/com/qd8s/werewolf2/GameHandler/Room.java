@@ -80,7 +80,7 @@ public class Room {
      * Removes a client from the Lobby.
      * @param client Client to remove from the Room
      */
-    public void removePlayer(Client client) {
+    public void removeClient(Client client) {
         mClients.remove(client);
     }
 
@@ -88,7 +88,7 @@ public class Room {
      * Removes a player from the Lobby.
      * @param index Index of player to remove.
      */
-    public void removePlayer(int index) {
+    public void removeClient(int index) {
 
         if(index >= mClients.size() || index < 0) {
             throw new IndexOutOfBoundsException("Invalid Index!");

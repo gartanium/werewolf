@@ -39,10 +39,13 @@ public class FireBaseRoomHandler {
     private boolean mJoinRoom;
 
     // Max players in a room.
-    private final int mMaxPlayers = 12;
+    private final int MAXPLAYERS = 12;
 
     // Tag for debugging.
     private static final String TAG = "FireBaseHandler";
+
+    // Name of the Master list that all things get published to.
+    private static final String MASTERLIST = "MasterList";
 
     /**
      * @return A copy of the List of Clients in the Room.
@@ -78,7 +81,7 @@ public class FireBaseRoomHandler {
     private void hostRoom(Client client, String roomID) {
 
         // Create a new local Room.
-        mRoom = new Room(mMaxPlayers, roomID);
+        mRoom = new Room(MAXPLAYERS, roomID);
         mRoom.addClient(client);
 
         // Serialize it.

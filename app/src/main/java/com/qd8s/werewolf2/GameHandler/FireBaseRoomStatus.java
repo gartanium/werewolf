@@ -1,5 +1,7 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by Matthew on 6/23/2017.
  * A class containing the status of a given room.
@@ -13,7 +15,8 @@ public class FireBaseRoomStatus {
      * @return True if rooms exists.
      */
     public boolean doesRoomExist(String roomID) {
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        if(database.)
     }
 
     /**

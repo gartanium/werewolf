@@ -51,7 +51,7 @@ public class RoomTest {
             List<Client> results = testObj.getClients();
             Client toRemove = results.get(i);
 
-            testObj.removePlayer(i);
+            testObj.removeClient(i);
 
             results = testObj.getClients();
 
@@ -65,7 +65,7 @@ public class RoomTest {
         Room testObj = new Room();
 
         try {
-            testObj.removePlayer(0);
+            testObj.removeClient(0);
         }
         catch (IndexOutOfBoundsException exception)
         {
@@ -81,7 +81,7 @@ public class RoomTest {
         testObj.addClient(new Client());
 
         try {
-            testObj.removePlayer(1);
+            testObj.removeClient(1);
         }
         catch (IndexOutOfBoundsException exception)
         {
