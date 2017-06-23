@@ -21,7 +21,7 @@ public class FireBaseRoomHandler {
 
     DatabaseReference mRef;
     Room mRoom;
-    
+
     private static final String TAG = "FireBaseHandler";
 
     public FireBaseRoomHandler() {
