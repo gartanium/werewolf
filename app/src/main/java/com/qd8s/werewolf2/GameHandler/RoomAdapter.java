@@ -30,6 +30,18 @@ public class RoomAdapter {
     // The local version of the room.
     private Room mRoom;
 
+    /**
+     * Returns a local copy of the Room.
+     * @return
+     */
+    public Room getRoom() { return mRoom; }
+
+    /**
+     * Returns the player count
+     * @return
+     */
+    public int getPlayerCount() { return mRoom.get_Player_Count();}
+
     // The client associated with this handler.
     private Client mClient;
 
