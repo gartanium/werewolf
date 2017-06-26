@@ -15,7 +15,10 @@ public class RoleDescription extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_description);
+        //jhjhjhjh
         client = getIntent().getExtras().getParcelable("Client_Data");
+
+
     }
 
     public void startDayNight(View view) {
