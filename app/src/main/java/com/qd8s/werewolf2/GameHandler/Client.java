@@ -3,6 +3,8 @@ package com.qd8s.werewolf2.GameHandler;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.qd8s.werewolf2.User;
+
 /**
  * Created by Matthew on 6/9/2017.
  * A player contains data for their ID and privelage level.
@@ -15,6 +17,9 @@ public class Client implements Parcelable {
     private boolean inGame;
 
     private boolean isHost;
+
+    private User player;
+
     /**
      * Sets the Client to be the host.
      * @param value
@@ -83,5 +88,13 @@ public class Client implements Parcelable {
 
     public boolean is_host() {
         return isHost;
+    }
+
+    public User getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(User player) {
+        this.player = player;
     }
 }
