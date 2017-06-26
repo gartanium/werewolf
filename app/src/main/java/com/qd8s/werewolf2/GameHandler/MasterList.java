@@ -1,71 +1,51 @@
 package com.qd8s.werewolf2.GameHandler;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-import com.qd8s.werewolf2.R;
+import android.util.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Matthew on 6/9/2017.
- * Contains a refrence to every active game.
+ * Created by Matthew on 6/24/2017.
+ * A class containing all the important Room Data for the Master List.
+ * Also contains data for translaiting it into an Array Addapter.
  */
 
 public class MasterList {
 
-    private List<Room> roomList;
+    /**
+     * A list of room Ids and the Player count.
+     */
+    private List<RoomData> mRoomDataList;
 
     /**
-     * Returns a list of all the rooms.
-     * @return
+     *
+     * @return Returns a list of Room Data.
      */
-    public List<Room> getList() {
-        return new ArrayList<Room> (roomList);
+    public List<RoomData> getRoomDataList() { return mRoomDataList;}
+
+    /**
+     *
+     * @return The number of Rooms in the Master List.
+     */
+    public int getRoomCount(){ return mRoomDataList.size();}
+
+    /**
+     * Add a room to the Master List.
+     * @param roomID      ID of the room.
+     * @param playerCount Number of players in the Room.
+     * @param maxPlayers Maximum number of players allowed in the Room.
+     */
+    public void addRoom(String roomID, int playerCount, int maxPlayers) {
+        RoomData data = new RoomData(roomID, playerCount, maxPlayers);
+
     }
 
     /**
-     * Default constructor for the arrayList.
+     * Removes data from the Room.
+     * @param roomID
+     * @param playerCount
      */
-    public MasterList() {
-        roomList = new ArrayList<Room>();
+    public void removeRoom(String roomID, int playerCount) {
+
     }
-
-    /**
-     * Add a new room to the master list.
-     * @param room
-     */
-    void addRoom(Room room) {
-        roomList.add(room);
-    }
-
-    /**
-     * Remove a room from the master list.
-     * @param room
-     */
-    void removeRoom(Room room) {
-        roomList.remove(room);
-    }
-
-   // @Override
-  //  public void publish() {
-        // Publishes the lobby data to firebase.
-        // Generate a Lobby, and add it to Firebase!
-
-        //Gson gson = new Gson();
-
-        // Gson converts it into a Json string.
-       // String dataToFirebase =  gson.toJson(this);
-
-        // Now send the data up to Firebase!!
-       // FirebaseDatabase database = FirebaseDatabase.getInstance();
-       // DatabaseReference myRef = database.getReference(String.valueOf(R.string.Master_List_Name));
-      //  myRef.setValue(dataToFirebase);
-
-    //}
-
-
-
-
 }

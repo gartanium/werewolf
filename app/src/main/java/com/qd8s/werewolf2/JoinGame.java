@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.qd8s.werewolf2.GameHandler.Client;
-import com.qd8s.werewolf2.GameHandler.FireBaseRoomHandler;
-import com.qd8s.werewolf2.GameHandler.MasterList;
+import com.qd8s.werewolf2.GameHandler.RoomAdapter;
+import com.qd8s.werewolf2.GameHandler.MasterListAdapter;
 
 public class JoinGame extends AppCompatActivity {
 
-    MasterList masterList;
+    MasterListAdapter masterListAdapter;
     Client client;
 
     @Override
@@ -27,7 +27,7 @@ public class JoinGame extends AppCompatActivity {
         Intent intent = new Intent(this, GameLobby.class);
 
         client.set_host(false);
-        FireBaseRoomHandler roomHandler = new FireBaseRoomHandler(client, "foobar");
+        RoomAdapter roomHandler = new RoomAdapter(client, "foobar");
 
         startActivity(intent);
     }

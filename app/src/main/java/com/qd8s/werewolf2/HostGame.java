@@ -6,12 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 import com.qd8s.werewolf2.GameHandler.Client;
-import com.qd8s.werewolf2.GameHandler.FireBaseRoomHandler;
-import com.qd8s.werewolf2.GameHandler.Room;
+import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 public class HostGame extends AppCompatActivity {
 
@@ -40,7 +36,7 @@ public class HostGame extends AppCompatActivity {
 
         client.is_Host();
 
-        FireBaseRoomHandler roomHandler = new FireBaseRoomHandler(client, newRoomName);
+        RoomAdapter roomHandler = new RoomAdapter(client, newRoomName);
 
         startActivity(intent);
     }

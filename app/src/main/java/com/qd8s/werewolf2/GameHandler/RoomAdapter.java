@@ -14,15 +14,15 @@ import java.util.List;
 
 /**
  * Created by Matthew on 6/22/2017.
- * Description: FireBaseRoomHandler is a class for handeling the Client's local version of a Room,
+ * Description: RoomAdapter is a class for handeling the Client's local version of a Room,
  * and updating it whenever there is a change in Firebase. Additionaly, it will at some point
  * contain logic for updating the Firebase's version any time the local one changes. For now,
- * it allows a Client to join the Room in firebase upon FireBaseRoomHandler initialization if the
+ * it allows a Client to join the Room in firebase upon RoomAdapter initialization if the
  * Client isn't the Host. If they are the host, then this Handler will go ahead and create a new
  * Room in Firebase for us and others to join.Then it will have the Client join it.
  */
 
-public class FireBaseRoomHandler {
+public class RoomAdapter {
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -45,7 +45,7 @@ public class FireBaseRoomHandler {
     private static final String TAG = "FireBaseHandler";
 
     // Name of the Master list that all things get published to.
-    private static final String MASTERLIST = "MasterList";
+    private static final String MASTERLIST = "MasterListAdapter";
 
     /**
      * @return A copy of the List of Clients in the Room.
@@ -56,10 +56,10 @@ public class FireBaseRoomHandler {
      * A Firebase handler containing a Room.
      * @param roomID ID of the room.
      */
-    public FireBaseRoomHandler(Client client, String roomID) {
+    public RoomAdapter(Client client, String roomID) {
         mJoinRoom = false;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mRef = database.getReference(roomID);
+        mRef = database.getReference(MASTERLIST).child(roomID);
         mClient = client;
 
         // If client is the host, Implement host logic!
