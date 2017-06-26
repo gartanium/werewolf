@@ -42,7 +42,7 @@ public class Night {
     public User wolfVote(Map< Integer, User> users)
     {
         Integer topVotes = 0;
-        Integer secondVotes = 0
+        Integer secondVotes = 0;
         User guiltyPerson = new User();
         for(Map.Entry<Integer, User> entry : users.entrySet()) {
             if( entry.getKey() >= topVotes) {

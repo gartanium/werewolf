@@ -36,7 +36,7 @@ public class Day {
 
     public User executeVerdict(Map<Integer, User> nominees) {
         Integer topVotes = 0;
-        Integer secondVotes = 0
+        Integer secondVotes = 0;
         User guiltyPerson = new User();
         for(Map.Entry<Integer, User> entry : nominees.entrySet()) {
             if( entry.getKey() >= topVotes) {
