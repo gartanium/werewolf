@@ -12,16 +12,21 @@ public class User {
     private boolean _immune;
     private boolean _actDone;
     private User _target;
-
+    private boolean _isAlpha;
+    private boolean _vote1;
+    private boolean _vote2;
 
     //non-default constructor
-    public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target) {
+    public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
         this._alive = alive;
         this._role = role;
         this._name = name;
         this._immune = immune;
         this._actDone = actDone;
         this._target = target;
+        this._isAlpha = isAlpha;
+        this._vote1 = false;
+        this._vote2 = false;
     }
 
     //default constructor
@@ -33,6 +38,9 @@ public class User {
         _immune = false;
         _actDone = false;
         _target = null;
+        _isAlpha = false;
+        this._vote1 = false;
+        this._vote2 = false;
     }
 
     //perform role
@@ -53,6 +61,7 @@ public class User {
 
         return;
     }
+
 
     //getters and setters
     public boolean isAlive() {
@@ -98,5 +107,25 @@ public class User {
     public User getTarget() { return _target; }
 
     public void setTarget(User target) { this._target = target; }
+
+    public boolean getAlpha() { return _isAlpha; }
+
+    public void setAlpha(boolean isAlpha) { this._isAlpha = isAlpha; }
+
+    public boolean is_vote1() {
+        return _vote1;
+    }
+
+    public void set_vote1(boolean _vote1) {
+        this._vote1 = _vote1;
+    }
+
+    public boolean is_vote2() {
+        return _vote2;
+    }
+
+    public void set_vote2(boolean _vote2) {
+        this._vote2 = _vote2;
+    }
 
 }
