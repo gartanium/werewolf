@@ -24,12 +24,16 @@ public class JoinGame extends AppCompatActivity {
     }
 
     public void startGameLobby(View view) {
+
+        // Initialize the Intent.
         Intent intent = new Intent(this, GameLobby.class);
 
-        client.set_host(false);
+        // set the status of the Client.
         RoomAdapter roomHandler = new RoomAdapter(client);
         roomHandler.joinRoom("foo"); // Seriously, please remember to change this later!
 
+        // Store the Client data into the intent, to send it to the next activity.
+        intent.putExtra("Client_Data", client);
         startActivity(intent);
     }
 

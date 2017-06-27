@@ -128,6 +128,9 @@ public class RoomAdapter {
                 // This is used for determining if our local version of the Room needs initializing.
                 mRoomIsInitialized = true;
 
+                // Set the client as the Host.
+                mClient.set_host(true);
+
                 // Create a new local Room.
                 mRoom = new Room(MAXPLAYERS, roomID);
                 mRoom.addClient(mClient);
@@ -164,6 +167,9 @@ public class RoomAdapter {
                 // Initialize our reference, and set it equal to the firebase version of the Room.
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 mRef = database.getReference(MASTERLIST).child(roomID);
+
+                // Set the client as not the host.
+                mClient.set_host(false);
 
                 // Add the event listener, so our local version of the Room will update whenever FB does.
                 addEventListener(mRef);

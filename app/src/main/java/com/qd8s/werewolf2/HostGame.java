@@ -34,10 +34,10 @@ public class HostGame extends AppCompatActivity {
 
         Intent intent = new Intent(this, GameLobby.class);
 
-        client.is_Host();
-
         RoomAdapter roomHandler = new RoomAdapter(client);
         roomHandler.hostRoom(newRoomName);
+
+        intent.putExtra("Client_Data", client);
 
         startActivity(intent);
     }
