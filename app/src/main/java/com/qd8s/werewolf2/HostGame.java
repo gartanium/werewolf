@@ -36,7 +36,8 @@ public class HostGame extends AppCompatActivity {
 
         client.is_Host();
 
-        RoomAdapter roomHandler = new RoomAdapter(client, newRoomName);
+        RoomAdapter roomHandler = new RoomAdapter(client);
+        roomHandler.hostRoom(newRoomName);
 
         startActivity(intent);
     }

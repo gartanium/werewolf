@@ -27,7 +27,8 @@ public class JoinGame extends AppCompatActivity {
         Intent intent = new Intent(this, GameLobby.class);
 
         client.set_host(false);
-        RoomAdapter roomHandler = new RoomAdapter(client, "foobar");
+        RoomAdapter roomHandler = new RoomAdapter(client);
+        roomHandler.joinRoom("foo"); // Seriously, please remember to change this later!
 
         startActivity(intent);
     }
