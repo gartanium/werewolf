@@ -37,6 +37,4 @@ public class JoinGame extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
 }
