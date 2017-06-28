@@ -1,5 +1,7 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import com.qd8s.werewolf2.User;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,11 +24,11 @@ public class RoomTest {
     public void addPlayer() throws Exception {
 
         int maxLobbySize = 5;
-        Room testObj = new Room(maxLobbySize);
+        Room testObj = new Room(maxLobbySize, "foo");
 
         for(int i = 0; i < maxLobbySize; i++)
         {
-            testObj.addClient(new Client());
+            testObj.addUser(new User());
 
             int expected = i + 1;
             int actual = testObj.get_Player_Count();
@@ -39,23 +41,23 @@ public class RoomTest {
     public void removePlayer() throws Exception {
 
         int maxLobbySize = 5;
-        Room testObj = new Room(maxLobbySize);
+        Room testObj = new Room(maxLobbySize, "foo");
 
         for(int i = 0; i < maxLobbySize; i++) {
-            testObj.addClient(new Client());
+            testObj.addUser(new User());
         }
 
         for(int i = maxLobbySize - 1; i > 0; i--) {
 
             // First get our player that is going to be removed.
-            List<Client> results = testObj.getClients();
-            Client toRemove = results.get(i);
+            List<User> results = testObj.getUsers();
+            User UsertoRemove = results.get(i);
 
-            testObj.removeClient(i);
+            testObj.removeUser(i);
 
-            results = testObj.getClients();
+            results = testObj.getUsers();
 
-            Assert.assertFalse(results.contains(toRemove));
+            Assert.assertFalse(results.contains(UsertoRemove));
         }
 
     }
@@ -65,7 +67,7 @@ public class RoomTest {
         Room testObj = new Room();
 
         try {
-            testObj.removeClient(0);
+            testObj.removeUser(0);
         }
         catch (IndexOutOfBoundsException exception)
         {
@@ -77,11 +79,11 @@ public class RoomTest {
 
     @Test
     public void removePlayerExceptionTwo() throws Exception {
-        Room testObj = new Room(5);
-        testObj.addClient(new Client());
+        Room testObj = new Room(5, "foo");
+        testObj.addUser(new User());
 
         try {
-            testObj.removeClient(1);
+            testObj.removeUser(1);
         }
         catch (IndexOutOfBoundsException exception)
         {
@@ -99,12 +101,12 @@ public class RoomTest {
     public void addPlayerException() throws Exception {
 
         int maxLobbySize = 1;
-        Room testObj = new Room(maxLobbySize);
-        testObj.addClient(new Client());
+        Room testObj = new Room(maxLobbySize, "foo");
+        testObj.addUser(new User());
 
         try {
 
-            testObj.addClient(new Client());
+            testObj.addUser(new User());
         }
         catch (IllegalArgumentException exception)
         {

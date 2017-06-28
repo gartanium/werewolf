@@ -5,12 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.qd8s.werewolf2.GameHandler.Client;
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 public class RoleDescription extends AppCompatActivity {
 
-    Client client;
+    User user;
 
     /**
      * Use the RoomAdapter class to get all your logic for the Room.
@@ -23,7 +22,7 @@ public class RoleDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_description);
         //jhjhjhjh
-        client = getIntent().getExtras().getParcelable("Client_Data");
+        user = getIntent().getExtras().getParcelable("Client_Data");
 
 
     }
