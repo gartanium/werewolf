@@ -18,6 +18,7 @@ public class User implements Parcelable {
     private boolean _isAlpha;
     private boolean _vote1;
     private boolean _vote2;
+    private boolean _isHost;
 
     //non-default constructor
     public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
@@ -30,6 +31,7 @@ public class User implements Parcelable {
         this._isAlpha = isAlpha;
         this._vote1 = false;
         this._vote2 = false;
+        this._isHost = false;
     }
 
     //default constructor
@@ -44,6 +46,7 @@ public class User implements Parcelable {
         _isAlpha = false;
         this._vote1 = false;
         this._vote2 = false;
+        this._isHost = false;
     }
 
     protected User(Parcel in) {

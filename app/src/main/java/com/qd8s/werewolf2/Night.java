@@ -9,6 +9,22 @@ import java.util.Map;
 
 public class Night {
 
+    public User get_target() {
+        return _target;
+    }
+
+    public void set_target(User _target) {
+        this._target = _target;
+    }
+
+    public User get_roleDoer() {
+        return _roleDoer;
+    }
+
+    public void set_roleDoer(User _roleDoer) {
+        this._roleDoer = _roleDoer;
+    }
+
     private User _target;
     private User _roleDoer;
 
