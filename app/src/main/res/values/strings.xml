@@ -20,6 +20,19 @@
     <string name="Error_Msg">ERROR</string>
     <string name="Enter_New_Game_Name_Text" />
     <string name="Master_List_Name">Master List</string>
+    <string name="Day_Count_Main_Text">Day X</string>
+    <string name="Day_Count_Second_Text">Day X</string>
+    <string name="Night_Count_Text">Night X</string>
+    <string name="Day_Main_Info_Text">Insert game instructions here</string>
+    <string name="Day_Second_Info_Text">Insert game instructions here.</string>
+    <string name="Night_Doc_Info_Text">Doc Instructions.</string>
+    <string name="Night_Wolf_Info_text">Wolf Insctructions</string>
+    <string name="Night_Vil_Info_Text">Are You A Villager?</string>
+    <string name="Day_Main_Button">Accept</string>
+    <string name="Day_Second_Button">Accept</string>
+    <string name="Night_Wolf_Button">Let the hunt begin!</string>
+    <string name="Night_Doc_Button">The Doctor is in!</string>
+    <string name="Night_Vil_button">Yes, I am a Villager.</string>
 </resources>
 
 
