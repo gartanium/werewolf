@@ -101,19 +101,11 @@ public class Room {
     }
 
     /**
-     * Updates the room with a new list of clients!
-     * @param users A list of clients.
-     */
-    public void updateRoom(List<User> users) {
-        mUsers = users;
-    }
-
-    /**
      * Updates user with similar ID.
      * @param user
      * @throws this throws an Illegal argument exception is the user is not found in the room.
      */
-    public void updateUser(User user) {
+    public void updateUser(User user) throws IllegalArgumentException {
         for(int i = 0; i < mUsers.size(); i++) {
             if(mUsers.get(i).getName() == user.getName()) {
                 mUsers.set(i, user);
@@ -121,14 +113,15 @@ public class Room {
             }
         }
 
+        // If this code is reached, throw the exception!
         throw new IllegalArgumentException("User not foudn in the Room! User: " + user.getName());
     }
 
     /**
-     * Updates a list of users to firebase.
+     * Updates this room's list of users.
      * @param users A list of users.
      */
-    public void updateUsers(List<User> users) {
+    public void updateUsers(List<User> users) throws IllegalArgumentException {
         for (User u : users) {
             for(int i = 0; i < mUsers.size(); i++) {
                 if(mUsers.get(i).getName() == users.get(i).getName()) {
