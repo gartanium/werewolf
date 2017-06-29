@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.qd8s.werewolf2.GameHandler.Client;
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.Random;
 
 public class RoleDescription extends AppCompatActivity {
 
-    private Client client;
+    private User user;
     private int numPlayers;
     private boolean doc;
     private int numWolfs;
@@ -33,9 +32,9 @@ public class RoleDescription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_description);
 
-        client = getIntent().getExtras().getParcelable("Client_Data");
+        user = getIntent().getExtras().getParcelable("Client_Data");
 
-        if (client.is_Host()) {
+        if (user.isHost()) {
             List<User> players = new ArrayList<>();
             List<String> roles = new ArrayList<>();
 

@@ -49,6 +49,19 @@ public class User implements Parcelable {
         _isHost = false;
     }
 
+    public User(String name) {
+        _alive = true;
+        _role = "";
+        _name = name;
+        _immune = false;
+        _actDone = false;
+        _target = null;
+        _isAlpha = false;
+        this._vote1 = false;
+        this._vote2 = false;
+        _isHost = false;
+    }
+
     protected User(Parcel in) {
         _alive = in.readByte() != 0;
         _role = in.readString();
@@ -161,7 +174,7 @@ public class User implements Parcelable {
 
     public void set_host(boolean value) { _isHost = value;}
 
-    public boolean is_host() { return _isHost; }
+    public boolean isHost() { return _isHost; }
 
     @Override
     public int describeContents() {

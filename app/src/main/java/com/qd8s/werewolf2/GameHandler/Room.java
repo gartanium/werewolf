@@ -16,15 +16,15 @@ public class Room {
      * Returns a copy of the players data in the Room.
      * @return
      */
-    public List<User> getUsers() { return new ArrayList<User>(mUser); }
-    private List<User> mUser;
+    public List<User> getUsers() { return new ArrayList<User>(mUsers); }
+    private List<User> mUsers;
 
     /**
      * Returns the number of players in the Lobby.
      * @return
      */
     public int get_Player_Count() {
-        return mUser.size();
+        return mUsers.size();
     }
 
     /**
@@ -49,7 +49,7 @@ public class Room {
      */
     public Room() {
         mMaxPlayers = 0;
-        mUser = new ArrayList<User>();
+        mUsers = new ArrayList<User>();
         mID = "default_name";
     }
 
@@ -59,7 +59,7 @@ public class Room {
      * @param ID ID (Name) Of the Room.
      */
     public Room(int maxPlayers, String ID) {
-        mUser = new ArrayList<User>();
+        mUsers = new ArrayList<User>();
         mMaxPlayers = maxPlayers;
         mID = ID;
     }
@@ -70,12 +70,12 @@ public class Room {
      */
     public void addUser(User user) throws IllegalArgumentException {
 
-        if (mMaxPlayers == mUser.size()) {
+        if (mMaxPlayers == mUsers.size()) {
 
             throw new IllegalArgumentException("To many players in the Game Room!");
         }
         else
-            mUser.add(user);
+            mUsers.add(user);
     }
 
     /**
@@ -83,7 +83,7 @@ public class Room {
      * @param user User to remove from the Room
      */
     public void removeUser(User user) {
-        mUser.remove(user);
+        mUsers.remove(user);
     }
 
     /**
@@ -92,11 +92,11 @@ public class Room {
      */
     public void removeUser(int index) {
 
-        if(index >= mUser.size() || index < 0) {
+        if(index >= mUsers.size() || index < 0) {
             throw new IndexOutOfBoundsException("Invalid Index!");
         }
         else
-            mUser.remove(index);
+            mUsers.remove(index);
 
     }
 
@@ -105,18 +105,42 @@ public class Room {
      * @param users A list of clients.
      */
     public void updateRoom(List<User> users) {
-        mUser = users;
+        mUsers = users;
     }
 
     /**
      * Updates user with similar ID.
      * @param user
+     * @throws this throws an Illegal argument exception is the user is not found in the room.
      */
     public void updateUser(User user) {
-        for(int i = 0; i < mUser.size(); i++) {
-            if(mUser.get(i).getName() == user.getName()) {
-                mUser.set(i, user);
+        for(int i = 0; i < mUsers.size(); i++) {
+            if(mUsers.get(i).getName() == user.getName()) {
+                mUsers.set(i, user);
+                return;
             }
         }
+
+        throw new IllegalArgumentException("User not foudn in the Room! User: " + user.getName());
+    }
+
+    /**
+     * Updates a list of users to firebase.
+     * @param users A list of users.
+     */
+    public void updateUsers(List<User> users) {
+        for (User u : users) {
+            for(int i = 0; i < mUsers.size(); i++) {
+                if(mUsers.get(i).getName() == users.get(i).getName()) {
+                    mUsers.set(i, u);
+                    continue;
+                }
+
+                if (i + 1 == mUsers.size())
+                    throw new IllegalArgumentException("Invalid users list!");
+            }
+
+        }
+
     }
 }

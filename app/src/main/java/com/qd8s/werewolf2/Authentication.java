@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.qd8s.werewolf2.GameHandler.Client;
+import com.qd8s.werewolf2.User;
 
 //Google Inc. All Rights Reserved.
 public class Authentication extends AppCompatActivity implements View.OnClickListener{
@@ -141,12 +141,12 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
 
     public void startGameMenu() {
         Intent intent = new Intent(this, GameMenu.class);
-        Client client = new Client(userEmail.getText().toString());
+        User user = new User(userEmail.getText().toString());
         //set player name
         //client.getPlayer().setName(userName.getText().toString());
 
         //Log.i(client.getPlayer().getName(), "Is mny name");
-        intent.putExtra("Client_Data", client);
+        intent.putExtra("Client_Data", user);
         startActivity(intent);
     }
 

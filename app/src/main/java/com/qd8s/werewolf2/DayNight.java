@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.qd8s.werewolf2.GameHandler.Client;
+import com.qd8s.werewolf2.User;
 
 import java.util.ArrayList;
 import java.util.List;
