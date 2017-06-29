@@ -1,9 +1,9 @@
 package com.qd8s.werewolf2;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +17,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.qd8s.werewolf2.GameHandler.Client;
 
+//Google Inc. All Rights Reserved.
 public class Authentication extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = "firebase";
     private EditText userEmail;
     private EditText userPassword;
     private FirebaseAuth mAuth;
+    private EditText userName;
 
 
     @Override
@@ -32,6 +34,7 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
 
         userEmail = (EditText) findViewById(R.id.editText2);
         userPassword = (EditText) findViewById(R.id.editText);
+        userName = (EditText) findViewById(R.id.userName);
 
         //Log.i(TAG, userEmail.getText().getSt);
         findViewById(R.id.newUser).setOnClickListener(this);
@@ -65,12 +68,14 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(Authentication.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+
                         }
 
                     }
@@ -92,12 +97,14 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Authentication.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+
                         }
 
                         // [START_EXCLUDE]
@@ -131,8 +138,20 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
         return valid;
     }
 
+
+    public void startGameMenu() {
+        Intent intent = new Intent(this, GameMenu.class);
+        Client client = new Client(userEmail.getText().toString());
+        //set player name
+        //client.getPlayer().setName(userName.getText().toString());
+
+        //Log.i(client.getPlayer().getName(), "Is mny name");
+        intent.putExtra("Client_Data", client);
+        startActivity(intent);
+    }
+
     private void updateUI(FirebaseUser user) {
-        /*//hideProgressDialog();
+        /*hideProgressDialog();
         if (user != null) {
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
@@ -153,21 +172,16 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
         }*/
     }
 
-    public void startGameMenu() {
-        Intent intent = new Intent(this, GameMenu.class);
-        Client client = new Client(userEmail.getText().toString());
-        intent.putExtra("Client_Data", client);
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.newUser) {
             createAccount(userEmail.getText().toString(), userPassword.getText().toString());
+            System.out.println("i am here new account");
             startGameMenu();
         } else if (i == R.id.Authenticate_Button) {
             signIn(userEmail.getText().toString(), userPassword.getText().toString());
+            System.out.println("i am here exsisting account");
             startGameMenu();
         }
     }

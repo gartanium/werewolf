@@ -3,6 +3,7 @@ package com.qd8s.werewolf2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,9 +19,11 @@ public class GameMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_menu);
 
+        Log.i("i am here", "Game Menu");
         Intent i = getIntent();
 
         client = i.getExtras().getParcelable("Client_Data");
+        //Log.i(client.getPlayer().getName(), "is my player name");
 
         welcomeView = (TextView)findViewById(R.id.welcomeView);
         welcomeView.setText("Welcome, " + client.get_ID());

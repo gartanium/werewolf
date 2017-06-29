@@ -1,10 +1,13 @@
 package com.qd8s.werewolf2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by admin on 6/5/17.
  */
 
-public class User {
+public class User implements Parcelable {
 
     private boolean _alive;
     private String _role;
@@ -42,6 +45,30 @@ public class User {
         this._vote1 = false;
         this._vote2 = false;
     }
+
+    protected User(Parcel in) {
+        _alive = in.readByte() != 0;
+        _role = in.readString();
+        _name = in.readString();
+        _immune = in.readByte() != 0;
+        _actDone = in.readByte() != 0;
+        _target = in.readParcelable(User.class.getClassLoader());
+        _isAlpha = in.readByte() != 0;
+        _vote1 = in.readByte() != 0;
+        _vote2 = in.readByte() != 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     //perform role
     void performRole()
@@ -128,4 +155,21 @@ public class User {
         this._vote2 = _vote2;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (_alive ? 1 : 0));
+        dest.writeString(_role);
+        dest.writeString(_name);
+        dest.writeByte((byte) (_immune ? 1 : 0));
+        dest.writeByte((byte) (_actDone ? 1 : 0));
+        dest.writeParcelable(_target, flags);
+        dest.writeByte((byte) (_isAlpha ? 1 : 0));
+        dest.writeByte((byte) (_vote1 ? 1 : 0));
+        dest.writeByte((byte) (_vote2 ? 1 : 0));
+    }
 }

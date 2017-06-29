@@ -20,6 +20,7 @@ public class Client implements Parcelable {
 
     private User player;
 
+
     /**
      * Sets the Client to be the host.
      * @param value
@@ -36,6 +37,8 @@ public class Client implements Parcelable {
         id = "John Doe";
         isHost = false;
         inGame = false;
+        player = new User();
+
     }
 
     /**
@@ -46,12 +49,14 @@ public class Client implements Parcelable {
         this.id = id;
         this.inGame = false;
         isHost = false;
+        player = new User();
     }
 
     protected Client(Parcel in) {
         id = in.readString();
         isHost = in.readByte() != 0;
         inGame = in.readByte() != 0;
+        player = in.readParcelable(User.class.getClassLoader());
     }
 
     public static final Creator<Client> CREATOR = new Creator<Client>() {
