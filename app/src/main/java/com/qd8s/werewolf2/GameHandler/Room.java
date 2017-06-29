@@ -1,5 +1,7 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import com.qd8s.werewolf2.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +16,15 @@ public class Room {
      * Returns a copy of the players data in the Room.
      * @return
      */
-    public List<Client> getClients() { return new ArrayList<Client>(mClients); }
-    private List<Client> mClients;
+    public List<User> getUsers() { return new ArrayList<User>(mUser); }
+    private List<User> mUser;
 
     /**
      * Returns the number of players in the Lobby.
      * @return
      */
     public int get_Player_Count() {
-        return mClients.size();
+        return mUser.size();
     }
 
     /**
@@ -47,7 +49,7 @@ public class Room {
      */
     public Room() {
         mMaxPlayers = 0;
-        mClients = new ArrayList<Client>();
+        mUser = new ArrayList<User>();
         mID = "default_name";
     }
 
@@ -57,52 +59,64 @@ public class Room {
      * @param ID ID (Name) Of the Room.
      */
     public Room(int maxPlayers, String ID) {
-        mClients = new ArrayList<Client>();
+        mUser = new ArrayList<User>();
         mMaxPlayers = maxPlayers;
         mID = ID;
     }
 
     /**
      * Adds a client to the lobby. Throws an exception if there are to many players in the Room.
-     * @param client client to add.
+     * @param user client to add.
      */
-    public void addClient(Client client) throws IllegalArgumentException {
+    public void addUser(User user) throws IllegalArgumentException {
 
-        if (mMaxPlayers == mClients.size()) {
+        if (mMaxPlayers == mUser.size()) {
 
             throw new IllegalArgumentException("To many players in the Game Room!");
         }
         else
-            mClients.add(client);
+            mUser.add(user);
     }
 
     /**
      * Removes a client from the Lobby.
-     * @param client Client to remove from the Room
+     * @param user User to remove from the Room
      */
-    public void removeClient(Client client) {
-        mClients.remove(client);
+    public void removeUser(User user) {
+        mUser.remove(user);
     }
 
     /**
      * Removes a player from the Lobby.
      * @param index Index of player to remove.
      */
-    public void removeClient(int index) {
+    public void removeUser(int index) {
 
-        if(index >= mClients.size() || index < 0) {
+        if(index >= mUser.size() || index < 0) {
             throw new IndexOutOfBoundsException("Invalid Index!");
         }
         else
-            mClients.remove(index);
+            mUser.remove(index);
 
     }
 
     /**
      * Updates the room with a new list of clients!
-     * @param clients A list of clients.
+     * @param users A list of clients.
      */
-    public void updateRoom(List<Client> clients) {
-        mClients = clients;
+    public void updateRoom(List<User> users) {
+        mUser = users;
+    }
+
+    /**
+     * Updates user with similar ID.
+     * @param user
+     */
+    public void updateUser(User user) {
+        for(int i = 0; i < mUser.size(); i++) {
+            if(mUser.get(i).getName() == user.getName()) {
+                mUser.set(i, user);
+            }
+        }
     }
 }

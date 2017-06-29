@@ -31,7 +31,7 @@ public class User implements Parcelable {
         this._isAlpha = isAlpha;
         this._vote1 = false;
         this._vote2 = false;
-        this._isHost = false;
+        _isHost = false;
     }
 
     //default constructor
@@ -46,7 +46,7 @@ public class User implements Parcelable {
         _isAlpha = false;
         this._vote1 = false;
         this._vote2 = false;
-        this._isHost = false;
+        _isHost = false;
     }
 
     protected User(Parcel in) {
@@ -59,6 +59,7 @@ public class User implements Parcelable {
         _isAlpha = in.readByte() != 0;
         _vote1 = in.readByte() != 0;
         _vote2 = in.readByte() != 0;
+        _isHost = in.readByte() != 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -158,6 +159,10 @@ public class User implements Parcelable {
         this._vote2 = _vote2;
     }
 
+    public void set_host(boolean value) { _isHost = value;}
+
+    public boolean is_host() { return _isHost; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -174,5 +179,6 @@ public class User implements Parcelable {
         dest.writeByte((byte) (_isAlpha ? 1 : 0));
         dest.writeByte((byte) (_vote1 ? 1 : 0));
         dest.writeByte((byte) (_vote2 ? 1 : 0));
+        dest.writeByte((byte) (_isHost ? 1 : 0));
     }
 }
