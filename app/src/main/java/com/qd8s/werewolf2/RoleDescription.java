@@ -3,6 +3,7 @@ package com.qd8s.werewolf2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
@@ -33,6 +34,7 @@ public class RoleDescription extends AppCompatActivity {
         setContentView(R.layout.activity_role_description);
 
         user = getIntent().getExtras().getParcelable("Client_Data");
+        user.set_host(true);
 
         if (user.isHost()) {
             List<User> players = new ArrayList<>();
@@ -79,83 +81,10 @@ public class RoleDescription extends AppCompatActivity {
 
             for (int i = 0; i < numPlayers; i++)
             {
-                System.out.println(players.get(i).getRole() + " " + (i + 1));
+               Log.v("Player", players.get(i).getRole() + " " + (i + 1));
             }
 
 
-        //if the top randomize does not work
-        /*
-        while (numPlayers > numAssignedRoles) {
-            //numWolfs greater 0 and doc is true assign all roles
-            if (numWolfs > 0 && doc) {
-                switch (randomNum.nextInt(3)) {
-                    case 1:
-                        //wolf
-                        players.get(count).setRole("wolf");
-                        numWolfs--;
-                        numAssignedRoles++;
-                        count++;
-                        break;
-                    case 2:
-                        //doc
-                        players.get(count).setRole("doc");
-                        numAssignedRoles++;
-                        count++;
-                        doc = false;
-                        break;
-                    case 3:
-                        //villager
-                        players.get(count).setRole("villager");
-                        numAssignedRoles++;
-                        count++;
-                        break;
-                }
-            }
-            //numWolfs assigned 0 and doc is true. Assign doc and villagers
-            if (numWolfs == 0 && doc) {
-                switch (randomNum.nextInt(2)) {
-                    case 1:
-                        //villager
-                        players.get(count).setRole("villager");
-                        numAssignedRoles++;
-                        count++;
-                        break;
-                    case 2:
-                        players.get(count).setRole("doc");
-                        numAssignedRoles++;
-                        count++;
-                        doc = false;
-                        break;
-
-                }
-            }
-
-            //numWolfs is greater than 0 and doc is false. Assign wolf and villagers
-            if (numWolfs > 0 && !doc) {
-                switch (randomNum.nextInt(2)) {
-                    case 1:
-                        //villager
-                        players.get(count).setRole("villager");
-                        numAssignedRoles++;
-                        count++;
-                        break;
-                    case 2:
-                        //wolf
-                        players.get(count).setRole("wolf");
-                        numWolfs--;
-                        numAssignedRoles++;
-                        count++;
-                        break;
-                }
-            }
-            //villagers are left. Assign villagers
-            else
-            {
-                players.get(count).setRole("villager");
-                numAssignedRoles++;
-                count++;
-            }
-        }*/
 
 
         //code that update the firebase goes here.
