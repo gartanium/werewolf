@@ -32,12 +32,6 @@ public class RoomAdapter {
     private Room mRoom;
 
     /**
-     * Returns a local copy of the Room.
-     * @return
-     */
-    public Room getRoom() { return mRoom; }
-
-    /**
      * Returns the player count
      * @return
      */
@@ -141,7 +135,7 @@ public class RoomAdapter {
 
                 // Add a listener to the reference, to detect changes.
                 addEventListener(mRef, user);
-                Log.v(TAG, "Local Client is hosting a room! Client:" + user.getName());
+                logUserUpdateMsg("hosting room!", user);
             }
             else
                 throw new IllegalStateException("Unkonwn Error, a room already exists!");
@@ -172,7 +166,7 @@ public class RoomAdapter {
                 addEventListener(mRef, user);
 
                 // Log for being nice and tidy :-)!
-                Log.v(TAG, "Local Client is joining a room! Client:" + user.getName());
+                logUserUpdateMsg("joining room!", user);
             }
             else
                 throw new IllegalStateException("Client is already in a Room! RoomID: " + mRoom.getID());
@@ -197,12 +191,24 @@ public class RoomAdapter {
                 Gson gson = new Gson();
                 String dataToFirebase = gson.toJson(mRoom);
                 mRef.setValue(dataToFirebase);
+
+                logUserUpdateMsg("leaving room", user);
+
             } else
                 throw new IllegalStateException("Client is not in the room, or the Room is Null!");
         }
         catch (IllegalStateException e) {
             Log.e(TAG, e.getMessage(), e);
         }
+    }
+
+    /**
+     * Logs an update message.
+     * @param msg Update message to display.
+     * @param user User affected
+     */
+    private void logUserUpdateMsg(String msg, User user) {
+        Log.v(TAG, "Room: " + mRoom.getID() + " User: " + user.getID() + " " + msg);
     }
 
     /**
@@ -260,20 +266,34 @@ public class RoomAdapter {
     }
 
     /**
-     * Updates a User.
+     * Updated version of the user.
      * @param user
      */
     public void updateUser(User user) {
-        mRoom.updateUser(user);
+
+
         Gson gson = new Gson();
         String dataToFirebase = gson.toJson(mRoom);
+        logUserUpdateMsg("updating user!", user);
         mRef.setValue(dataToFirebase);
+
+        try {
+            User currentUser = mRoom.getUser(user.getID());
+            currentUser = user;
+        }
+        catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid User: " + user.getID() + "! (Is the ID incorrect?)", e);
+        }
+
     }
 
+    /**
+     * Updates a list of users.
+     * @param users A list of users.
+     */
     public void updateUsers(List<User> users) {
-        mRoom.updateUsers(users);
-        Gson gson = new Gson();
-        String dataToFirebase = gson.toJson(mRoom);
-        mRef.setValue(dataToFirebase);
+        for (User u: users) {
+            updateUser(u);
+        }
     }
 }

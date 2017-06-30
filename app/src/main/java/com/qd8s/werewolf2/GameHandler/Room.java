@@ -72,10 +72,44 @@ public class Room {
 
         if (mMaxPlayers == mUsers.size()) {
 
-            throw new IllegalArgumentException("To many players in the Game Room!");
+            throw new IllegalArgumentException("To many players in the Room!");
         }
         else
             mUsers.add(user);
+    }
+
+    /**
+     * Returns a user by index.
+     * @param index Index o a user
+     * @throws throws IndexOutOfBoundsException
+     * @return
+     */
+    public User getUser(int index) throws IndexOutOfBoundsException {
+        try {
+            return mUsers.get(index);
+        }
+        catch(IndexOutOfBoundsException e) {
+            throw e;
+        }
+    }
+
+    /**
+     * getUser
+     * @param id
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public User getUser(String id) throws IllegalArgumentException {
+
+        // foreach user, see if their ID matches!
+        for (User u: mUsers) {
+            if(u.getID() == id){
+                return u;
+            }
+        }
+
+        // If the Id is not found, throw this exception!
+        throw new IllegalArgumentException("ID: " + id + " is not in the Room!");
     }
 
     /**
@@ -83,6 +117,7 @@ public class Room {
      * @param user User to remove from the Room
      */
     public void removeUser(User user) {
+
         mUsers.remove(user);
     }
 
@@ -97,43 +132,6 @@ public class Room {
         }
         else
             mUsers.remove(index);
-
-    }
-
-    /**
-     * Updates user with similar ID.
-     * @param user
-     * @throws this throws an Illegal argument exception is the user is not found in the room.
-     */
-    public void updateUser(User user) throws IllegalArgumentException {
-        for(int i = 0; i < mUsers.size(); i++) {
-            if(mUsers.get(i).getName() == user.getName()) {
-                mUsers.set(i, user);
-                return;
-            }
-        }
-
-        // If this code is reached, throw the exception!
-        throw new IllegalArgumentException("User not foudn in the Room! User: " + user.getName());
-    }
-
-    /**
-     * Updates this room's list of users.
-     * @param users A list of users.
-     */
-    public void updateUsers(List<User> users) throws IllegalArgumentException {
-        for (User u : users) {
-            for(int i = 0; i < mUsers.size(); i++) {
-                if(mUsers.get(i).getName() == users.get(i).getName()) {
-                    mUsers.set(i, u);
-                    continue;
-                }
-
-                if (i + 1 == mUsers.size())
-                    throw new IllegalArgumentException("Invalid users list!");
-            }
-
-        }
 
     }
 }

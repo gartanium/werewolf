@@ -11,14 +11,14 @@ import com.qd8s.werewolf2.GameHandler.MasterListAdapter;
 public class JoinGame extends AppCompatActivity {
 
     MasterListAdapter masterListAdapter;
-    User user;
+    User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Get the user data from the last activity.
-        user = getIntent().getExtras().getParcelable("Client_Data");
+        mUser = getIntent().getExtras().getParcelable("Client_Data");
         setContentView(R.layout.activity_join_game);
     }
 
@@ -28,11 +28,11 @@ public class JoinGame extends AppCompatActivity {
         Intent intent = new Intent(this, GameLobby.class);
 
         // set the status of the User.
-        RoomAdapter roomHandler = new RoomAdapter(user);
-        roomHandler.joinRoom("foo"); // Seriously, please remember to change this later!
+        RoomAdapter roomHandler = new RoomAdapter();
+        roomHandler.joinRoom("foo", mUser); // Seriously, please remember to change this later!
 
         // Store the User data into the intent, to send it to the next activity.
-        intent.putExtra("Client_Data", user);
+        intent.putExtra("Client_Data", mUser);
         startActivity(intent);
     }
 

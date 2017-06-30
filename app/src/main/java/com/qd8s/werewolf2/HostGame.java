@@ -10,7 +10,7 @@ import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 public class HostGame extends AppCompatActivity {
 
-    private User user;
+    private User mUser;
     /**
      * Publishes the Lobby to firebase.
      */
@@ -18,7 +18,7 @@ public class HostGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = getIntent().getExtras().getParcelable("Client_Data");
+        mUser = getIntent().getExtras().getParcelable("Client_Data");
         setContentView(R.layout.activity_host_game);
     }
 
@@ -33,13 +33,11 @@ public class HostGame extends AppCompatActivity {
 
         Intent intent = new Intent(this, GameLobby.class);
 
-        RoomAdapter roomHandler = new RoomAdapter(user);
-        roomHandler.hostRoom(newRoomName);
+        RoomAdapter roomHandler = new RoomAdapter();
+        roomHandler.hostRoom(newRoomName, mUser);
 
-        intent.putExtra("Client_Data", user);
+        intent.putExtra("Client_Data", mUser);
 
         startActivity(intent);
     }
-
-
 }
