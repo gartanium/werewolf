@@ -116,4 +116,36 @@ public class RoomTest {
         Assert.fail("Expected an Illegal Argument Exception!");
 
     }
+
+    @Test
+    public void updateUser() throws Exception {
+        Room testObj = new Room(12, "foo");
+        User testUser = new User("foo", "bob");
+
+        testObj.addUser(testUser);
+
+        testUser.setName("john");
+
+        Assert.assertEquals("john", testObj.getUser(0).getName());
+
+
+    }
+
+    @Test
+    public void getUser() throws Exception {
+        Room testObj = new Room(12, "foo");
+        User testUser = new User("foo", "bob");
+
+        testObj.addUser(testUser);
+
+        testUser.setName("Jim");
+
+        User actual = testObj.getUser("foo");
+
+        String expected = "Jim";
+
+        Assert.assertEquals(expected, actual.getName());
+
+
+    }
 }
