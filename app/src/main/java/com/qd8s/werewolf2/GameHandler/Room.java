@@ -1,5 +1,8 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.qd8s.werewolf2.User;
 
 import java.util.ArrayList;
@@ -9,8 +12,26 @@ import java.util.List;
  * Created by Matthew on 6/9/2017.
  * A Room is "Hosted" for a player.
  */
-public class Room {
+public class Room implements Parcelable {
 
+
+    protected Room(Parcel in) {
+        mUsers = in.createTypedArrayList(User.CREATOR);
+        mID = in.readString();
+        mMaxPlayers = in.readInt();
+    }
+
+    public static final Creator<Room> CREATOR = new Creator<Room>() {
+        @Override
+        public Room createFromParcel(Parcel in) {
+            return new Room(in);
+        }
+
+        @Override
+        public Room[] newArray(int size) {
+            return new Room[size];
+        }
+    };
 
     /**
      * Returns a copy of the players data in the Room.
@@ -133,5 +154,17 @@ public class Room {
         else
             mUsers.remove(index);
 
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(mUsers);
+        dest.writeString(mID);
+        dest.writeInt(mMaxPlayers);
     }
 }

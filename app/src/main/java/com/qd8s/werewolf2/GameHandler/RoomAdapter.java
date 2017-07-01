@@ -1,5 +1,7 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,13 +25,30 @@ import java.util.List;
  * Room in Firebase for us and others to join.Then it will have the User join it.
  */
 
-public class RoomAdapter {
+public class RoomAdapter implements Parcelable {
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
 
     // The local version of the room.
     private Room mRoom;
+
+    protected RoomAdapter(Parcel in) {
+        mIsConnectedToFirebase = in.readByte() != 0;
+
+    }
+
+    public static final Creator<RoomAdapter> CREATOR = new Creator<RoomAdapter>() {
+        @Override
+        public RoomAdapter createFromParcel(Parcel in) {
+            return new RoomAdapter(in);
+        }
+
+        @Override
+        public RoomAdapter[] newArray(int size) {
+            return new RoomAdapter[size];
+        }
+    };
 
     /**
      * Returns the player count
@@ -41,7 +60,7 @@ public class RoomAdapter {
     // A boolean to determine if the client should be added to the room.
     //  If false, when the next update occurs, the client will join.
     // Then it should be set to false.
-    private boolean mRoomIsInitialized;
+    private boolean mIsConnectedToFirebase;
 
     // Max players in a room.
     private final int MAXPLAYERS = 12;
@@ -66,7 +85,7 @@ public class RoomAdapter {
 
         // Validate that the User has joined a room!
         try{
-            if(mRoomIsInitialized)
+            if(mIsConnectedToFirebase)
                 return new ArrayList<User>(mRoom.getUsers());
             else
                 throw new NullPointerException(BADACCESSATEMPT);
@@ -85,7 +104,7 @@ public class RoomAdapter {
 
         // Validate that the User has joined a room!
         try{
-            if(mRoomIsInitialized)
+            if(mIsConnectedToFirebase)
                 return mRoom.get_Player_Count();
             else
                 throw new NullPointerException(BADACCESSATEMPT);
@@ -100,7 +119,7 @@ public class RoomAdapter {
      * A Firebase handler containing a Room.
      */
     public RoomAdapter() {
-        mRoomIsInitialized = false;
+        mIsConnectedToFirebase = false;
         mRoom = null;
         mRef = null;
     }
@@ -118,7 +137,7 @@ public class RoomAdapter {
                 mRef = database.getReference(MASTERLIST).child(roomID);
 
                 // This is used for determining if our local version of the Room needs initializing.
-                mRoomIsInitialized = true;
+                mIsConnectedToFirebase = true;
 
                 // Create a new local Room.
                 mRoom = new Room(MAXPLAYERS, roomID);
@@ -165,8 +184,6 @@ public class RoomAdapter {
                 // Add the event listener, so our local version of the Room will update whenever FB does.
                 addEventListener(mRef, user);
 
-                // Log for being nice and tidy :-)!
-                logUserUpdateMsg("joining room!", user);
             }
             else
                 throw new IllegalStateException("Client is already in a Room! RoomID: " + mRoom.getID());
@@ -226,13 +243,10 @@ public class RoomAdapter {
                 Gson gson = new Gson();
                 mRoom = gson.fromJson(roomJson, Room.class);
 
-                if(!mRoomIsInitialized) {
+                if(!mIsConnectedToFirebase) {
                     mRoom.addUser(user);
-                    mRoomIsInitialized = true;
+                    mIsConnectedToFirebase = true;
                 }
-
-                // Log for allowing us to know that the room updated.
-                Log.v(TAG, "Updating Room! Clients: " + mRoom.getUsers().toString());
 
                 // ...
             }
@@ -262,6 +276,9 @@ public class RoomAdapter {
         Gson gson = new Gson();
         String dataToFirebase = gson.toJson(mRoom);
         mRef.setValue(dataToFirebase);
+
+        // Log for allowing us to know that the room updated.
+        logUserUpdateMsg("joining room!", user);
 
     }
 
@@ -296,4 +313,32 @@ public class RoomAdapter {
             updateUser(u);
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (mIsConnectedToFirebase ? 1 : 0));
+        dest.writeInt(MAXPLAYERS);
+    }
+
+    /**
+     * Returns the ID of the inner room.
+     * @return Id of the room.
+     * @throws NullPointerException
+     */
+    public String getID() throws NullPointerException {
+        if(mRoom != null)
+            return mRoom.getID();
+        else
+            throw new NullPointerException("mRoom is not yet initialized! (Did you forget to join the Room?");
+    }
+
+    /**
+     * @return Returns if the local client is connected to Firebase.
+     */
+    public boolean isConnectedToFirebase() { return mIsConnectedToFirebase; }
 }
