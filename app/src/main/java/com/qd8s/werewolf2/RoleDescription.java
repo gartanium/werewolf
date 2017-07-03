@@ -11,15 +11,13 @@ import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+
 
 public class RoleDescription extends AppCompatActivity {
 
     private User user;
     private int numPlayers;
-    private boolean doc;
     private int numWolfs;
-    private Random randomNum;
     private int numAssignedRoles;
     private RoomAdapter mRoom;
 
@@ -45,11 +43,13 @@ public class RoleDescription extends AppCompatActivity {
             //assign players from firebase goes here
 
             //
-            for (int i = 0; i < 10; i++)
+            /*for (int i = 0; i < 10; i++)
             {
                 User player = new User();
                 players.add(player);
-            }
+            }*/
+
+            players = room.getUsers();
 
             numPlayers = players.size();
             //doc = true;
@@ -86,7 +86,8 @@ public class RoleDescription extends AppCompatActivity {
                Log.v("Player", players.get(i).getRole() + " " + (i + 1));
             }
 
-
+            //updates firebase
+            room.updateUsers(players);
         }
 
 
