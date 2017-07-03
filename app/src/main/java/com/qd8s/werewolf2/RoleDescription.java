@@ -21,10 +21,11 @@ public class RoleDescription extends AppCompatActivity {
     private int numWolfs;
     private Random randomNum;
     private int numAssignedRoles;
+    private RoomAdapter mRoom;
 
     /**
      * Use the RoomAdapter class to get all your logic for the Room.
-     * The room will contain a list of all clients and their associated users.
+     * The mRoom will contain a list of all clients and their associated users.
      */
     RoomAdapter room;
 
@@ -34,6 +35,7 @@ public class RoleDescription extends AppCompatActivity {
         setContentView(R.layout.activity_role_description);
 
         user = getIntent().getExtras().getParcelable("Client_Data");
+        mRoom = getIntent().getExtras().getParcelable("Room_Data");
         user.set_host(true);
 
         if (user.isHost()) {
@@ -85,10 +87,6 @@ public class RoleDescription extends AppCompatActivity {
             }
 
 
-
-
-        //code that update the firebase goes here.
-
         }
 
 
@@ -96,6 +94,8 @@ public class RoleDescription extends AppCompatActivity {
 
     public void startDayNight(View view) {
         Intent intent = new Intent(this, DayNight.class);
+        intent.putExtra("Client_Data", user);
+        intent.putExtra("Room_data", mRoom);
         startActivity(intent);
     }
 }
