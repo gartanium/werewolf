@@ -65,6 +65,12 @@ public class Room implements Parcelable {
     private int mMaxPlayers;
 
     /**
+     *
+     * @return Returns true if the room is full or above capacity.
+     */
+    public boolean isFull() { return mUsers.size() >= mMaxPlayers; }
+
+    /**
      * Default constructor. Initializes lobby size to 0.
      * Sets a default name.
      */

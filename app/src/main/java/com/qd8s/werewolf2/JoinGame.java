@@ -11,7 +11,7 @@ import com.qd8s.werewolf2.GameHandler.MasterListAdapter;
 
 public class JoinGame extends AppCompatActivity {
 
-    MasterListAdapter masterListAdapter;
+    RoomAdapter mRoom;
     User mUser;
 
     @Override
@@ -23,19 +23,24 @@ public class JoinGame extends AppCompatActivity {
         setContentView(R.layout.activity_join_game);
     }
 
-    public void startGameLobby(View view) {
-
-        // Initialize the Intent.
-        Intent intent = new Intent(this, GameLobby.class);
-
-        // set the status of the User.
-        RoomAdapter roomHandler = new RoomAdapter();
-        roomHandler.joinRoom("foo", mUser); // Seriously, please remember to change this later!
-
-        // Store the User data into the intent, to send it to the next activity.
-        intent.putExtra("Client_Data", mUser);
-        intent.putExtra("Room_Data", roomHandler);
-        startActivity(intent);
+    public void downloadLobby(View view) {
+        mRoom = new RoomAdapter();
+        mRoom.connectToRoom("foo");
     }
 
+    public void startGameLobby(View view) {
+
+        if(mRoom.isConnectedToFirebase()){
+            // Initialize the Intent.
+            Intent intent = new Intent(this, GameLobby.class);
+
+
+           mRoom.joinRoom(mUser); // Seriously, please remember to change this later!
+
+            // Store the User data into the intent, to send it to the next activity.
+            intent.putExtra("Client_Data", mUser);
+            intent.putExtra("Room_Data", mRoom);
+            startActivity(intent);
+        }
+    }
 }

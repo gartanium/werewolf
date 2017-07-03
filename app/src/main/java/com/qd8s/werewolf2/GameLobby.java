@@ -43,13 +43,4 @@ public class GameLobby extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * Updates the player's version of the room.
-     * The player is able to kick others if they are the host.
-     */
-    public void updateLobby() {
-        // Load the Lobby from Firebase, into this activity.
-
-        // _room = room_from_firebase
-    }
 }
