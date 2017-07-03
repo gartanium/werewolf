@@ -37,6 +37,7 @@ public class HostGame extends AppCompatActivity {
         roomHandler.hostRoom(newRoomName, mUser);
 
         intent.putExtra("Client_Data", mUser);
+        intent.putExtra("Room_Data", roomHandler);
 
         startActivity(intent);
     }
