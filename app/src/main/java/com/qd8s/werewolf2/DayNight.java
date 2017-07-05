@@ -14,23 +14,26 @@ import java.util.Vector;
 
 public class DayNight extends AppCompatActivity {
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_night);
-        //get players here
+        user = getIntent().getExtras().getParcelable("Client_Data");
+        //TODO:get players here
         List<User> players = new ArrayList();
-        startGame((ArrayList<User>) players);
+        startGame((ArrayList<User>) players, user);
     }
 
 
 
-    public void startGame(ArrayList<User> players)
+    public void startGame(ArrayList<User> players, User user)
     {
         boolean gameOver = false;
         while(!gameOver)
         {
-            //goToNight(players);
+            goToNight(players, user);
             //goToDay(players);
             for(int i = 0; i < players.size(); i++) {
                 int goodWinning = 0;
@@ -40,14 +43,14 @@ public class DayNight extends AppCompatActivity {
                 if(players.get(i).getRole() == "wolf") {
                     goodWinning--;
                 }
-                if(goodWinning < 0 || goodWinning == players.size()-1) {
+                if(goodWinning < 0 || goodWinning >= players.size()-1) {
                     gameOver = true;
                 }
             }
         }
     }
     public void goToNight(ArrayList<User> Players, User you) {
-        //bring up the night interface, I don't know how to do that
+        //TODO:bring up the night interface, I don't know how to do that
         boolean nightOver = false;
         Night tonight = new Night();
         tonight.set_roleDoer(you);

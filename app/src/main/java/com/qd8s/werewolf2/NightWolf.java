@@ -10,4 +10,5 @@ public class NightWolf extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_night_wolf);
     }
+    //TODO:an onclick that sets the target of the given user to the user they click on
 }

@@ -167,6 +167,7 @@ public class RoleDescription extends AppCompatActivity {
 
     public void startDayNight(View view) {
         Intent intent = new Intent(this, DayNight.class);
+        intent.putExtra("Client_Data",user);
         startActivity(intent);
     }
 }
