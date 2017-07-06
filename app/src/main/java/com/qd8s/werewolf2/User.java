@@ -20,6 +20,7 @@ public class User implements Parcelable {
     private boolean _vote1;
     private boolean _vote2;
     private boolean _isHost;
+    private String activity;
 
     //non-default constructor
     public User(String id, boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
@@ -202,5 +203,13 @@ public class User implements Parcelable {
         dest.writeByte((byte) (_vote1 ? 1 : 0));
         dest.writeByte((byte) (_vote2 ? 1 : 0));
         dest.writeByte((byte) (_isHost ? 1 : 0));
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
     }
 }

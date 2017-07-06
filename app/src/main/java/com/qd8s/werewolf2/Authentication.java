@@ -135,6 +135,15 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
             userPassword.setError(null);
         }
 
+        String name = userName.getText().toString();
+        if (TextUtils.isEmpty(name)){
+            userName.setError("required.");
+            valid = false;
+        }
+        else {
+            userName.setError(null);
+        }
+
         return valid;
     }
 
