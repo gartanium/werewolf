@@ -90,6 +90,8 @@ public class RoomAdapter implements Parcelable {
         }
     }
 
+
+
     /**
      *
      * @return The number of clients in the Room. Returns -1 for an error state.

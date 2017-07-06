@@ -9,6 +9,11 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
+    public enum ActivityState
+    {Authentication, day_main, day_night, day_second, game_lobby, game_menu, host_game, join_game,
+        night_doc, night_villager, night_wolf, role_description, user_row};
+
+
     private boolean _alive;
     private String _role;
     private String _name;
@@ -20,7 +25,7 @@ public class User implements Parcelable {
     private boolean _vote1;
     private boolean _vote2;
     private boolean _isHost;
-    private String activity;
+    private ActivityState _state;
 
     //non-default constructor
     public User(String id, boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
@@ -205,11 +210,11 @@ public class User implements Parcelable {
         dest.writeByte((byte) (_isHost ? 1 : 0));
     }
 
-    public String getActivity() {
-        return activity;
+    public ActivityState getActivity() {
+        return _state;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setActivity(ActivityState state) {
+        this._state = state;
     }
 }

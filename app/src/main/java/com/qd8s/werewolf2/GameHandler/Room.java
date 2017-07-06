@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class Room implements Parcelable {
 
+    private final String JOIN_ERROR_TOMANY_USERS = "ERROR: To many users in the room!";
+    private final String GET_USER_ERROR_USER_NOT_IN_ROOM = "ERROR: User not in the room!";
+    private final String ERROR_USER_ALREADY_IN_ROOM = "ERROR: User already in the room!";
 
     protected Room(Parcel in) {
         mUsers = in.createTypedArrayList(User.CREATOR);
@@ -92,17 +95,22 @@ public class Room implements Parcelable {
     }
 
     /**
-     * Adds a client to the lobby. Throws an exception if there are to many players in the Room.
+     * Adds a client to the lobby.
      * @param user client to add.
+     * @throws IllegalArgumentException if there are to many users or user already is in the room.
      */
     public void addUser(User user) throws IllegalArgumentException {
 
         if (mMaxPlayers == mUsers.size()) {
 
-            throw new IllegalArgumentException("To many players in the Room!");
+            throw new IllegalArgumentException(JOIN_ERROR_TOMANY_USERS);
         }
-        else
+        else if (containsUser(user)) {
+            throw new IllegalArgumentException(ERROR_USER_ALREADY_IN_ROOM);
+        }
+        else {
             mUsers.add(user);
+        }
     }
 
     /**
@@ -136,7 +144,7 @@ public class Room implements Parcelable {
         }
 
         // If the Id is not found, throw this exception!
-        throw new IllegalArgumentException("ID: " + id + " is not in the Room!");
+        throw new IllegalArgumentException(GET_USER_ERROR_USER_NOT_IN_ROOM);
     }
 
     /**
@@ -152,14 +160,29 @@ public class Room implements Parcelable {
      * Removes a player from the Lobby.
      * @param index Index of player to remove.
      */
-    public void removeUser(int index) {
+    public void removeUser(int index) throws IndexOutOfBoundsException {
 
         if(index >= mUsers.size() || index < 0) {
-            throw new IndexOutOfBoundsException("Invalid Index!");
+            throw new IndexOutOfBoundsException();
         }
         else
             mUsers.remove(index);
 
+    }
+
+    /**
+     * Returns true if the room contains a given user. (Checks by ID)
+     * @param user
+     * @return
+     */
+    public boolean containsUser(User user) {
+        for (User u: mUsers) {
+            if(u.getID() == user.getID()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
