@@ -27,7 +27,6 @@ public class RoleDescription extends AppCompatActivity {
      * Use the RoomAdapter class to get all your logic for the Room.
      * The mRoom will contain a list of all clients and their associated users.
      */
-    RoomAdapter room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
