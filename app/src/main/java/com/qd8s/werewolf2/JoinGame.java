@@ -30,7 +30,7 @@ public class JoinGame extends AppCompatActivity {
 
     public void startGameLobby(View view) {
 
-        if(mRoom.isConnectedToFirebase()){
+        if(mRoom != null && mRoom.isConnectedToFirebase()){
             // Initialize the Intent.
             Intent intent = new Intent(this, GameLobby.class);
 

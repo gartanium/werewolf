@@ -25,7 +25,6 @@ public class RoleDescription extends AppCompatActivity {
      * Use the RoomAdapter class to get all your logic for the Room.
      * The mRoom will contain a list of all clients and their associated users.
      */
-    RoomAdapter room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class RoleDescription extends AppCompatActivity {
 
         user = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
-        user.set_host(true);
+        //user.set_host(true);
 
         if (user.isHost()) {
             List<User> players = new ArrayList<>();
@@ -42,14 +41,7 @@ public class RoleDescription extends AppCompatActivity {
 
             //assign players from firebase goes here
 
-            //
-            /*for (int i = 0; i < 10; i++)
-            {
-                User player = new User();
-                players.add(player);
-            }*/
-
-            players = room.getUsers();
+            players = mRoom.getUsers();
 
             numPlayers = players.size();
             //doc = true;
@@ -87,7 +79,7 @@ public class RoleDescription extends AppCompatActivity {
             }
 
             //updates firebase
-            room.updateUsers(players);
+            mRoom.updateUsers(players);
         }
 
 
