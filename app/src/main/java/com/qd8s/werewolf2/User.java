@@ -9,10 +9,32 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
-    public enum ActivityState
-    {Authentication, day_main, day_night, day_second, game_lobby, game_menu, host_game, join_game,
-        night_doc, night_villager, night_wolf, role_description, user_row};
+    /**
+     * Enum for storing the User's State.
+     */
+    public enum UserState {
+        JoinNextActivity,
+        Idle
+    };
 
+    /**
+     * Enum for storing the User's Activity Location.
+     */
+    public enum ActivityLocation {
+        Authentication,
+        DayMain,
+        DayNight,
+        DaySecond,
+        GameLobby,
+        GameMenu,
+        HostGame,
+        JoinGame,
+        NightDoc,
+        NightVillager,
+        NightWolf,
+        RoleDescription,
+        UserRow
+    }
 
     private boolean _alive;
     private String _role;
@@ -25,7 +47,8 @@ public class User implements Parcelable {
     private boolean _vote1;
     private boolean _vote2;
     private boolean _isHost;
-    private ActivityState _state;
+    private UserState _state;
+    private ActivityLocation _activityLocation;
 
     //non-default constructor
     public User(String id, boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
@@ -77,6 +100,8 @@ public class User implements Parcelable {
         _role = in.readString();
         _name = in.readString();
         _id = in.readString();
+        _state = UserState.valueOf(in.readString());
+        _activityLocation = ActivityLocation.valueOf(in.readString());
         _immune = in.readByte() != 0;
         _actDone = in.readByte() != 0;
         _target = in.readParcelable(User.class.getClassLoader());
@@ -84,6 +109,7 @@ public class User implements Parcelable {
         _vote1 = in.readByte() != 0;
         _vote2 = in.readByte() != 0;
         _isHost = in.readByte() != 0;
+
 
     }
 
@@ -201,6 +227,8 @@ public class User implements Parcelable {
         dest.writeString(_role);
         dest.writeString(_name);
         dest.writeString(_id);
+        dest.writeString(_state.name());
+        dest.writeString(_activityLocation.name());
         dest.writeByte((byte) (_immune ? 1 : 0));
         dest.writeByte((byte) (_actDone ? 1 : 0));
         dest.writeParcelable(_target, flags);
@@ -210,11 +238,35 @@ public class User implements Parcelable {
         dest.writeByte((byte) (_isHost ? 1 : 0));
     }
 
-    public ActivityState getActivity() {
+    /**
+     * Returns the state of the user.
+     * @return State of the User.
+     */
+    public UserState getState() {
         return _state;
     }
 
-    public void setActivity(ActivityState state) {
+    /**
+     * Sets the state of the user.
+     * @param state State of the user.
+     */
+    public void setState(UserState state) {
         this._state = state;
+    }
+
+    /**
+     * Returns which activity the user is in.
+     * @return ActivityLocation enum.
+     */
+    public ActivityLocation getActivityLocation() {
+        return _activityLocation;
+    }
+
+    /**
+     * Returns the Activity location of the User.
+     * @param location ActivityLocation of the User.
+     */
+    public void setActivityLocation(ActivityLocation location) {
+        _activityLocation = location;
     }
 }
