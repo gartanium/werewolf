@@ -1,5 +1,7 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +25,7 @@ import java.util.List;
  * Room in Firebase for us and others to join.Then it will have the User join it.
  */
 
-public class RoomAdapter {
+public class RoomAdapter implements Parcelable {
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -32,24 +34,10 @@ public class RoomAdapter {
     private Room mRoom;
 
     /**
-     * Returns a local copy of the Room.
-     * @return
-     */
-    public Room getRoom() { return mRoom; }
-
-    /**
      * Returns the player count
      * @return
      */
     public int getPlayerCount() { return mRoom.get_Player_Count();}
-
-    // The user associated with this handler.
-    private User mUser;
-
-    // A boolean to determine if the client should be added to the room.
-    //  If false, when the next update occurs, the client will join.
-    // Then it should be set to false.
-    private boolean mRoomIsInitialized;
 
     // Max players in a room.
     private final int MAXPLAYERS = 12;
@@ -68,13 +56,30 @@ public class RoomAdapter {
             "ERROR: Client has not joined a room! Did you forget to call the join/hostRoom funcs?";
 
     /**
-     * @return A copy of the List of Clients in the Room. Returns null when in error.
+     * @return Returns if the local client is connected to Firebase.
+     */
+    public boolean isConnectedToFirebase() { return mRoom != null; }
+
+    /**
+     * Returns the ID of the inner room.
+     * @return Id of the room.
+     * @throws NullPointerException
+     */
+    public String getID() throws NullPointerException {
+        if(mRoom != null)
+            return mRoom.getID();
+        else
+            throw new NullPointerException("mRoom is not yet initialized! (Did you forget to join the Room?");
+    }
+
+    /**
+     * @return A copy of the List of Users in the Room. Returns null when in error.
      */
     public List<User> getUsers() {
 
         // Validate that the User has joined a room!
         try{
-            if(mRoomIsInitialized)
+            if(mRoom != null)
                 return new ArrayList<User>(mRoom.getUsers());
             else
                 throw new NullPointerException(BADACCESSATEMPT);
@@ -93,7 +98,7 @@ public class RoomAdapter {
 
         // Validate that the User has joined a room!
         try{
-            if(mRoomIsInitialized)
+            if(mRoom != null)
                 return mRoom.get_Player_Count();
             else
                 throw new NullPointerException(BADACCESSATEMPT);
@@ -107,17 +112,15 @@ public class RoomAdapter {
     /**
      * A Firebase handler containing a Room.
      */
-    public RoomAdapter(User user) {
-        mUser = user;
-        mRoomIsInitialized = false;
+    public RoomAdapter() {
         mRoom = null;
         mRef = null;
-    }
+     }
 
-    /**
+     /**
      * Attempt to host a game!
      */
-    public void hostRoom(String roomID) {
+    public void hostRoom(String roomID, User user) {
 
         // Don't let a User host a room if they are already apart of one!
         try {
@@ -126,15 +129,11 @@ public class RoomAdapter {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 mRef = database.getReference(MASTERLIST).child(roomID);
 
-                // This is used for determining if our local version of the Room needs initializing.
-                mRoomIsInitialized = true;
-
-                // Set the client as the Host.
-                mUser.set_host(true);
-
                 // Create a new local Room.
                 mRoom = new Room(MAXPLAYERS, roomID);
-                mRoom.addUser(mUser);
+                mRoom.addUser(user);
+
+                user.set_host(true);
 
                 // Serialize it.
                 Gson gson = new Gson();
@@ -145,10 +144,10 @@ public class RoomAdapter {
 
                 // Add a listener to the reference, to detect changes.
                 addEventListener(mRef);
-                Log.v(TAG, "Local Client is hosting a room! Client:" + mUser.getName());
+                logUserUpdateMsg("hosting room!", user);
             }
             else
-                throw new IllegalStateException("Unkonwn Error, a room already exists!");
+                throw new IllegalStateException("Unknown Error, a room already exists!");
         }
         catch(IllegalStateException e) {
             Log.e(TAG, e.getMessage(), e);
@@ -158,55 +157,50 @@ public class RoomAdapter {
 
     /**
      * Makes the User to join a room.
-     * @param roomID Firebase ID for the room to join.
+     * @param user user to join the room.
      */
-    public void joinRoom(String roomID) {
-
-        // Don't allow a client to join a room if they are already apart of one!
-        try {
-            if (mRoom == null) {
-                // Initialize our reference, and set it equal to the firebase version of the Room.
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                mRef = database.getReference(MASTERLIST).child(roomID);
-
-                // Set the client as not the host.
-                mUser.set_host(false);
-
-                // Add the event listener, so our local version of the Room will update whenever FB does.
-                addEventListener(mRef);
-
-                // Log for being nice and tidy :-)!
-                Log.v(TAG, "Local Client is joining a room! Client:" + mUser.getName());
-            }
-            else
-                throw new IllegalStateException("Client is already in a Room! RoomID: " + mRoom.getID());
-            }
-        catch (IllegalStateException e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
+    public void joinRoom(User user) {
+        addUserToRoom(user);
     }
 
     /**
-     * Removes the User from the firebase room.
+     * @param user user to leave the room.
      */
-    public void leaveRoom() {
+    public void leaveRoom(User user) {
 
         // Make sure that the Room isn't nUll!.
         try {
-            if (mRoom != null && mRoom.getUsers().contains(mUser)) {
+            if (mRoom != null && mRoom.getUsers().contains(user)) {
                 // Remove the User from the local Room.
-                mRoom.removeUser(mUser);
+                mRoom.removeUser(user);
 
                 // Serialize it, and send it up to Firebase.
                 Gson gson = new Gson();
                 String dataToFirebase = gson.toJson(mRoom);
                 mRef.setValue(dataToFirebase);
+
+                logUserUpdateMsg("leaving room", user);
+
             } else
                 throw new IllegalStateException("Client is not in the room, or the Room is Null!");
         }
         catch (IllegalStateException e) {
             Log.e(TAG, e.getMessage(), e);
         }
+    }
+
+    /**
+     * Connect to a room in firebase
+     * @param roomID The id of the firebase room.
+     */
+    public void connectToRoom(String roomID) {
+
+        // Initialize our reference, and set it equal to the firebase version of the Room.
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mRef = database.getReference(MASTERLIST).child(roomID);
+        // Add the event listener, so our local version of the Room will update whenever FB does.
+        addEventListener(mRef);
+
     }
 
     /**
@@ -223,16 +217,6 @@ public class RoomAdapter {
                 String roomJson = dataSnapshot.getValue(String.class);
                 Gson gson = new Gson();
                 mRoom = gson.fromJson(roomJson, Room.class);
-
-                // If the User isn't in the room, have them join it!
-                if(!mRoomIsInitialized)
-                {
-                    mRoomIsInitialized = true;
-                    addClientToRoom();
-                }
-
-                // Log for allowing us to know that the room updated.
-                Log.v(TAG, "Updating Room! Clients: " + mRoom.getUsers().toString());
 
                 // ...
             }
@@ -253,26 +237,103 @@ public class RoomAdapter {
     /**
      * Add a client to the Room when joining it.
      */
-    private void addClientToRoom() {
+    private void addUserToRoom(User user) {
 
-        // Change our local version first.
-        mRoom.addUser(mUser);
+        try {
+            if (isConnectedToFirebase()) {
 
-        // Serialize it, and send it up to Firebase.
-        Gson gson = new Gson();
-        String dataToFirebase = gson.toJson(mRoom);
-        mRef.setValue(dataToFirebase);
+                if(!mRoom.isFull()) {
+                    // Change our local version first.
+                    mRoom.addUser(user);
+
+                    // Serialize it, and send it up to Firebase.
+                    Gson gson = new Gson();
+                    String dataToFirebase = gson.toJson(mRoom);
+                    mRef.setValue(dataToFirebase);
+
+                    // Log for allowing us to know that the room updated.
+                    logUserUpdateMsg("joining room!", user);
+                }
+                else
+                    throw new IllegalStateException("Unable to join room, it's full!");
+            }
+            else
+                throw new IllegalStateException("Unable to join room, not connected to FireBase!");
+        }
+        catch (IllegalStateException e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+
 
     }
 
     /**
-     * Updates a User.
+     * Updated version of the user.
      * @param user
      */
     public void updateUser(User user) {
-        mRoom.updateUser(user);
+
         Gson gson = new Gson();
         String dataToFirebase = gson.toJson(mRoom);
+        logUserUpdateMsg("updating user!", user);
         mRef.setValue(dataToFirebase);
+
+        try {
+            User currentUser = mRoom.getUser(user.getID());
+            currentUser = user;
+        }
+        catch (IllegalArgumentException e) {
+            Log.e(TAG, "Invalid User: " + user.getID() + "! (Is the ID incorrect?)", e);
+        }
+
+    }
+
+    /**
+     * Updates a list of users.
+     * @param users A list of users.
+     */
+    public void updateUsers(List<User> users) {
+        for (User u: users) {
+            updateUser(u);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(mRoom, flags);
+    }
+
+    protected RoomAdapter(Parcel in) {
+        mRoom = in.readParcelable(Room.class.getClassLoader());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mRef = database.getReference(MASTERLIST).child(mRoom.getID());
+        addEventListener(mRef);
+
+    }
+
+    public static final Creator<RoomAdapter> CREATOR = new Creator<RoomAdapter>() {
+        @Override
+        public RoomAdapter createFromParcel(Parcel in) {
+            return new RoomAdapter(in);
+        }
+
+        @Override
+        public RoomAdapter[] newArray(int size) {
+            return new RoomAdapter[size];
+        }
+    };
+
+    /**
+     * Logs an update message.
+     * @param msg Update message to display.
+     * @param user User affected
+     */
+    private void logUserUpdateMsg(String msg, User user) {
+        Log.v(TAG, "Room: " + mRoom.getID() + " User: " + user.getID() + " " + msg);
     }
 }

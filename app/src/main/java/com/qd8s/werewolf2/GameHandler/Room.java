@@ -1,5 +1,8 @@
 package com.qd8s.werewolf2.GameHandler;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.qd8s.werewolf2.User;
 
 import java.util.ArrayList;
@@ -9,8 +12,26 @@ import java.util.List;
  * Created by Matthew on 6/9/2017.
  * A Room is "Hosted" for a player.
  */
-public class Room {
+public class Room implements Parcelable {
 
+
+    protected Room(Parcel in) {
+        mUsers = in.createTypedArrayList(User.CREATOR);
+        mID = in.readString();
+        mMaxPlayers = in.readInt();
+    }
+
+    public static final Creator<Room> CREATOR = new Creator<Room>() {
+        @Override
+        public Room createFromParcel(Parcel in) {
+            return new Room(in);
+        }
+
+        @Override
+        public Room[] newArray(int size) {
+            return new Room[size];
+        }
+    };
 
     /**
      * Returns a copy of the players data in the Room.
@@ -44,6 +65,12 @@ public class Room {
     private int mMaxPlayers;
 
     /**
+     *
+     * @return Returns true if the room is full or above capacity.
+     */
+    public boolean isFull() { return mUsers.size() >= mMaxPlayers; }
+
+    /**
      * Default constructor. Initializes lobby size to 0.
      * Sets a default name.
      */
@@ -72,10 +99,44 @@ public class Room {
 
         if (mMaxPlayers == mUsers.size()) {
 
-            throw new IllegalArgumentException("To many players in the Game Room!");
+            throw new IllegalArgumentException("To many players in the Room!");
         }
         else
             mUsers.add(user);
+    }
+
+    /**
+     * Returns a user by index.
+     * @param index Index o a user
+     * @throws throws IndexOutOfBoundsException
+     * @return
+     */
+    public User getUser(int index) throws IndexOutOfBoundsException {
+        try {
+            return mUsers.get(index);
+        }
+        catch(IndexOutOfBoundsException e) {
+            throw e;
+        }
+    }
+
+    /**
+     * getUser
+     * @param id
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public User getUser(String id) throws IllegalArgumentException {
+
+        // foreach user, see if their ID matches!
+        for (User u: mUsers) {
+            if(u.getID() == id){
+                return u;
+            }
+        }
+
+        // If the Id is not found, throw this exception!
+        throw new IllegalArgumentException("ID: " + id + " is not in the Room!");
     }
 
     /**
@@ -83,6 +144,7 @@ public class Room {
      * @param user User to remove from the Room
      */
     public void removeUser(User user) {
+
         mUsers.remove(user);
     }
 
@@ -100,47 +162,15 @@ public class Room {
 
     }
 
-    /**
-     * Updates the room with a new list of clients!
-     * @param users A list of clients.
-     */
-    public void updateRoom(List<User> users) {
-        mUsers = users;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    /**
-     * Updates user with similar ID.
-     * @param user
-     * @throws this throws an Illegal argument exception is the user is not found in the room.
-     */
-    public void updateUser(User user) {
-        for(int i = 0; i < mUsers.size(); i++) {
-            if(mUsers.get(i).getName() == user.getName()) {
-                mUsers.set(i, user);
-                return;
-            }
-        }
-
-        throw new IllegalArgumentException("User not foudn in the Room! User: " + user.getName());
-    }
-
-    /**
-     * Updates a list of users to firebase.
-     * @param users A list of users.
-     */
-    public void updateUsers(List<User> users) {
-        for (User u : users) {
-            for(int i = 0; i < mUsers.size(); i++) {
-                if(mUsers.get(i).getName() == users.get(i).getName()) {
-                    mUsers.set(i, u);
-                    continue;
-                }
-
-                if (i + 1 == mUsers.size())
-                    throw new IllegalArgumentException("Invalid users list!");
-            }
-
-        }
-
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(mUsers);
+        dest.writeString(mID);
+        dest.writeInt(mMaxPlayers);
     }
 }

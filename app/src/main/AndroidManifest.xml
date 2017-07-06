@@ -21,7 +21,7 @@
         <activity android:name=".GameLobby" />
         <activity android:name=".DayNight" />
         <activity android:name=".RoleDescription" />
-        <activity android:name=".GameMenu"></activity>
+        <activity android:name=".GameMenu" />
     </application>
 
 </manifest>

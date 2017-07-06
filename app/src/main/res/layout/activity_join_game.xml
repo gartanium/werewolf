@@ -17,12 +17,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <ListView
+    <Button
+        android:id="@+id/downloadLobby"
         android:layout_width="@dimen/default_button_width"
-        android:layout_height="@dimen/player_listview_height"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="@color/Player_Listview_Color"
+        android:onClick="downloadLobby"
+        android:text="@string/Download_Lobby"
         app:layout_constraintBottom_toTopOf="@+id/startGameLobbyButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

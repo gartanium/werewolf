@@ -12,6 +12,7 @@ public class User implements Parcelable {
     private boolean _alive;
     private String _role;
     private String _name;
+    private String _id;
     private boolean _immune;
     private boolean _actDone;
     private User _target;
@@ -21,7 +22,7 @@ public class User implements Parcelable {
     private boolean _isHost;
 
     //non-default constructor
-    public User(boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
+    public User(String id, boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
         this._alive = alive;
         this._role = role;
         this._name = name;
@@ -31,7 +32,8 @@ public class User implements Parcelable {
         this._isAlpha = isAlpha;
         this._vote1 = false;
         this._vote2 = false;
-        _isHost = false;
+        this._isHost = false;
+        this._id = id;
     }
 
     //default constructor
@@ -47,9 +49,10 @@ public class User implements Parcelable {
         this._vote1 = false;
         this._vote2 = false;
         _isHost = false;
+        _id = "";
     }
 
-    public User(String name) {
+    public User(String id, String name) {
         _alive = true;
         _role = "";
         _name = name;
@@ -60,12 +63,14 @@ public class User implements Parcelable {
         this._vote1 = false;
         this._vote2 = false;
         _isHost = false;
+        _id = id;
     }
 
     protected User(Parcel in) {
         _alive = in.readByte() != 0;
         _role = in.readString();
         _name = in.readString();
+        _id = in.readString();
         _immune = in.readByte() != 0;
         _actDone = in.readByte() != 0;
         _target = in.readParcelable(User.class.getClassLoader());
@@ -73,6 +78,7 @@ public class User implements Parcelable {
         _vote1 = in.readByte() != 0;
         _vote2 = in.readByte() != 0;
         _isHost = in.readByte() != 0;
+
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -132,6 +138,8 @@ public class User implements Parcelable {
         this._name = name;
     }
 
+    public String getID() { return this._id; }
+
     public boolean isImmune() {
         return _immune;
     }
@@ -186,6 +194,7 @@ public class User implements Parcelable {
         dest.writeByte((byte) (_alive ? 1 : 0));
         dest.writeString(_role);
         dest.writeString(_name);
+        dest.writeString(_id);
         dest.writeByte((byte) (_immune ? 1 : 0));
         dest.writeByte((byte) (_actDone ? 1 : 0));
         dest.writeParcelable(_target, flags);

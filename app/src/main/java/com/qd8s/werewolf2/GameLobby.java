@@ -3,9 +3,9 @@ package com.qd8s.werewolf2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import com.qd8s.werewolf2.GameHandler.Room;
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 public class GameLobby extends AppCompatActivity {
@@ -13,9 +13,10 @@ public class GameLobby extends AppCompatActivity {
     /**
      * _room contains all of the data for the players.
      */
-    private Room _room;
     User user;
-    RoomAdapter room;
+    RoomAdapter mRoom;
+
+    private static final String TAG = "GameLobby";
 
     /**
      * When this activity is created, the user is added to the lobby.
@@ -27,6 +28,10 @@ public class GameLobby extends AppCompatActivity {
         setContentView(R.layout.activity_game_lobby);
 
         user = getIntent().getExtras().getParcelable("Client_Data");
+        mRoom = getIntent().getExtras().getParcelable("Room_Data");
+        String msg = mRoom.getID();
+        Log.v(TAG, "Loaded data froom Room: " + msg);
+
     }
 
 
@@ -34,16 +39,9 @@ public class GameLobby extends AppCompatActivity {
 
         Intent intent = new Intent(this, RoleDescription.class);
         intent.putExtra("Client_Data", user);
+        intent.putExtra("Room_Data", mRoom);
         startActivity(intent);
+
     }
 
-    /**
-     * Updates the player's version of the room.
-     * The player is able to kick others if they are the host.
-     */
-    public void updateLobby() {
-        // Load the Lobby from Firebase, into this activity.
-
-        // _room = room_from_firebase
-    }
 }
