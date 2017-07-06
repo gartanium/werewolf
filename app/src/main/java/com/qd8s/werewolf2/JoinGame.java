@@ -30,12 +30,12 @@ public class JoinGame extends AppCompatActivity {
 
     public void startGameLobby(View view) {
 
-        if(mRoom.isConnectedToFirebase()){
+        if(mRoom != null && mRoom.isConnectedToFirebase()){
             // Initialize the Intent.
             Intent intent = new Intent(this, GameLobby.class);
 
 
-           mRoom.joinRoom(mUser); // Seriously, please remember to change this later!
+            mRoom.joinRoom(mUser); // Seriously, please remember to change this later!
 
             // Store the User data into the intent, to send it to the next activity.
             intent.putExtra("Client_Data", mUser);
