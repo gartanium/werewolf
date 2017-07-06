@@ -15,24 +15,31 @@ import java.util.Vector;
 
 public class DayNight extends AppCompatActivity {
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_night);
-        //get players here
+        user = getIntent().getExtras().getParcelable("Client_Data");
+        //TODO:get players here
         List<User> players = new ArrayList();
-        startGame((ArrayList<User>) players);
+        startGame((ArrayList<User>) players, user);
     }
 
 
 
-    public void startGame(ArrayList<User> players)
+    public void startGame(ArrayList<User> players, User user)
     {
+        //the main loop of the game, while the gameOver is false, the game continues
         boolean gameOver = false;
         while(!gameOver)
         {
-            //goToNight(players);
+            //do the night stuff
+            goToNight(players, user);
+            //do the day stuff
             //goToDay(players);
+            //check if the game is over
             for(int i = 0; i < players.size(); i++) {
                 int goodWinning = 0;
                 if(players.get(i).getRole() == "villager" || players.get(i).getRole() == "doc") {
@@ -41,26 +48,30 @@ public class DayNight extends AppCompatActivity {
                 if(players.get(i).getRole() == "wolf") {
                     goodWinning--;
                 }
-                if(goodWinning < 0 || goodWinning == players.size()-1) {
+                //if there are less good than bad, the game ends, or if there are no more bad, the game ends
+                if(goodWinning < 0 || goodWinning >= players.size()-1) {
                     gameOver = true;
                 }
             }
         }
     }
     public void goToNight(ArrayList<User> Players, User you) {
-        //bring up the night interface, I don't know how to do that
+        //TODO:bring up the night interface, I don't know how to do that
+        //the night isn't over
         boolean nightOver = false;
         Night tonight = new Night();
         tonight.set_roleDoer(you);
         tonight.doRole();
+        //loop until everyone is done with the night
         while(nightOver = false) {
             nightOver = true;
             for (int i = 0; i < Players.size(); i++) {
-                if (!Players.get(i).isActDone()) {
+                if (!Players.get(i).is_vote1()) {
                     nightOver = false;
                 }
             }
         }
+        //the host will perform everyone's roles
         //update the firebase based on the actions here
     }
 

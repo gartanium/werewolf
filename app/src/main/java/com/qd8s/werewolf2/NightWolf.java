@@ -51,4 +51,5 @@ public class NightWolf extends AppCompatActivity {
             }
         });
     }
+    //TODO:an onclick that sets the target of the given user to the user they click on
 }
