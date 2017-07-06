@@ -45,6 +45,7 @@ public class NightWolf extends AppCompatActivity {
                 for (int i = 0; i < userList.size(); i++) {
                     if (currentPlayer.getName() == userList.get(i).getName()) {
                         userList.get(i).setTarget(currentPlayer.getTarget());
+                        userList.get(i).set_voteReady(true);
                     }
                 }
                 mRoom.updateUsers(userList);

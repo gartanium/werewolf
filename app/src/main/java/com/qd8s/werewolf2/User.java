@@ -17,8 +17,7 @@ public class User implements Parcelable {
     private boolean _actDone;
     private User _target;
     private boolean _isAlpha;
-    private boolean _vote1;
-    private boolean _vote2;
+    private boolean _voteReady;
     private boolean _isHost;
 
     //non-default constructor
@@ -30,8 +29,7 @@ public class User implements Parcelable {
         this._actDone = actDone;
         this._target = target;
         this._isAlpha = isAlpha;
-        this._vote1 = false;
-        this._vote2 = false;
+        this._voteReady = false;
         this._isHost = false;
         this._id = id;
     }
@@ -46,8 +44,7 @@ public class User implements Parcelable {
         _actDone = false;
         _target = null;
         _isAlpha = false;
-        this._vote1 = false;
-        this._vote2 = false;
+        this._voteReady = false;
         _isHost = false;
         _id = "";
     }
@@ -60,8 +57,7 @@ public class User implements Parcelable {
         _actDone = false;
         _target = null;
         _isAlpha = false;
-        this._vote1 = false;
-        this._vote2 = false;
+        this._voteReady = false;
         _isHost = false;
         _id = id;
     }
@@ -75,8 +71,7 @@ public class User implements Parcelable {
         _actDone = in.readByte() != 0;
         _target = in.readParcelable(User.class.getClassLoader());
         _isAlpha = in.readByte() != 0;
-        _vote1 = in.readByte() != 0;
-        _vote2 = in.readByte() != 0;
+        _voteReady = in.readByte() != 0;
         _isHost = in.readByte() != 0;
 
     }
@@ -164,20 +159,12 @@ public class User implements Parcelable {
 
     public void setAlpha(boolean isAlpha) { this._isAlpha = isAlpha; }
 
-    public boolean is_vote1() {
-        return _vote1;
+    public boolean is_voteReady() {
+        return _voteReady;
     }
 
-    public void set_vote1(boolean _vote1) {
-        this._vote1 = _vote1;
-    }
-
-    public boolean is_vote2() {
-        return _vote2;
-    }
-
-    public void set_vote2(boolean _vote2) {
-        this._vote2 = _vote2;
+    public void set_voteReady(boolean _voteReady) {
+        this._voteReady = _voteReady;
     }
 
     public void set_host(boolean value) { _isHost = value;}
@@ -199,8 +186,7 @@ public class User implements Parcelable {
         dest.writeByte((byte) (_actDone ? 1 : 0));
         dest.writeParcelable(_target, flags);
         dest.writeByte((byte) (_isAlpha ? 1 : 0));
-        dest.writeByte((byte) (_vote1 ? 1 : 0));
-        dest.writeByte((byte) (_vote2 ? 1 : 0));
+        dest.writeByte((byte) (_voteReady ? 1 : 0));
         dest.writeByte((byte) (_isHost ? 1 : 0));
     }
 }
