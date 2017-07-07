@@ -27,7 +27,7 @@ import java.util.List;
 
 public class RoomAdapter implements Parcelable{
 
-    private List<ReadyListener> listeners = new ArrayList<ReadyListener>();
+    private List<ReadyListener> mListeners = new ArrayList<ReadyListener>();
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -272,19 +272,30 @@ public class RoomAdapter implements Parcelable{
     }
 
     /**
-     * Updated version of the user.
-     * @param user
+     * Updated version of the user. This function can become very time consuming!
+     * @param user user to be updated
      */
     public void updateUser(User user) {
 
-        Gson gson = new Gson();
-        String dataToFirebase = gson.toJson(mRoom);
-        logUserUpdateMsg("updating user!", user);
-        mRef.setValue(dataToFirebase);
+
 
         try {
             User currentUser = mRoom.getUser(user.getID());
             currentUser = user;
+
+            Gson gson = new Gson();
+            String dataToFirebase = gson.toJson(mRoom);
+            logUserUpdateMsg("updating user!", user);
+            mRef.setValue(dataToFirebase);
+
+            // If every everyone in the room is ready, notify all the listeners!
+            if(mRoom.isReadyToTransition())
+            {
+                for (ReadyListener rl: mListeners) {
+                    rl.usersAreReady();
+                }
+            }
+
         }
         catch (IllegalArgumentException e) {
             Log.e(TAG, "Invalid User: " + user.getID() + "! (Is the ID incorrect?)", e);
@@ -298,7 +309,22 @@ public class RoomAdapter implements Parcelable{
      */
     public void updateUsers(List<User> users) {
         for (User u: users) {
-            updateUser(u);
+            User currentUser = mRoom.getUser(u.getID());
+            currentUser = u;
+            logUserUpdateMsg("updating user!", u);
+        }
+
+        // Send the updated version to Firebase!
+        Gson gson = new Gson();
+        String dataToFirebase = gson.toJson(mRoom);
+        mRef.setValue(dataToFirebase);
+
+        // If every everyone in the room is ready, notify all the listeners!
+        if(mRoom.isReadyToTransition())
+        {
+            for (ReadyListener rl: mListeners) {
+                rl.usersAreReady();
+            }
         }
     }
 
