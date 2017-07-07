@@ -181,4 +181,97 @@ public class RoomTest {
             Assert.fail(e.getMessage());
         }
     }
+
+    @Test
+    public void isReadyToTransitionTest() throws Exception {
+        Room testObj = new Room(12, "test");
+
+        User testUOne = new User("1", "Bob");
+        User testUTwo = new User("2", "Jill");
+        User testUThree = new User("3", "Myles");
+
+        testUOne.setState(User.UserState.Idle);
+        testUTwo.setState(User.UserState.JoinNextActivity);
+        testUThree.setState(User.UserState.JoinNextActivity);
+
+        testObj.addUser(testUOne);
+        testObj.addUser(testUTwo);
+        testObj.addUser(testUThree);
+
+        Assert.assertFalse(testObj.isReadyToTransition());
+
+        testUOne.setState(User.UserState.JoinNextActivity);
+
+        Assert.assertTrue(testObj.isReadyToTransition());
+
+    }
+
+    @Test
+    public void isDoneWithNightTest() throws Exception {
+        Room testObj = new Room(12, "test");
+
+        User testUOne = new User("1", "Bob");
+        User testUTwo = new User("2", "Jill");
+        User testUThree = new User("3", "Myles");
+
+        testUOne.setState(User.UserState.Idle);
+        testUTwo.setState(User.UserState.DoneWithNight);
+        testUThree.setState(User.UserState.DoneWithNight);
+
+        testObj.addUser(testUOne);
+        testObj.addUser(testUTwo);
+        testObj.addUser(testUThree);
+
+        Assert.assertFalse(testObj.isDoneWithNight());
+
+        testUOne.setState(User.UserState.DoneWithNight);
+
+        Assert.assertTrue(testObj.isDoneWithNight());
+    }
+
+    @Test
+    public void isIdleTest() throws Exception {
+        Room testObj = new Room(12, "test");
+
+        User testUOne = new User("1", "Bob");
+        User testUTwo = new User("2", "Jill");
+        User testUThree = new User("3", "Myles");
+
+        testUOne.setState(User.UserState.Idle);
+        testUTwo.setState(User.UserState.Idle);
+        testUThree.setState(User.UserState.DoneWithNight);
+
+        testObj.addUser(testUOne);
+        testObj.addUser(testUTwo);
+        testObj.addUser(testUThree);
+
+        Assert.assertFalse(testObj.isUsersIdle());
+
+        testUThree.setState(User.UserState.Idle);
+
+        Assert.assertTrue(testObj.isUsersIdle());
+    }
+
+    @Test
+    public void setStateIdleTest() throws Exception {
+        Room testObj = new Room(12, "test");
+
+        User testUOne = new User("1", "Bob");
+        User testUTwo = new User("2", "Jill");
+        User testUThree = new User("3", "Myles");
+
+        testUOne.setState(User.UserState.Idle);
+        testUTwo.setState(User.UserState.DoneWithNight);
+        testUThree.setState(User.UserState.DoneWithNight);
+
+        testObj.addUser(testUOne);
+        testObj.addUser(testUTwo);
+        testObj.addUser(testUThree);
+
+        Assert.assertFalse(testObj.isUsersIdle());
+
+        testObj.setUsersIdle();
+
+        Assert.assertTrue(testObj.isUsersIdle());
+    }
 }

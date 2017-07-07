@@ -14,6 +14,7 @@ public class User implements Parcelable {
      */
     public enum UserState {
         JoinNextActivity,
+        DoneWithNight,
         Idle
     };
 

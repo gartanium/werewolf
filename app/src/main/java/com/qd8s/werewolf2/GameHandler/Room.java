@@ -14,34 +14,19 @@ import java.util.List;
  */
 public class Room implements Parcelable {
 
+    private String mID;
+    private int mMaxPlayers;
+    private List<User> mUsers;
+
     private final String JOIN_ERROR_TOMANY_USERS = "ERROR: To many users in the room!";
     private final String GET_USER_ERROR_USER_NOT_IN_ROOM = "ERROR: User not in the room!";
     private final String ERROR_USER_ALREADY_IN_ROOM = "ERROR: User already in the room!";
-
-    protected Room(Parcel in) {
-        mUsers = in.createTypedArrayList(User.CREATOR);
-        mID = in.readString();
-        mMaxPlayers = in.readInt();
-    }
-
-    public static final Creator<Room> CREATOR = new Creator<Room>() {
-        @Override
-        public Room createFromParcel(Parcel in) {
-            return new Room(in);
-        }
-
-        @Override
-        public Room[] newArray(int size) {
-            return new Room[size];
-        }
-    };
 
     /**
      * Returns a copy of the players data in the Room.
      * @return
      */
     public List<User> getUsers() { return new ArrayList<User>(mUsers); }
-    private List<User> mUsers;
 
     /**
      * Returns the number of players in the Lobby.
@@ -56,7 +41,6 @@ public class Room implements Parcelable {
      * @return
      */
     public String getID() { return mID; }
-    private String mID;
 
     /**
      * Maximum number of players in the Lobby.
@@ -65,53 +49,7 @@ public class Room implements Parcelable {
     public int getMaxPlayers() {
         return mMaxPlayers;
     }
-    private int mMaxPlayers;
 
-    /**
-     *
-     * @return Returns true if the room is full or above capacity.
-     */
-    public boolean isFull() { return mUsers.size() >= mMaxPlayers; }
-
-    /**
-     * Default constructor. Initializes lobby size to 0.
-     * Sets a default name.
-     */
-    public Room() {
-        mMaxPlayers = 0;
-        mUsers = new ArrayList<User>();
-        mID = "default_name";
-    }
-
-    /**
-     * Constructor that accepts a paramater for the maximum number of players.
-     * @param maxPlayers Maximum players permitted in the Room.
-     * @param ID ID (Name) Of the Room.
-     */
-    public Room(int maxPlayers, String ID) {
-        mUsers = new ArrayList<User>();
-        mMaxPlayers = maxPlayers;
-        mID = ID;
-    }
-
-    /**
-     * Adds a client to the lobby.
-     * @param user client to add.
-     * @throws IllegalArgumentException if there are to many users or user already is in the room.
-     */
-    public void addUser(User user) throws IllegalArgumentException {
-
-        if (mMaxPlayers == mUsers.size()) {
-
-            throw new IllegalArgumentException(JOIN_ERROR_TOMANY_USERS);
-        }
-        else if (containsUser(user)) {
-            throw new IllegalArgumentException(ERROR_USER_ALREADY_IN_ROOM);
-        }
-        else {
-            mUsers.add(user);
-        }
-    }
 
     /**
      * Returns a user by index.
@@ -145,6 +83,119 @@ public class Room implements Parcelable {
 
         // If the Id is not found, throw this exception!
         throw new IllegalArgumentException(GET_USER_ERROR_USER_NOT_IN_ROOM);
+    }
+
+    protected Room(Parcel in) {
+        mUsers = in.createTypedArrayList(User.CREATOR);
+        mID = in.readString();
+        mMaxPlayers = in.readInt();
+    }
+
+    public static final Creator<Room> CREATOR = new Creator<Room>() {
+        @Override
+        public Room createFromParcel(Parcel in) {
+            return new Room(in);
+        }
+
+        @Override
+        public Room[] newArray(int size) {
+            return new Room[size];
+        }
+    };
+
+    /**
+     * Default constructor. Initializes lobby size to 0.
+     * Sets a default name.
+     */
+    public Room() {
+        mMaxPlayers = 0;
+        mUsers = new ArrayList<User>();
+        mID = "default_name";
+    }
+
+    /**
+     * Constructor that accepts a paramater for the maximum number of players.
+     * @param maxPlayers Maximum players permitted in the Room.
+     * @param ID ID (Name) Of the Room.
+     */
+    public Room(int maxPlayers, String ID) {
+        mUsers = new ArrayList<User>();
+        mMaxPlayers = maxPlayers;
+        mID = ID;
+    }
+
+    /**
+     *
+     * @return Returns true if the room is full or above capacity.
+     */
+    public boolean isFull() { return mUsers.size() >= mMaxPlayers; }
+
+    /**
+     * Check to see if each user is ready to switch to the next activity.
+     * @return Returns true if each user is ready to switch activities.
+     */
+    public boolean isReadyToTransition() {
+        for (User u: mUsers) {
+            if(u.getState() != User.UserState.JoinNextActivity)
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks to see if each user is done with the Night.
+     * @return Returns true if each user is done with the Night.
+     */
+    public boolean isDoneWithNight() {
+        for (User u: mUsers) {
+            if (u.getState() != User.UserState.DoneWithNight)
+                return false;
+
+        }
+        return true;
+    }
+
+    /**
+     * Checks to see if each user is Idle
+     * @return Returns true if each user is Idle in the Room.
+     */
+    public boolean isUsersIdle() {
+        for (User u: mUsers) {
+            if (u.getState() != User.UserState.Idle)
+                return false;
+
+        }
+        return true;
+    }
+
+    /**
+     * Sets every user to the Idle state in the Room.
+     */
+    public void setUsersIdle() {
+        for (User u: mUsers){
+            u.setState(User.UserState.Idle);
+        }
+    }
+
+
+    /**
+     * Adds a client to the lobby.
+     * @param user client to add.
+     * @throws IllegalArgumentException if there are to many users or user already is in the room.
+     */
+    public void addUser(User user) throws IllegalArgumentException {
+
+        if (mMaxPlayers == mUsers.size()) {
+
+            throw new IllegalArgumentException(JOIN_ERROR_TOMANY_USERS);
+        }
+        else if (containsUser(user)) {
+            throw new IllegalArgumentException(ERROR_USER_ALREADY_IN_ROOM);
+        }
+        else {
+            mUsers.add(user);
+        }
     }
 
     /**
@@ -196,4 +247,6 @@ public class Room implements Parcelable {
         dest.writeString(mID);
         dest.writeInt(mMaxPlayers);
     }
+
+    // Cycles through each user and returns true if they are all ready to transition states.
 }

@@ -25,7 +25,9 @@ import java.util.List;
  * Room in Firebase for us and others to join.Then it will have the User join it.
  */
 
-public class RoomAdapter implements Parcelable {
+public class RoomAdapter implements Parcelable{
+
+    private List<ReadyListener> listeners = new ArrayList<ReadyListener>();
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -298,6 +300,25 @@ public class RoomAdapter implements Parcelable {
         for (User u: users) {
             updateUser(u);
         }
+    }
+
+    /**
+     * Check to see if all the players are ready to transition to the next activity!
+     * @return
+     */
+    public boolean isRoomReadyToTransition() {
+        if(mRoom.isReadyToTransition())
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * Transition all the users to the next activity!
+     * @return
+     */
+    public void transitionUsersToRoleDescription() {
+
     }
 
     @Override
