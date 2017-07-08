@@ -33,13 +33,14 @@ public class RoleDescription extends AppCompatActivity {
 
         user = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
-        //user.set_host(true);
+
+        // Set the users state to be in RoleDescription.
+        user.setActivityLocation(User.ActivityLocation.RoleDescription);
+        //mUser.set_host(true);
 
         if (user.isHost()) {
             List<User> players = new ArrayList<>();
             List<String> roles = new ArrayList<>();
-
-            //assign players from firebase goes here
 
             players = mRoom.getUsers();
 

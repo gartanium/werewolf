@@ -64,6 +64,8 @@ public class User implements Parcelable {
         this._vote2 = false;
         this._isHost = false;
         this._id = id;
+        this._state = UserState.Idle;
+        this._activityLocation = ActivityLocation.Authentication;
     }
 
     //default constructor
@@ -80,6 +82,8 @@ public class User implements Parcelable {
         this._vote2 = false;
         _isHost = false;
         _id = "";
+        this._state = UserState.Idle;
+        this._activityLocation = ActivityLocation.Authentication;
     }
 
     public User(String id, String name) {
@@ -94,6 +98,8 @@ public class User implements Parcelable {
         this._vote2 = false;
         _isHost = false;
         _id = id;
+        this._state = UserState.Idle;
+        this._activityLocation = ActivityLocation.Authentication;
     }
 
     protected User(Parcel in) {
@@ -240,7 +246,7 @@ public class User implements Parcelable {
     }
 
     /**
-     * Returns the state of the user.
+     * Returns the state of the mUser.
      * @return State of the User.
      */
     public UserState getState() {
@@ -248,15 +254,15 @@ public class User implements Parcelable {
     }
 
     /**
-     * Sets the state of the user.
-     * @param state State of the user.
+     * Sets the state of the mUser.
+     * @param state State of the mUser.
      */
     public void setState(UserState state) {
         this._state = state;
     }
 
     /**
-     * Returns which activity the user is in.
+     * Returns which activity the mUser is in.
      * @return ActivityLocation enum.
      */
     public ActivityLocation getActivityLocation() {

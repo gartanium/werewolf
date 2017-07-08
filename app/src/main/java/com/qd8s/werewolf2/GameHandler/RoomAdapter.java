@@ -27,7 +27,16 @@ import java.util.List;
 
 public class RoomAdapter implements Parcelable{
 
-    private List<ReadyListener> mListeners = new ArrayList<ReadyListener>();
+    // A list of ReadyListners that get a function called whenever update
+    // Updates.
+    private List<RoomStartListener> mListeners = new ArrayList<RoomStartListener>();
+
+    /**
+     * Add a listener to the RoomAdapater!
+     */
+    public void addListener(RoomStartListener listener) {
+        mListeners.add(listener);
+    }
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -222,6 +231,14 @@ public class RoomAdapter implements Parcelable{
                 Gson gson = new Gson();
                 mRoom = gson.fromJson(roomJson, Room.class);
 
+                // If room is ready to start, fire the event!
+                if(mRoom.isReadyToStart())
+                {
+                    for (RoomStartListener obj: mListeners) {
+                        obj.onRoomStart();
+                    }
+                }
+
                 // ...
             }
 
@@ -277,8 +294,6 @@ public class RoomAdapter implements Parcelable{
      */
     public void updateUser(User user) {
 
-
-
         try {
             User currentUser = mRoom.getUser(user.getID());
             currentUser = user;
@@ -287,14 +302,6 @@ public class RoomAdapter implements Parcelable{
             String dataToFirebase = gson.toJson(mRoom);
             logUserUpdateMsg("updating user!", user);
             mRef.setValue(dataToFirebase);
-
-            // If every everyone in the room is ready, notify all the listeners!
-            if(mRoom.isReadyToTransition())
-            {
-                for (ReadyListener rl: mListeners) {
-                    rl.usersAreReady();
-                }
-            }
 
         }
         catch (IllegalArgumentException e) {
@@ -318,13 +325,21 @@ public class RoomAdapter implements Parcelable{
         Gson gson = new Gson();
         String dataToFirebase = gson.toJson(mRoom);
         mRef.setValue(dataToFirebase);
+    }
 
-        // If every everyone in the room is ready, notify all the listeners!
-        if(mRoom.isReadyToTransition())
-        {
-            for (ReadyListener rl: mListeners) {
-                rl.usersAreReady();
-            }
+    /**
+     * Attempts to start the Room if the user is the host.
+     * @param user
+     */
+    public void startRoom(User user) {
+        try {
+            mRoom.startRoom(user);
+            Gson gson = new Gson();
+            String dataToFirebase = gson.toJson(mRoom);
+            mRef.setValue(dataToFirebase);
+        }
+        catch (IllegalArgumentException e) {
+            Log.v(TAG, e.getMessage(), e);
         }
     }
 
@@ -337,14 +352,6 @@ public class RoomAdapter implements Parcelable{
             return true;
         else
             return false;
-    }
-
-    /**
-     * Transition all the users to the next activity!
-     * @return
-     */
-    public void transitionUsersToRoleDescription() {
-
     }
 
     @Override

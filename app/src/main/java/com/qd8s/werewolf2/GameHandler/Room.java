@@ -14,13 +14,15 @@ import java.util.List;
  */
 public class Room implements Parcelable {
 
-    private String mID;
-    private int mMaxPlayers;
-    private List<User> mUsers;
+    private String mID;                 // ID to ID the Room.
+    private int mMaxPlayers;            // Maximum players allowed in the Room.
+    private List<User> mUsers;          // List of users in the Room.
+    private boolean mReadyToStart;      // Bool for deciding when to start the game.
 
     private final String JOIN_ERROR_TOMANY_USERS = "ERROR: To many users in the room!";
     private final String GET_USER_ERROR_USER_NOT_IN_ROOM = "ERROR: User not in the room!";
     private final String ERROR_USER_ALREADY_IN_ROOM = "ERROR: User already in the room!";
+    private final String ERROR_USER_ISNT_HOST = "ERROR: Only the host can start the room!";
 
     /**
      * Returns a copy of the players data in the Room.
@@ -85,10 +87,20 @@ public class Room implements Parcelable {
         throw new IllegalArgumentException(GET_USER_ERROR_USER_NOT_IN_ROOM);
     }
 
+    // Set to true when the Room is ready to start the game!
+    public void startRoom(User user) {
+        if(user.isHost()) {
+            mReadyToStart = true;
+        }
+        else
+            throw new IllegalArgumentException(ERROR_USER_ISNT_HOST);
+    }
+
     protected Room(Parcel in) {
         mUsers = in.createTypedArrayList(User.CREATOR);
         mID = in.readString();
         mMaxPlayers = in.readInt();
+        mReadyToStart = in.readByte() != 0;
     }
 
     public static final Creator<Room> CREATOR = new Creator<Room>() {
@@ -111,6 +123,7 @@ public class Room implements Parcelable {
         mMaxPlayers = 0;
         mUsers = new ArrayList<User>();
         mID = "default_name";
+        mReadyToStart = false;
     }
 
     /**
@@ -122,7 +135,14 @@ public class Room implements Parcelable {
         mUsers = new ArrayList<User>();
         mMaxPlayers = maxPlayers;
         mID = ID;
+        mReadyToStart = false;
     }
+
+    /**
+     * Check to see if the room is ready to start.
+     * @return whether or not the room is ready to start.
+     */
+    public boolean isReadyToStart() { return mReadyToStart; }
 
     /**
      *
@@ -246,6 +266,7 @@ public class Room implements Parcelable {
         dest.writeTypedList(mUsers);
         dest.writeString(mID);
         dest.writeInt(mMaxPlayers);
+        dest.writeByte((byte) (mReadyToStart ? 1 : 0));
     }
 
     // Cycles through each user and returns true if they are all ready to transition states.
