@@ -76,15 +76,18 @@ public class Room implements Parcelable {
      */
     public User getUser(String id) throws IllegalArgumentException {
 
+        String usersInRoom = "";
         // foreach user, see if their ID matches!
         for (User u: mUsers) {
-            if(u.getID() == id){
+            if (u.getID().equals(id)) {
                 return u;
             }
+            else
+                usersInRoom += u.getID() + " ";
         }
 
         // If the Id is not found, throw this exception!
-        throw new IllegalArgumentException(GET_USER_ERROR_USER_NOT_IN_ROOM);
+        throw new IllegalArgumentException(GET_USER_ERROR_USER_NOT_IN_ROOM + " IDS: " + usersInRoom);
     }
 
     // Set to true when the Room is ready to start the game!

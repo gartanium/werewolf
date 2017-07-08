@@ -36,6 +36,8 @@ public class RoleDescription extends AppCompatActivity {
 
         // Set the users state to be in RoleDescription.
         user.setActivityLocation(User.ActivityLocation.RoleDescription);
+        user.setName("FOOBAR");
+        mRoom.updateUser(user);
         //mUser.set_host(true);
 
         if (user.isHost()) {

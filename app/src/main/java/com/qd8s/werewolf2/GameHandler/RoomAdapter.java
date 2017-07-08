@@ -300,7 +300,7 @@ public class RoomAdapter implements Parcelable{
 
             Gson gson = new Gson();
             String dataToFirebase = gson.toJson(mRoom);
-            logUserUpdateMsg("updating user!", user);
+            logUserUpdateMsg("Updating single user!", user);
             mRef.setValue(dataToFirebase);
 
         }
