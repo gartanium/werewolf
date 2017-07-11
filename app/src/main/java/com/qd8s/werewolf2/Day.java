@@ -16,8 +16,9 @@ public class Day {
             Integer votes = 0;
             nominee = userList.get(i);
             for (int j = 0; j < userList.size(); j++) {
-                if (nominee == userList.get(j).getTarget()) {
+                if (nominee == userList.get(j).getTarget() && userList.get(j).getTarget() != null) {
                     votes++;
+                    userList.get(j).setTarget(null);
                 }
             }
             userVotes.put(nominee, votes);
