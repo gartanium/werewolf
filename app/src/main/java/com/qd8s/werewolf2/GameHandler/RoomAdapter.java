@@ -25,7 +25,18 @@ import java.util.List;
  * Room in Firebase for us and others to join.Then it will have the User join it.
  */
 
-public class RoomAdapter implements Parcelable {
+public class RoomAdapter implements Parcelable{
+
+    // A list of ReadyListners that get a function called whenever update
+    // Updates.
+    private List<RoomStartListener> mListeners = new ArrayList<RoomStartListener>();
+
+    /**
+     * Add a listener to the RoomAdapater!
+     */
+    public void addListener(RoomStartListener listener) {
+        mListeners.add(listener);
+    }
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -89,6 +100,8 @@ public class RoomAdapter implements Parcelable {
             return null;
         }
     }
+
+
 
     /**
      *
@@ -218,6 +231,14 @@ public class RoomAdapter implements Parcelable {
                 Gson gson = new Gson();
                 mRoom = gson.fromJson(roomJson, Room.class);
 
+                // If room is ready to start, fire the event!
+                if(mRoom.isReadyToStart())
+                {
+                    for (RoomStartListener obj: mListeners) {
+                        obj.onRoomStart();
+                    }
+                }
+
                 // ...
             }
 
@@ -268,19 +289,19 @@ public class RoomAdapter implements Parcelable {
     }
 
     /**
-     * Updated version of the user.
-     * @param user
+     * Updated version of the user. This function can become very time consuming!
+     * @param user user to be updated
      */
     public void updateUser(User user) {
 
-        Gson gson = new Gson();
-        String dataToFirebase = gson.toJson(mRoom);
-        logUserUpdateMsg("updating user!", user);
-        mRef.setValue(dataToFirebase);
-
         try {
-            User currentUser = mRoom.getUser(user.getID());
-            currentUser = user;
+
+            logUserUpdateMsg("Attempting to update single User!", user);
+            mRoom.updateUser(user);
+            Gson gson = new Gson();
+            String dataToFirebase = gson.toJson(mRoom);
+            mRef.setValue(dataToFirebase);
+
         }
         catch (IllegalArgumentException e) {
             Log.e(TAG, "Invalid User: " + user.getID() + "! (Is the ID incorrect?)", e);
@@ -293,9 +314,42 @@ public class RoomAdapter implements Parcelable {
      * @param users A list of users.
      */
     public void updateUsers(List<User> users) {
-        for (User u: users) {
-            updateUser(u);
+        for(int i = 0; i < users.size(); i++) {
+            logUserUpdateMsg("Attempting to update all Users!", users.get(i));
+            mRoom.updateUser(users.get(i));
         }
+
+        // Send the updated version to Firebase!
+        Gson gson = new Gson();
+        String dataToFirebase = gson.toJson(mRoom);
+        mRef.setValue(dataToFirebase);
+    }
+
+    /**
+     * Attempts to start the Room if the user is the host.
+     * @param user
+     */
+    public void startRoom(User user) {
+        try {
+            mRoom.startRoom(user);
+            Gson gson = new Gson();
+            String dataToFirebase = gson.toJson(mRoom);
+            mRef.setValue(dataToFirebase);
+        }
+        catch (IllegalArgumentException e) {
+            Log.v(TAG, e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Check to see if all the players are ready to transition to the next activity!
+     * @return
+     */
+    public boolean isRoomReadyToTransition() {
+        if(mRoom.isReadyToTransition())
+            return true;
+        else
+            return false;
     }
 
     @Override

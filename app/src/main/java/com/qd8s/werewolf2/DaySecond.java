@@ -32,7 +32,7 @@ public class DaySecond extends AppCompatActivity {
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
         userList = mRoom.getUsers();
-// get the user data from FireBase!
+// get the mUser data from FireBase!
         ListView listview = (ListView) findViewById(R.id.listView1);
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);

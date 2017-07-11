@@ -9,6 +9,34 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
+    /**
+     * Enum for storing the User's State.
+     */
+    public enum UserState {
+        JoinNextActivity,
+        DoneWithNight,
+        Idle
+    };
+
+    /**
+     * Enum for storing the User's Activity Location.
+     */
+    public enum ActivityLocation {
+        Authentication,
+        DayMain,
+        DayNight,
+        DaySecond,
+        GameLobby,
+        GameMenu,
+        HostGame,
+        JoinGame,
+        NightDoc,
+        NightVillager,
+        NightWolf,
+        RoleDescription,
+        UserRow
+    }
+
     private boolean _alive;
     private String _role;
     private String _name;
@@ -19,6 +47,8 @@ public class User implements Parcelable {
     private boolean _isAlpha;
     private boolean _voteReady;
     private boolean _isHost;
+    private UserState _state;
+    private ActivityLocation _activityLocation;
 
     //non-default constructor
     public User(String id, boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
@@ -32,6 +62,8 @@ public class User implements Parcelable {
         this._voteReady = false;
         this._isHost = false;
         this._id = id;
+        this._state = UserState.Idle;
+        this._activityLocation = ActivityLocation.Authentication;
     }
 
     //default constructor
@@ -47,6 +79,8 @@ public class User implements Parcelable {
         this._voteReady = false;
         _isHost = false;
         _id = "";
+        this._state = UserState.Idle;
+        this._activityLocation = ActivityLocation.Authentication;
     }
 
     public User(String id, String name) {
@@ -60,6 +94,8 @@ public class User implements Parcelable {
         this._voteReady = false;
         _isHost = false;
         _id = id;
+        this._state = UserState.Idle;
+        this._activityLocation = ActivityLocation.Authentication;
     }
 
     protected User(Parcel in) {
@@ -67,12 +103,15 @@ public class User implements Parcelable {
         _role = in.readString();
         _name = in.readString();
         _id = in.readString();
+        _state = UserState.valueOf(in.readString());
+        _activityLocation = ActivityLocation.valueOf(in.readString());
         _immune = in.readByte() != 0;
         _actDone = in.readByte() != 0;
         _target = in.readParcelable(User.class.getClassLoader());
         _isAlpha = in.readByte() != 0;
         _voteReady = in.readByte() != 0;
         _isHost = in.readByte() != 0;
+
 
     }
 
@@ -182,11 +221,45 @@ public class User implements Parcelable {
         dest.writeString(_role);
         dest.writeString(_name);
         dest.writeString(_id);
+        dest.writeString(_state.name());
+        dest.writeString(_activityLocation.name());
         dest.writeByte((byte) (_immune ? 1 : 0));
         dest.writeByte((byte) (_actDone ? 1 : 0));
         dest.writeParcelable(_target, flags);
         dest.writeByte((byte) (_isAlpha ? 1 : 0));
         dest.writeByte((byte) (_voteReady ? 1 : 0));
         dest.writeByte((byte) (_isHost ? 1 : 0));
+    }
+
+    /**
+     * Returns the state of the mUser.
+     * @return State of the User.
+     */
+    public UserState getState() {
+        return _state;
+    }
+
+    /**
+     * Sets the state of the mUser.
+     * @param state State of the mUser.
+     */
+    public void setState(UserState state) {
+        this._state = state;
+    }
+
+    /**
+     * Returns which activity the mUser is in.
+     * @return ActivityLocation enum.
+     */
+    public ActivityLocation getActivityLocation() {
+        return _activityLocation;
+    }
+
+    /**
+     * Returns the Activity location of the User.
+     * @param location ActivityLocation of the User.
+     */
+    public void setActivityLocation(ActivityLocation location) {
+        _activityLocation = location;
     }
 }

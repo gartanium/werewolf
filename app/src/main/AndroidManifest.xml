@@ -12,7 +12,6 @@
         <activity android:name=".Authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -20,7 +19,8 @@
         <activity android:name=".JoinGame" />
         <activity android:name=".GameLobby" />
         <activity android:name=".DayNight" />
-        <activity android:name=".RoleDescription" />
+        <activity android:launchMode="singleInstance"
+                  android:name=".RoleDescription" />
         <activity android:name=".GameMenu" />
     </application>
 

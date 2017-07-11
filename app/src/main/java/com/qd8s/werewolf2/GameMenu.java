@@ -26,7 +26,7 @@ public class GameMenu extends AppCompatActivity {
     }
 
     public void startHostGame(View view) {
-        // Set the user as the host!
+        // Set the mUser as the host!
         user.set_host(true);
 
         Intent intent = new Intent(this, HostGame.class);
@@ -35,7 +35,7 @@ public class GameMenu extends AppCompatActivity {
     }
 
     public void startJoinGame(View view) {
-        // Don't let the user be the host!
+        // Don't let the mUser be the host!
         user.set_host(false);
 
         Intent intent = new Intent(this, JoinGame.class);
