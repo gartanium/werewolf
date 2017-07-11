@@ -59,7 +59,7 @@ public class Room implements Parcelable {
      * @throws throws IndexOutOfBoundsException
      * @return
      */
-    public User getUser(int index) throws IndexOutOfBoundsException {
+    private User getUser(int index) throws IndexOutOfBoundsException {
         try {
             return mUsers.get(index);
         }
@@ -243,6 +243,29 @@ public class Room implements Parcelable {
             mUsers.remove(index);
 
     }
+
+    /**
+     * Updates a user in the Room.
+     * @param user
+     */
+    public void updateUser(User user) {
+        mUsers.set(findIndex(user.getID()), user);
+    }
+
+    private int findIndex(String ID) {
+        if(mUsers != null) {
+            for (int i = 0; i < mUsers.size(); i++) {
+                if (mUsers.get(i).getID().equals(ID)) {
+                    return i;
+                }
+            }
+        }
+        else
+            throw new NullPointerException("There are no Users in the Room!");
+
+        throw new IllegalArgumentException("User is not in the Room!");
+    }
+
 
     /**
      * Returns true if the room contains a given user. (Checks by ID)

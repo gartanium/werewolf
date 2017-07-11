@@ -143,7 +143,7 @@ public class RoomTest {
 
         testUser.setName("john");
 
-        Assert.assertEquals("john", testObj.getUser(0).getName());
+        Assert.assertEquals("john", testObj.getUser("foo").getName());
     }
 
     @Test
@@ -273,5 +273,17 @@ public class RoomTest {
         testObj.setUsersIdle();
 
         Assert.assertTrue(testObj.isUsersIdle());
+    }
+
+    @Test
+    public void updateUserTest() throws Exception {
+        Room testObj = new Room(12, "Test");
+        User testUser = new User("2000", "Bob");
+        testObj.addUser(testUser);
+        User updatedUser = new User("2000", "Kyle");
+        testObj.updateUser(updatedUser);
+
+        Assert.assertTrue(testObj.getUser("2000").getName() == "Kyle");
+
     }
 }

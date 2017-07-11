@@ -25,9 +25,9 @@ public class RoleDescription extends AppCompatActivity {
      * Use the RoomAdapter class to get all your logic for the Room.
      * The mRoom will contain a list of all clients and their associated users.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v("RoleAssigner", "Created!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role_description);
 
@@ -74,14 +74,15 @@ public class RoleDescription extends AppCompatActivity {
             //assign
             for (int i = 0; i < numAssignedRoles; i++) {
                 players.get(i).setRole(roles.get(i));
+                Log.v("RoleAssigner", "User: " + players.get(i).getID() + " role set to: " + roles.get(i));
             }
 
             for (int i = 0; i < numPlayers; i++)
             {
-               Log.v("Player", players.get(i).getRole() + " " + (i + 1));
+               Log.v("RoleAssigner", players.get(i).getRole() + " " + (i + 1));
             }
 
-            //updates firebase
+            Log.v("RoleAssigner", "Attempting to update RoleDescriptions!");
             mRoom.updateUsers(players);
         }
 

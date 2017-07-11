@@ -125,7 +125,7 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
             valid = false;
         } else {
             userEmail.setError(null);
-        }
+            }
 
         String password = userPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
