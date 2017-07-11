@@ -92,8 +92,6 @@ public class RoleDescription extends AppCompatActivity {
         user = mRoom.getUser(user);
 
 
-
-
         role = (TextView)findViewById(R.id.userRole);
         role.setText(user.getRole());
 
