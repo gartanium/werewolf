@@ -89,11 +89,15 @@ public class RoleDescription extends AppCompatActivity {
         }
 
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
-        user = mRoom.getUser(user);
+        List<User> player = mRoom.getUsers();
 
-
-        role = (TextView)findViewById(R.id.userRole);
-        role.setText(user.getRole());
+        for (int i = 0; i < player.size(); i++)
+        {
+            if (user.getName() == player.get(i).getName()) {
+                user.setRole(player.get(i).getRole());
+                role = (TextView) findViewById(R.id.userRole);
+                role.setText(user.getRole());
+            }
 
     }
 
