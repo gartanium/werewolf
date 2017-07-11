@@ -135,6 +135,15 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
             userPassword.setError(null);
         }
 
+        String name = userName.getText().toString();
+        if (TextUtils.isEmpty(name)){
+            userName.setError("required.");
+            valid = false;
+        }
+        else {
+            userName.setError(null);
+        }
+
         return valid;
     }
 
@@ -173,14 +182,21 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int i = v.getId();
+        String name = userName.getText().toString();
+        String email = userEmail.getText().toString();
+        String password = userPassword.getText().toString();
+
         if (i == R.id.newUser) {
             createAccount(userEmail.getText().toString(), userPassword.getText().toString());
             System.out.println("i am here new account");
-            startGameMenu();
+            if ( !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
+                startGameMenu();}
         } else if (i == R.id.Authenticate_Button) {
             signIn(userEmail.getText().toString(), userPassword.getText().toString());
             System.out.println("i am here exsisting account");
-            startGameMenu();
+            if ( !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)) {
+                startGameMenu();
+            }
         }
     }
 
