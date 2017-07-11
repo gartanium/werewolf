@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
@@ -20,6 +21,7 @@ public class RoleDescription extends AppCompatActivity {
     private int numWolfs;
     private int numAssignedRoles;
     private RoomAdapter mRoom;
+    private TextView role;
 
     /**
      * Use the RoomAdapter class to get all your logic for the Room.
@@ -86,14 +88,37 @@ public class RoleDescription extends AppCompatActivity {
             mRoom.updateUsers(players);
         }
 
+        mRoom = getIntent().getExtras().getParcelable("Room_Data");
+        user = mRoom.getUser(user);
+
+
+
+
+        role = (TextView)findViewById(R.id.userRole);
+        role.setText(user.getRole());
 
     }
 
     public void startDayNight(View view) {
-        Intent intent = new Intent(this, DayNight.class);
-        intent.putExtra("Client_Data", user);
-        intent.putExtra("Room_data", mRoom);
-        startActivity(intent);
+
+        if (user.getRole() == "wolf") {
+            Intent intent = new Intent(this, NightWolf.class);
+            intent.putExtra("Client_Data", user);
+            intent.putExtra("Room_data", mRoom);
+            startActivity(intent);
+        }
+        if (user.getRole() == "doc") {
+            Intent intent = new Intent(this, NightDoc.class);
+            intent.putExtra("Client_Data", user);
+            intent.putExtra("Room_data", mRoom);
+            startActivity(intent);
+        }
+        if (user.getRole() == "villager") {
+            Intent intent = new Intent(this, NightVillager.class);
+            intent.putExtra("Client_Data", user);
+            intent.putExtra("Room_data", mRoom);
+            startActivity(intent);
+        }
     }
 }
 

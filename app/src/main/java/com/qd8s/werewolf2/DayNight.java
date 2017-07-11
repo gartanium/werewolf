@@ -22,6 +22,7 @@ public class DayNight extends AppCompatActivity {
         //get players here
         List<User> players = new ArrayList();
         startGame((ArrayList<User>) players);
+
     }
 
 
