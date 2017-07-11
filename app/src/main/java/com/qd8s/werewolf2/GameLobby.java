@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 import com.qd8s.werewolf2.GameHandler.RoomStartListener;
@@ -44,6 +45,10 @@ public class GameLobby extends AppCompatActivity {
                     }
                 }
         );
+
+        ListView listview = (ListView) findViewById(R.id.GameLobbyListView);
+        UserListAdapter adapter = new UserListAdapter(this, mRoom.getUsers());
+        listview.setAdapter(adapter);
     }
 
 
