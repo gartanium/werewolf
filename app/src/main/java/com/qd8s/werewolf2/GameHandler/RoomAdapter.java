@@ -101,7 +101,14 @@ public class RoomAdapter implements Parcelable{
         }
     }
 
-
+    /**
+     * Returns the updated version of the User.
+     * @param user
+     * @return
+     */
+    public User getUser(User user) {
+        return mRoom.getUser(user.getID());
+    }
 
     /**
      *
