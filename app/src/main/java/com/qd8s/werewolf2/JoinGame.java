@@ -18,7 +18,7 @@ public class JoinGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get the user data from the last activity.
+        // Get the mUser data from the last activity.
         mUser = getIntent().getExtras().getParcelable("Client_Data");
         setContentView(R.layout.activity_join_game);
     }

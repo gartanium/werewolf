@@ -32,7 +32,7 @@ public class DaySecond extends AppCompatActivity {
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
         userList = mRoom.getUsers();
-// get the user data from FireBase!
+// get the mUser data from FireBase!
         ListView listview = (ListView) findViewById(R.id.listView1);
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);
@@ -43,8 +43,9 @@ public class DaySecond extends AppCompatActivity {
                 currentPlayer.setTarget(target);
                 Log.d("Listener", currentPlayer.getTarget().getName());
                 for (int i = 0; i < userList.size(); i++) {
-                    if (currentPlayer.getName() == userList.get(i).getName()) {
+                    if (currentPlayer.getName() == userList.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
                         userList.get(i).setTarget(currentPlayer.getTarget());
+                        userList.get(i).set_voteReady(true);
                     }
                 }
                 mRoom.updateUsers(userList);
