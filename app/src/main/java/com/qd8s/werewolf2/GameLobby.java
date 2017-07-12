@@ -10,6 +10,10 @@ import android.widget.ListView;
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 import com.qd8s.werewolf2.GameHandler.RoomStartListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class GameLobby extends AppCompatActivity {
 
     /**
@@ -17,6 +21,10 @@ public class GameLobby extends AppCompatActivity {
      */
     User mUser;
     RoomAdapter mRoom;
+    private User user;
+    private int numPlayers;
+    private int numWolfs;
+    private int numAssignedRoles;
 
     private static final String TAG = "GameLobby";
 
@@ -38,6 +46,7 @@ public class GameLobby extends AppCompatActivity {
                 new RoomStartListener() {
                     @Override
                     public void onRoomStart() {
+                        assignRoles();
                         Intent intent = new Intent(getBaseContext(), RoleDescription.class);
                         intent.putExtra("Client_Data", mUser);
                         intent.putExtra("Room_Data", mRoom);
@@ -55,5 +64,53 @@ public class GameLobby extends AppCompatActivity {
     public void startRoleDescription(View view) {
         mRoom.startRoom(mUser);
     }
+
+    public void assignRoles()
+    {
+            List<User> players;
+            List<String> roles = new ArrayList<>();
+
+            players = mRoom.getUsers();
+
+            numPlayers = players.size();
+            //doc = true;
+            numWolfs = numPlayers / 4;
+            //randomNum = new Random();
+            numAssignedRoles = 0;
+            //int count = 0;
+
+            //adds wolf role
+            for (int i = 0; i < numWolfs; i++) {
+                roles.add("wolf");
+                numAssignedRoles++;
+            }
+            //add doc role
+            roles.add("doc");
+            numAssignedRoles++;
+
+            //adds villagers role
+            for (int i = numAssignedRoles; i < numPlayers; i++) {
+                roles.add("villager");
+                numAssignedRoles++;
+            }
+
+            //randomize
+            Collections.shuffle(roles);
+
+            //assign
+            for (int i = 0; i < numAssignedRoles; i++) {
+                players.get(i).setRole(roles.get(i));
+                Log.v("RoleAssigner", "User: " + players.get(i).getID() + " role set to: " + roles.get(i));
+            }
+
+            for (int i = 0; i < numPlayers; i++)
+            {
+                Log.v("RoleAssigner", players.get(i).getRole() + " " + (i + 1));
+            }
+
+            Log.v("RoleAssigner", "Attempting to update RoleDescriptions!");
+            mRoom.updateUsers(players);
+        }
+    //}
 
 }
