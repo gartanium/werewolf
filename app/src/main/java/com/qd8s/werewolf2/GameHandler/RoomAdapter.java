@@ -29,14 +29,22 @@ public class RoomAdapter implements Parcelable{
 
     // A list of ReadyListners that get a function called whenever update
     // Updates.
-    private List<RoomStartListener> mListeners = new ArrayList<RoomStartListener>();
+    private List<RoomStartListener> mRoomStartListeners = new ArrayList<RoomStartListener>();
+
+    private List<NightFinishedListener> mNightFinishedListeners = new ArrayList<>();
 
     /**
      * Add a listener to the RoomAdapater!
      */
     public void addListener(RoomStartListener listener) {
-        mListeners.add(listener);
+        mRoomStartListeners.add(listener);
     }
+
+    /**
+     * Add a night finished listener that is called whenever everyone is done with the Night.
+     * @param listener
+     */
+    public void addListener(NightFinishedListener listener) { mNightFinishedListeners.add(listener);}
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -238,15 +246,8 @@ public class RoomAdapter implements Parcelable{
                 Gson gson = new Gson();
                 mRoom = gson.fromJson(roomJson, Room.class);
 
-                // If room is ready to start, fire the event!
-                if(mRoom.isReadyToStart())
-                {
-                    for (RoomStartListener obj: mListeners) {
-                        obj.onRoomStart();
-                    }
-                }
-
-                // ...
+                // See if any events need to be fired.
+                checkForEvents();
             }
 
             @Override
@@ -260,6 +261,27 @@ public class RoomAdapter implements Parcelable{
         // Attach the event listener to the reference!
         ref.addValueEventListener(roomListener);
 
+    }
+
+    /**
+     * Checks to see if we need to fire any Events.
+     */
+    private void checkForEvents() {
+        // If room is ready to start, fire the event!
+        if(mRoom.isReadyToStart())
+        {
+            for (RoomStartListener obj: mRoomStartListeners) {
+                obj.onRoomStart();
+            }
+        }
+
+        // If everyone in the Room is finished with Night, fire the event!
+        if(mRoom.isDoneWithNight())
+        {
+            for (NightFinishedListener listener: mNightFinishedListeners) {
+                listener.onNightFinished();
+            }
+        }
     }
 
     /**

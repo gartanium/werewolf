@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.qd8s.werewolf2.GameHandler.NightFinishedListener;
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class NightDoc extends AppCompatActivity {
     private List<User> userList;
-    private User currentPlayer;
+    private User mUser;
     private RoomAdapter mRoom;
     private User target;
 
@@ -28,7 +29,7 @@ public class NightDoc extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        currentPlayer = intent.getExtras().getParcelable("Client_Data");
+        mUser = intent.getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
         userList = mRoom.getUsers();
@@ -40,17 +41,44 @@ public class NightDoc extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 target = userList.get(position);
-                currentPlayer.setTarget(target);
-                Log.d("Listener", currentPlayer.getTarget().getName());
+                mUser.setTarget(target);
+                Log.d("Listener", mUser.getTarget().getName());
                 for (int i = 0; i < userList.size(); i++) {
-                    if (currentPlayer.getName() == userList.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
-                        userList.get(i).setTarget(currentPlayer.getTarget());
+                    if (mUser.getName() == userList.get(i).getName() && mUser.is_voteReady() == false && mUser.isAlive() == true) {
+                        userList.get(i).setTarget(mUser.getTarget());
                         userList.get(i).set_voteReady(true);
                     }
                 }
                 mRoom.updateUsers(userList);
             }
         });
+
+        mRoom.addListener(new NightFinishedListener() {
+            @Override
+            public void onNightFinished() {
+                Intent intent = new Intent(getBaseContext(), DayMain.class);
+                intent.putExtra("Client_Data", mUser);
+                intent.putExtra("Room_Data", mRoom);
+                startActivity(intent);
+            }
+        });
+
     }
     //TODO:an onclick that sets the target of the given user to the user they click on
+
+
+    // TODO: Put logic here for when the User hits the ready button.
+    public void onReadyButton(View view) {
+        mUser.setState(User.UserState.DoneWithNight);
+
+        // NOTE!!!!!!!!!!!!!!!!!!
+        // When ever the User updates,
+        // Because of our event up above,
+        // A check goes to see if everyone is ready.
+        // If everyone is ready, then it moves to the next Lobby!
+        // I hope.
+        mRoom.updateUser(mUser);
+
+    }
+
 }
