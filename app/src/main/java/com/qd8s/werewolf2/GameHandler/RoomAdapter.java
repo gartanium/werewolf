@@ -292,12 +292,12 @@ public class RoomAdapter implements Parcelable{
         }
 
         // If everyone in the Room is finished with Night, fire the event!
-        if(mRoom.isDoneWithNight())
+        /*if(mRoom.isDoneWithNight())
         {
             for (NightFinishedListener listener: mNightFinishedListeners) {
                 listener.onNightFinished();
             }
-        }
+        }*/
     }
 
     /**

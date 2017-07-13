@@ -26,6 +26,7 @@ public class GameLobby extends AppCompatActivity {
     private int numPlayers;
     private int numWolfs;
     private int numAssignedRoles;
+    private boolean loop;
 
     private static final String TAG = "GameLobby";
 
@@ -37,6 +38,7 @@ public class GameLobby extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
+        loop = true;
 
         mUser = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
@@ -80,8 +82,9 @@ public class GameLobby extends AppCompatActivity {
         mRoom.startRoom(mUser);
     }
 
-    public void assignRoles()
-    {
+    public void assignRoles() {
+        if (loop) {
+            loop = false;
             List<User> players;
             List<String> roles = new ArrayList<>();
 
@@ -118,14 +121,14 @@ public class GameLobby extends AppCompatActivity {
                 Log.v("RoleAssigner", "User: " + players.get(i).getID() + " role set to: " + roles.get(i));
             }
 
-            for (int i = 0; i < numPlayers; i++)
-            {
+            for (int i = 0; i < numPlayers; i++) {
                 Log.v("RoleAssigner", players.get(i).getRole() + " " + (i + 1));
             }
 
             Log.v("RoleAssigner", "Attempting to update RoleDescriptions!");
             mRoom.updateUsers(players);
         }
-    //}
+        //}
+    }
 
 }
