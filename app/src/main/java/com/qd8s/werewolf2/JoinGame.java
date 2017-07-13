@@ -21,11 +21,12 @@ public class JoinGame extends AppCompatActivity {
         // Get the mUser data from the last activity.
         mUser = getIntent().getExtras().getParcelable("Client_Data");
         setContentView(R.layout.activity_join_game);
+
+        mRoom = new RoomAdapter();
     }
 
     public void downloadLobby(View view) {
-        mRoom = new RoomAdapter();
-        mRoom.connectToRoom("game");
+        mRoom.connectToRoom("matt");
     }
 
     public void startGameLobby(View view) {
