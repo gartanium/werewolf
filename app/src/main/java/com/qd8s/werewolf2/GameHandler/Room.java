@@ -275,6 +275,7 @@ public class Room implements Parcelable {
             for (int i = 0; i < mUsers.size(); i++) {
                 if (mUsers.get(i).getID().equals(ID)) {
                     return i;
+
                 }
             }
         }
