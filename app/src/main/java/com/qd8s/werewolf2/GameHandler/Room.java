@@ -201,6 +201,24 @@ public class Room implements Parcelable {
         }
     }
 
+    /**
+     * Sets each user's state to state.
+     * @param state
+     */
+    public void setUsersState(User.UserState state) {
+        for(User u: mUsers) {
+            u.setState(state);
+        }
+    }
+
+    /**
+     * Set the state of a specific user.
+     * @param user
+     * @param state
+     */
+    public void setState(User user, User.UserState state) {
+        getUser(user.getID()).setState(state);
+    }
 
     /**
      * Adds a client to the lobby.

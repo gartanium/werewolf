@@ -24,9 +24,6 @@ public class NightDoc extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_night_doc);
-
-        userList = new ArrayList<User>();
-
         Intent intent = getIntent();
 
         mUser = intent.getExtras().getParcelable("Client_Data");
