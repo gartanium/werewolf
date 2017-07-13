@@ -34,19 +34,36 @@ public class DayMain extends AppCompatActivity {
 
         userList = mRoom.getUsers();
 // get the mUser data from FireBase!
+        final ArrayList<User> aliveUsers = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++)
+        {
+            if (userList.get(i).isAlive())
+            {
+                aliveUsers.add(userList.get(i));
+                Log.v("Checking alive users", aliveUsers.get(i).getName());
+            }
+        }
         ListView listview = (ListView) findViewById(R.id.listView1);
-        UserListAdapter adapter = new UserListAdapter(this, userList);
+        UserListAdapter adapter = new UserListAdapter(this, aliveUsers);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                target = userList.get(position);
+                target = aliveUsers.get(position);
                 currentPlayer.setTarget(target);
                 Log.d("Listener", currentPlayer.getTarget().getName());
-                for (int i = 0; i < userList.size(); i++) {
-                    if (currentPlayer.getName() == userList.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
-                        userList.get(i).setTarget(currentPlayer.getTarget());
-                        userList.get(i).set_voteReady(true);
+                for (int i = 0; i < aliveUsers.size(); i++) {
+                    if (currentPlayer.getName() == aliveUsers.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
+                        aliveUsers.get(i).setTarget(currentPlayer.getTarget());
+                        aliveUsers.get(i).set_voteReady(true);
+                    }
+                }
+                for (int i = 0; i < userList.size(); i++){
+                    for (int j = 0; j < aliveUsers.size(); j++){
+                        if (userList.get(i).getName().equals(aliveUsers.get(j).getName())) {
+                            userList.set(i, aliveUsers.get(j));
+                            break;
+                        }
                     }
                 }
                 mRoom.updateUsers(userList);
