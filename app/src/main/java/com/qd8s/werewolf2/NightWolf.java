@@ -36,27 +36,45 @@ public class NightWolf extends AppCompatActivity {
 
         userList = mRoom.getUsers();
 
+        final ArrayList<User> aliveUsers = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++)
+        {
+            if (userList.get(i).isAlive())
+            {
+                aliveUsers.add(userList.get(i));
+                Log.v("Checking alive users", aliveUsers.get(i).getName());
+            }
+        }
+
         ListView listview = (ListView) findViewById(R.id.listView2);
-        UserListAdapter adapter = new UserListAdapter(this, userList);
+        UserListAdapter adapter = new UserListAdapter(this, aliveUsers);
         listview.setAdapter(adapter);
 
-        /*
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 target = userList.get(position);
                 mUser.setTarget(target);
                 Log.d("Listener", mUser.getTarget().getName());
-                for (int i = 0; i < userList.size(); i++) {
-                    if (mUser.getName() == userList.get(i).getName() && mUser.is_voteReady() == false && mUser.isAlive() == true) {
-                        userList.get(i).setTarget(mUser.getTarget());
-                        userList.get(i).set_voteReady(true);
+                for (int i = 0; i < aliveUsers.size(); i++) {
+                    if (mUser.getName() == aliveUsers.get(i).getName() && mUser.is_voteReady() == false && mUser.isAlive() == true) {
+                        aliveUsers.get(i).setTarget(mUser.getTarget());
+                        aliveUsers.get(i).set_voteReady(true);
+                    }
+                }
+                for (int i = 0; i < userList.size(); i++){
+                    for (int j = 0; j < aliveUsers.size(); j++){
+                        if (userList.get(i).getName().equals(aliveUsers.get(j).getName())) {
+                            userList.set(i, aliveUsers.get(j));
+                            break;
+                        }
                     }
                 }
                 mRoom.updateUsers(userList);
             }
         });
-         */
+
 
 
         mRoom.addListener(new NightFinishedListener() {
