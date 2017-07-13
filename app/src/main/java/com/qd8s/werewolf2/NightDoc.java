@@ -56,7 +56,7 @@ public class NightDoc extends AppCompatActivity {
         });
         **/
 
-        mRoom.addListener(new NightFinishedListener() {
+        /**mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
                 Intent intent = new Intent(getBaseContext(), DayMain.class);
@@ -64,7 +64,7 @@ public class NightDoc extends AppCompatActivity {
                 intent.putExtra("Room_Data", mRoom);
                 startActivity(intent);
             }
-        });
+        });**/
 
     }
     //TODO:an onclick that sets the target of the given user to the user they click on

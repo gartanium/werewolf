@@ -37,7 +37,7 @@ public class NightWolf extends AppCompatActivity {
         ListView listview = (ListView) findViewById(R.id.listView2);
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);
-        
+
         /**
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,6 +56,7 @@ public class NightWolf extends AppCompatActivity {
         });
          **/
 
+        /**
         mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
@@ -64,7 +65,7 @@ public class NightWolf extends AppCompatActivity {
                 intent.putExtra("Room_Data", mRoom);
                 startActivity(intent);
             }
-        });
+        });**/
     }
     //TODO:an onclick that sets the target of the given user to the user they click on
 

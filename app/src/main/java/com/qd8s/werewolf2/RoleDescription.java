@@ -22,6 +22,7 @@ public class RoleDescription extends AppCompatActivity {
     private TextView descriptions;
     private String des;
 
+    private final String TAG = "RoleDescription";
     /**
      * Use the RoomAdapter class to get all your logic for the Room.
      * The mRoom will contain a list of all clients and their associated users.
@@ -78,22 +79,26 @@ public class RoleDescription extends AppCompatActivity {
 
     public void startDayNight(View view) {
 
+
         if (user.getRole().equals("wolf")) {
             Intent intent = new Intent(this, NightWolf.class);
             intent.putExtra("Client_Data", user);
             intent.putExtra("Room_Data", mRoom);
+            Log.v(TAG, "Starting night for wolf!");
             startActivity(intent);
         }
         if (user.getRole().equals("doc")) {
             Intent intent = new Intent(this, NightDoc.class);
             intent.putExtra("Client_Data", user);
             intent.putExtra("Room_Data", mRoom);
+            Log.v(TAG, "Starting night for doc!");
             startActivity(intent);
         }
         if (user.getRole().equals("villager")) {
             Intent intent = new Intent(this, NightVillager.class);
             intent.putExtra("Client_Data", user);
             intent.putExtra("Room_Data", mRoom);
+            Log.v(TAG, "Starting night for villager!");
             startActivity(intent);
         }
     }

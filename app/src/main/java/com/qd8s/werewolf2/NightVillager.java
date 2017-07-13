@@ -31,7 +31,7 @@ public class NightVillager extends AppCompatActivity {
 
         mUser = intent.getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
-
+        /**
         mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
@@ -40,11 +40,11 @@ public class NightVillager extends AppCompatActivity {
                 intent.putExtra("Room_Data", mRoom);
                 startActivity(intent);
             }
-        });
+        });**/
     }
 
     //TODO:an onclick that sets the target of the given user to the user they click on
-    public void onReadyButton(View view) {
+public void onReadyButton(View view) {
         mUser.setState(User.UserState.DoneWithNight);
 
         // NOTE!!!!!!!!!!!!!!!!!!
