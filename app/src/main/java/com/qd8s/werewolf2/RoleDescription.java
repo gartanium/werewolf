@@ -36,8 +36,8 @@ public class RoleDescription extends AppCompatActivity {
         user = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
-        Log.v("RoleAssigner", "Your role is: " + user.getRole());
         user = mRoom.getUser(user);
+        Log.v("RoleAssigner", "Your role is: " + user.getRole());
 
         // Set the users state to be in RoleDescription.
         user.setActivityLocation(User.ActivityLocation.RoleDescription);
