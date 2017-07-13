@@ -19,6 +19,7 @@ public class NightDoc extends AppCompatActivity {
     private User mUser;
     private RoomAdapter mRoom;
     private User target;
+    private final String TAG = "NightDoc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class NightDoc extends AppCompatActivity {
         });
         **/
 
-        /**mRoom.addListener(new NightFinishedListener() {
+        /*mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
                 Intent intent = new Intent(getBaseContext(), DayMain.class);
@@ -61,15 +62,14 @@ public class NightDoc extends AppCompatActivity {
                 intent.putExtra("Room_Data", mRoom);
                 startActivity(intent);
             }
-        });**/
-
+        });*/
     }
     //TODO:an onclick that sets the target of the given user to the user they click on
 
 
     // TODO: Put logic here for when the User hits the ready button.
     public void onReadyButton(View view) {
-        mUser.setState(User.UserState.DoneWithNight);
+       // mUser.setState(User.UserState.DoneWithNight);
 
         // NOTE!!!!!!!!!!!!!!!!!!
         // When ever the User updates,
@@ -78,6 +78,11 @@ public class NightDoc extends AppCompatActivity {
         // If everyone is ready, then it moves to the next Lobby!
         // I hope.
         mRoom.updateUser(mUser);
+        Intent intent = new Intent(this, DayMain.class);
+        intent.putExtra("Client_Data", mUser);
+        intent.putExtra("Room_Data", mRoom);
+        Log.v(TAG, "Starting day for the doctor ");
+        startActivity(intent);
 
     }
 

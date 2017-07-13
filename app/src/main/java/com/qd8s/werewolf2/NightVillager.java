@@ -19,6 +19,7 @@ public class NightVillager extends AppCompatActivity {
     private User mUser;
     private RoomAdapter mRoom;
     private User target;
+    private final String TAG = "NightVillager";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,11 @@ public class NightVillager extends AppCompatActivity {
 
         userList = new ArrayList<User>();
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        mUser = intent.getExtras().getParcelable("Client_Data");
+        mUser = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
-        /**
+
         mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
@@ -40,7 +41,7 @@ public class NightVillager extends AppCompatActivity {
                 intent.putExtra("Room_Data", mRoom);
                 startActivity(intent);
             }
-        });**/
+        });
     }
 
     //TODO:an onclick that sets the target of the given user to the user they click on
@@ -54,6 +55,11 @@ public void onReadyButton(View view) {
         // If everyone is ready, then it moves to the next Lobby!
         // I hope.
         mRoom.updateUser(mUser);
+        Intent intent = new Intent(this, DayMain.class);
+        intent.putExtra("Client_Data", mUser);
+        intent.putExtra("Room_Data", mRoom);
+        Log.v(TAG, "Starting day for the Villager ");
+        startActivity(intent);
 
     }
 }
