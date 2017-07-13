@@ -118,11 +118,14 @@ public class GameLobby extends AppCompatActivity {
             //assign
             for (int i = 0; i < numAssignedRoles; i++) {
                 players.get(i).setRole(roles.get(i));
-                Log.v("RoleAssigner", "User: " + players.get(i).getName() + " role set to: " + roles.get(i));
+                Log.v("RoleAssigner", "User: " + players.get(i).getName() +
+                       " " + players.get(i).getID() + " role set to: " + roles.get(i));
             }
 
             for (int i = 0; i < numPlayers; i++) {
-                Log.v("RoleAssigner", players.get(i).getName() + " " + players.get(i).getRole() + " " + (i + 1));
+                Log.v("RoleAssigner", players.get(i).getName() +
+                        " " + players.get(i).getID() + " " +
+                        players.get(i).getRole() + " " + (i + 1));
             }
 
             Log.v("RoleAssigner", "Attempting to update RoleDescriptions!");
