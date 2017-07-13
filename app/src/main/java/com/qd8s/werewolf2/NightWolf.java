@@ -19,6 +19,8 @@ public class NightWolf extends AppCompatActivity {
     private User mUser;
     private RoomAdapter mRoom;
     private User target;
+    private final String TAG = "NightWolf";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +29,9 @@ public class NightWolf extends AppCompatActivity {
 
         userList = new ArrayList<User>();
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        mUser = intent.getExtras().getParcelable("Client_Data");
+        mUser = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
         userList = mRoom.getUsers();
@@ -38,7 +40,7 @@ public class NightWolf extends AppCompatActivity {
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);
 
-        /**
+        /*
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -54,9 +56,9 @@ public class NightWolf extends AppCompatActivity {
                 mRoom.updateUsers(userList);
             }
         });
-         **/
+         */
 
-        /**
+
         mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
@@ -65,7 +67,7 @@ public class NightWolf extends AppCompatActivity {
                 intent.putExtra("Room_Data", mRoom);
                 startActivity(intent);
             }
-        });**/
+        });
     }
     //TODO:an onclick that sets the target of the given user to the user they click on
 
@@ -80,6 +82,12 @@ public class NightWolf extends AppCompatActivity {
         // If everyone is ready, then it moves to the next Lobby!
         // I hope.
         mRoom.updateUser(mUser);
+        Intent intent = new Intent(this, DayMain.class);
+        intent.putExtra("Client_Data", mUser);
+        intent.putExtra("Room_Data", mRoom);
+        Log.v(TAG, "Starting day for the Wolf ");
+        startActivity(intent);
+
 
     }
 }

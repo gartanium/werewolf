@@ -18,6 +18,7 @@ public class DaySecond extends AppCompatActivity {
     private User currentPlayer;
     private RoomAdapter mRoom;
     private User target;
+    private final String TAG = "DaySecond";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +27,14 @@ public class DaySecond extends AppCompatActivity {
 
         userList = new ArrayList<User>();
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        currentPlayer = intent.getExtras().getParcelable("Client_Data");
+        currentPlayer = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
         userList = mRoom.getUsers();
 // get the mUser data from FireBase!
-        ListView listview = (ListView) findViewById(R.id.listView1);
+        ListView listview = (ListView) findViewById(R.id.listView3);
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,5 +52,30 @@ public class DaySecond extends AppCompatActivity {
                 mRoom.updateUsers(userList);
             }
         });
+    }
+
+    public void goToNight(View view) {
+        Log.v(TAG, "In go to Night");
+        if (currentPlayer.getRole().equals("wolf")) {
+            Intent intent = new Intent(this, NightWolf.class);
+            intent.putExtra("Client_Data", currentPlayer);
+            intent.putExtra("Room_Data", mRoom);
+            Log.v(TAG, "Starting night for wolf!");
+            startActivity(intent);
+        }
+        if (currentPlayer.getRole().equals("doc")) {
+            Intent intent = new Intent(this, NightDoc.class);
+            intent.putExtra("Client_Data", currentPlayer);
+            intent.putExtra("Room_Data", mRoom);
+            Log.v(TAG, "Starting night for doc!");
+            startActivity(intent);
+        }
+        if (currentPlayer.getRole().equals("villager")) {
+            Intent intent = new Intent(this, NightVillager.class);
+            intent.putExtra("Client_Data", currentPlayer);
+            intent.putExtra("Room_Data", mRoom);
+            Log.v(TAG, "Starting night for villager!");
+            startActivity(intent);
+        }
     }
 }

@@ -18,6 +18,7 @@ public class DayMain extends AppCompatActivity {
     private User currentPlayer;
     private RoomAdapter mRoom;
     private User target;
+    private final String TAG = "DayMain";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +27,9 @@ public class DayMain extends AppCompatActivity {
 
         userList = new ArrayList<User>();
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        currentPlayer = intent.getExtras().getParcelable("Client_Data");
+        currentPlayer = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
         userList = mRoom.getUsers();
@@ -51,6 +52,24 @@ public class DayMain extends AppCompatActivity {
                 mRoom.updateUsers(userList);
             }
         });
+
+    }
+
+    public void onReadyDaySecond(View view) {
+        //currentPlayer.setState(User.UserState.DoneWithNight);
+        Log.v(TAG, "Entering onReadyDaySecond");
+        // NOTE!!!!!!!!!!!!!!!!!!
+        // When ever the User updates,
+        // Because of our event up above,
+        // A check goes to see if everyone is ready.
+        // If everyone is ready, then it moves to the next Lobby!
+        // I hope.
+        mRoom.updateUser(currentPlayer);
+        Intent intent = new Intent(this, DaySecond.class);
+        intent.putExtra("Client_Data", currentPlayer);
+        intent.putExtra("Room_Data", mRoom);
+        Log.v(TAG, "Starting day second");
+        startActivity(intent);
 
     }
 }
