@@ -37,6 +37,8 @@ public class NightWolf extends AppCompatActivity {
         ListView listview = (ListView) findViewById(R.id.listView2);
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);
+        
+        /**
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -52,6 +54,7 @@ public class NightWolf extends AppCompatActivity {
                 mRoom.updateUsers(userList);
             }
         });
+         **/
 
         mRoom.addListener(new NightFinishedListener() {
             @Override
