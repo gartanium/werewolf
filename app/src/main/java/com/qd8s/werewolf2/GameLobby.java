@@ -22,7 +22,6 @@ public class GameLobby extends AppCompatActivity {
      */
     User mUser;
     RoomAdapter mRoom;
-    private User user;
     private int numPlayers;
     private int numWolfs;
     private int numAssignedRoles;
@@ -49,7 +48,9 @@ public class GameLobby extends AppCompatActivity {
                 new RoomStartListener() {
                     @Override
                     public void onRoomStart() {
-                        assignRoles();
+                        if (mUser.isHost()) {
+                            assignRoles();
+                        }
                         Intent intent = new Intent(getBaseContext(), RoleDescription.class);
                         intent.putExtra("Client_Data", mUser);
                         intent.putExtra("Room_Data", mRoom);
