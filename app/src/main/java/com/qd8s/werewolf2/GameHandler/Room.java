@@ -284,6 +284,16 @@ public class Room implements Parcelable {
         throw new IllegalArgumentException("User is not in the Room!");
     }
 
+    /**
+     * Updates all the users in the Room.
+     * @param users
+     */
+    public void updateUsers(List<User> users) {
+        if(users.size() == mUsers.size()) {
+            mUsers = users;
+        }
+    }
+
 
     /**
      * Returns true if the room contains a given user. (Checks by ID)
