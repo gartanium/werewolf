@@ -31,7 +31,12 @@ public class RoomAdapter implements Parcelable{
     // Updates.
     private List<RoomStartListener> mRoomStartListeners = new ArrayList<RoomStartListener>();
 
+    /**
+     * A list of listeners for whenever every user is done with the Night.
+     */
     private List<NightFinishedListener> mNightFinishedListeners = new ArrayList<>();
+
+    private List<UserJoinedRoomListener> mUserJoinedListener = new ArrayList<>();
 
     /**
      * Add a listener to the RoomAdapater!
