@@ -73,6 +73,9 @@ public class DayNight extends AppCompatActivity {
     public void StartMainActivty(View view) {
         Intent intent = new Intent(this, GameMenu.class);
         startActivity(intent);
+
+
+        
     }
 
 
