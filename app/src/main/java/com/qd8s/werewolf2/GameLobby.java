@@ -48,7 +48,7 @@ public class GameLobby extends AppCompatActivity {
                 new RoomStartListener() {
                     @Override
                     public void onRoomStart() {
-                            assignRoles();
+                        userAssign();
                         Intent intent = new Intent(getBaseContext(), RoleDescription.class);
                         intent.putExtra("Client_Data", mUser);
                         intent.putExtra("Room_Data", mRoom);
@@ -69,6 +69,7 @@ public class GameLobby extends AppCompatActivity {
         mRoom.addListener(new UserJoinedListener() {
             @Override
             public void onUserJoined() {
+
                 ListView listview = (ListView) findViewById(R.id.GameLobbyListView);
                 UserListAdapter adapter = new UserListAdapter(getBaseContext(), mRoom.getUsers());
                 listview.setAdapter(adapter);
@@ -137,5 +138,18 @@ public class GameLobby extends AppCompatActivity {
 
         //}
     }
+
+    public void userAssign(){
+        List<User> players;
+        players = mRoom.getUsers();
+
+        for (int i = 0; i < players.size(); i++){
+            if (mUser.getName().equals(players.get(i).getName()))
+            {
+                mUser = players.get(i);
+            }
+        }
+    }
+
 
 }
