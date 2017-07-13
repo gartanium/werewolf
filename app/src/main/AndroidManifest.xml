@@ -22,6 +22,13 @@
         <activity android:launchMode="singleInstance"
                   android:name=".RoleDescription" />
         <activity android:name=".GameMenu" />
+        <activity android:name=".NightDoc" />
+        <activity android:name=".NightVillager" />
+        <activity android:name=".NightWolf" />
+        <activity android:name=".WinScreen" />
+        <activity android:name=".DayMain" />
+        <activity android:name=".DaySecond"/>
+        <activity android:name=".LoseScreen"/>
     </application>
 
 </manifest>

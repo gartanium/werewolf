@@ -33,7 +33,7 @@ public class NightDoc extends AppCompatActivity {
 
         userList = mRoom.getUsers();
 // get the mUser data from FireBase!
-        ListView listview = (ListView) findViewById(R.id.listView1);
+        ListView listview = (ListView) findViewById(R.id.listView);
         UserListAdapter adapter = new UserListAdapter(this, userList);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
