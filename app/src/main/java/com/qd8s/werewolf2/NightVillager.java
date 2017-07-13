@@ -32,27 +32,6 @@ public class NightVillager extends AppCompatActivity {
         mUser = intent.getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
-        userList = mRoom.getUsers();
-// get the mUser data from FireBase!
-        ListView listview = (ListView) findViewById(R.id.listView);
-        UserListAdapter adapter = new UserListAdapter(this, userList);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                target = userList.get(position);
-                mUser.setTarget(target);
-                Log.d("Listener", mUser.getTarget().getName());
-                for (int i = 0; i < userList.size(); i++) {
-                    if (mUser.getName() == userList.get(i).getName() && mUser.is_voteReady() == false && mUser.isAlive() == true) {
-                        userList.get(i).setTarget(mUser.getTarget());
-                        userList.get(i).set_voteReady(true);
-                    }
-                }
-                mRoom.updateUsers(userList);
-            }
-        });
-
         mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {

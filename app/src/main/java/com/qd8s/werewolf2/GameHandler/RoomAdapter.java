@@ -36,7 +36,7 @@ public class RoomAdapter implements Parcelable{
      */
     private List<NightFinishedListener> mNightFinishedListeners = new ArrayList<>();
 
-    private List<UserJoinedRoomListener> mUserJoinedListener = new ArrayList<>();
+    private List<UserJoinedListener> mUserJoinedListener = new ArrayList<>();
 
     /**
      * Add a listener to the RoomAdapater!
@@ -50,6 +50,12 @@ public class RoomAdapter implements Parcelable{
      * @param listener
      */
     public void addListener(NightFinishedListener listener) { mNightFinishedListeners.add(listener);}
+
+    /**
+     * Add a listener for when a User joins a room.
+     * @param listener
+     */
+    public void addListener(UserJoinedListener listener) { mUserJoinedListener.add(listener);}
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -194,6 +200,11 @@ public class RoomAdapter implements Parcelable{
      */
     public void joinRoom(User user) {
         addUserToRoom(user);
+
+        // Fire all the events for all the Users!
+        for ( UserJoinedListener listener: mUserJoinedListener) {
+            listener.onUserJoined();
+        }
     }
 
     /**

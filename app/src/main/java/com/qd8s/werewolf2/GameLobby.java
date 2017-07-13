@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 import com.qd8s.werewolf2.GameHandler.RoomStartListener;
+import com.qd8s.werewolf2.GameHandler.UserJoinedListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +59,20 @@ public class GameLobby extends AppCompatActivity {
         ListView listview = (ListView) findViewById(R.id.GameLobbyListView);
         UserListAdapter adapter = new UserListAdapter(this, mRoom.getUsers());
         listview.setAdapter(adapter);
+
+        // Set it so whenever the User joins, the adapter and listview is updated!!!
+
+    }
+
+    private void addUserJoinedEventListener() {
+        mRoom.addListener(new UserJoinedListener() {
+            @Override
+            public void onUserJoined() {
+                ListView listview = (ListView) findViewById(R.id.GameLobbyListView);
+                UserListAdapter adapter = new UserListAdapter(getBaseContext(), mRoom.getUsers());
+                listview.setAdapter(adapter);
+            }
+        });
     }
 
 

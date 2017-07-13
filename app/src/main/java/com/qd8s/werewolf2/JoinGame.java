@@ -25,7 +25,7 @@ public class JoinGame extends AppCompatActivity {
 
     public void downloadLobby(View view) {
         mRoom = new RoomAdapter();
-        mRoom.connectToRoom("foo");
+        mRoom.connectToRoom("game");
     }
 
     public void startGameLobby(View view) {
