@@ -78,7 +78,9 @@ public class GameLobby extends AppCompatActivity {
 
 
     public void startRoleDescription(View view) {
-        assignRoles();
+        if (mUser.isHost()) {
+            assignRoles();
+        }
         mRoom.startRoom(mUser);
     }
 
