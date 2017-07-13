@@ -92,7 +92,7 @@ public class Night {
             } else if(entry.getKey() < topFirst & entry.getKey() > topSecond) {
                 topSecond = entry.getKey();
                 secondUser = entry.getValue();
-                
+
             }
         }
         topNominees.put(topFirst, topUser);
