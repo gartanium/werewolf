@@ -275,6 +275,7 @@ public class Room implements Parcelable {
             for (int i = 0; i < mUsers.size(); i++) {
                 if (mUsers.get(i).getID().equals(ID)) {
                     return i;
+
                 }
             }
         }
@@ -282,6 +283,16 @@ public class Room implements Parcelable {
             throw new NullPointerException("There are no Users in the Room!");
 
         throw new IllegalArgumentException("User is not in the Room!");
+    }
+
+    /**
+     * Updates all the users in the Room.
+     * @param users
+     */
+    public void updateUsers(List<User> users) {
+        if(users.size() == mUsers.size()) {
+            mUsers = users;
+        }
     }
 
 
