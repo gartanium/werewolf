@@ -324,5 +324,18 @@ public class Room implements Parcelable {
         dest.writeByte((byte) (mReadyToStart ? 1 : 0));
     }
 
+    public boolean isDoneWithVoting() {
+        if(mUsers.size() > 0) {
+            for (User u : mUsers) {
+                if (!u.is_voteReady())
+                    return false;
+            }
+
+            return true;
+        }
+        else
+            throw new NullPointerException("THERE ARE NO USERS IN THE ROOM!");
+    }
+
     // Cycles through each user and returns true if they are all ready to transition states.
 }
