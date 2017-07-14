@@ -42,27 +42,15 @@ public class RoomAdapter implements Parcelable{
     /**
      * Add a listener to the RoomAdapater!
      */
-    public void addListener(RoomStartListener listener) {
-        mRoomStartListeners.add(listener);
-    }
-
-    /**
-     * Add a night finished listener that is called whenever everyone is done with the Night.
-     * @param listener
-     */
+    public void addListener(RoomStartListener listener) { mRoomStartListeners.add(listener);}
     public void addListener(NightFinishedListener listener) { mNightFinishedListeners.add(listener);}
-
-    /**
-     * Add a listener for when a User joins a room.
-     * @param listener
-     */
     public void addListener(UserJoinedListener listener) { mUserJoinedListener.add(listener);}
-
     public void addListener(VotingEventListener listener) { mVotingEventListeners.add(listener);}
 
     public void fireOnRoomStart() {
 
     }
+
     public void fireOnVoteReady(){
         for(VotingEventListener listener: mVotingEventListeners) {
             listener.onVoteFinished();
@@ -75,6 +63,15 @@ public class RoomAdapter implements Parcelable{
         }
 
         mRoom.updateUsers(users);
+    }
+
+    public void fireOnUserJoined() {
+        // Fire all the events for all the Users!
+        for ( UserJoinedListener listener: mUserJoinedListener) {
+            listener.onUserJoined();
+        }
+
+        mRoom.Flag_User_Joined = false;
     }
 
 
@@ -221,11 +218,6 @@ public class RoomAdapter implements Parcelable{
      */
     public void joinRoom(User user) {
         addUserToRoom(user);
-
-        // Fire all the events for all the Users!
-        for ( UserJoinedListener listener: mUserJoinedListener) {
-            listener.onUserJoined();
-        }
     }
 
     /**
@@ -323,6 +315,9 @@ public class RoomAdapter implements Parcelable{
         if(mRoom.isDoneWithVoting()){
             fireOnVoteReady();
         }
+
+        if(mRoom.Flag_User_Joined)
+            fireOnVoteReady();
     }
 
     /**
