@@ -12,12 +12,14 @@ import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DaySecond extends AppCompatActivity {
     private List<User> userList;
     private User currentPlayer;
     private RoomAdapter mRoom;
     private User target;
+    private Map<User, Integer> topMap;
     private final String TAG = "DaySecond";
 
     @Override
@@ -31,7 +33,9 @@ public class DaySecond extends AppCompatActivity {
 
         currentPlayer = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
+        topMap = getIntent().getExtras().getParcelable("Map");
 
+        //getMap put it into an array list
         userList = mRoom.getUsers();
 
         final ArrayList<User> aliveUsers = new ArrayList<>();

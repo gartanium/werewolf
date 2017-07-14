@@ -1,6 +1,7 @@
 package com.qd8s.werewolf2;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +13,15 @@ import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DayMain extends AppCompatActivity {
     private List<User> userList;
+    private List<User> aliveUsers;
     private User currentPlayer;
     private RoomAdapter mRoom;
     private User target;
+    private Map<User, Integer> topMap;
     private final String TAG = "DayMain";
 
     @Override
@@ -34,7 +38,7 @@ public class DayMain extends AppCompatActivity {
 
         userList = mRoom.getUsers();
 // get the mUser data from FireBase!
-        final ArrayList<User> aliveUsers = new ArrayList<>();
+        aliveUsers = new ArrayList<>();
         for (int i = 0; i < userList.size(); i++)
         {
             if (userList.get(i).isAlive())
@@ -65,6 +69,11 @@ public class DayMain extends AppCompatActivity {
     }
 
     public void onReadyDaySecond(View view) {
+
+
+        Day dayGetNominees = new Day();
+        topMap = dayGetNominees.voteCounter(aliveUsers);
+        topMap = dayGetNominees.getTopNominees(topMap);
         //currentPlayer.setState(User.UserState.DoneWithNight);
         Log.v(TAG, "Entering onReadyDaySecond");
         // NOTE!!!!!!!!!!!!!!!!!!
@@ -77,6 +86,7 @@ public class DayMain extends AppCompatActivity {
         Intent intent = new Intent(this, DaySecond.class);
         intent.putExtra("Client_Data", currentPlayer);
         intent.putExtra("Room_Data", mRoom);
+        intent.putExtra("Map", (Parcelable) topMap);
         Log.v(TAG, "Starting day second");
         startActivity(intent);
 
