@@ -27,52 +27,8 @@ import java.util.List;
 
 public class RoomAdapter implements Parcelable{
 
-    // A list of ReadyListners that get a function called whenever update
-    // Updates.
-    private List<RoomStartListener> mRoomStartListeners = new ArrayList<RoomStartListener>();
 
-    private List<VotingEventListener> mVotingEventListeners = new ArrayList<>();
-    /**
-     * A list of listeners for whenever every user is done with the Night.
-     */
-    private List<NightFinishedListener> mNightFinishedListeners = new ArrayList<>();
 
-    private List<UserJoinedListener> mUserJoinedListener = new ArrayList<>();
-
-    /**
-     * Add a listener to the RoomAdapater!
-     */
-    public void addListener(RoomStartListener listener) { mRoomStartListeners.add(listener);}
-    public void addListener(NightFinishedListener listener) { mNightFinishedListeners.add(listener);}
-    public void addListener(UserJoinedListener listener) { mUserJoinedListener.add(listener);}
-    public void addListener(VotingEventListener listener) { mVotingEventListeners.add(listener);}
-
-    public void fireOnRoomStart() {
-
-    }
-
-    public void fireOnVoteReady(){
-        for(VotingEventListener listener: mVotingEventListeners) {
-            listener.onVoteFinished();
-        }
-
-        List<User> users = mRoom.getUsers();
-
-        for(User u : users) {
-            u.set_voteReady(false);
-        }
-
-        mRoom.updateUsers(users);
-    }
-
-    public void fireOnUserJoined() {
-        // Fire all the events for all the Users!
-        for ( UserJoinedListener listener: mUserJoinedListener) {
-            listener.onUserJoined();
-        }
-
-        mRoom.Flag_User_Joined = false;
-    }
 
 
     // A reference to the room in Firebase
@@ -93,6 +49,9 @@ public class RoomAdapter implements Parcelable{
     // Tag for debugging.
     private static final String TAG = "FireBaseHandler";
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ERROR MESSAGES
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // Name of the Master list that all things get published to.
     private static final String MASTERLIST = "MasterList";
 
@@ -102,6 +61,61 @@ public class RoomAdapter implements Parcelable{
     // Error message when methods are illegaly called, and mRoom is null.
     private static final String BADACCESSATEMPT =
             "ERROR: Client has not joined a room! Did you forget to call the join/hostRoom funcs?";
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // EVENTS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private List<RoomStartListener> mRoomStartListeners = new ArrayList<RoomStartListener>();
+    private List<VotingEventListener> mVotingEventListeners = new ArrayList<>();
+    private List<NightFinishedListener> mNightFinishedListeners = new ArrayList<>();
+    private List<UserJoinedListener> mUserJoinedListener = new ArrayList<>();
+    private List<FirebaseConnectedListener> mFirebaseConnectedListeners = new ArrayList<>();
+
+    public void addListener(RoomStartListener listener) { mRoomStartListeners.add(listener);}
+    public void addListener(NightFinishedListener listener) { mNightFinishedListeners.add(listener);}
+    public void addListener(UserJoinedListener listener) { mUserJoinedListener.add(listener);}
+    public void addListener(VotingEventListener listener) { mVotingEventListeners.add(listener);}
+    public void addListener(FirebaseConnectedListener listener) { mFirebaseConnectedListeners.add(listener);}
+
+    private boolean mFlag_User_connected;
+    private boolean mFlag_User_Joined;
+
+    public void fireOnRoomStart() {
+
+    }
+
+    private void fireOnVoteReady(){
+        for(VotingEventListener listener: mVotingEventListeners) {
+            listener.onVoteFinished();
+            Log.v(TAG, "Firing: On Vote finished!");
+        }
+
+        List<User> users = mRoom.getUsers();
+
+        for(User u : users) {
+            u.set_voteReady(false);
+        }
+
+        mRoom.updateUsers(users);
+    }
+
+    private void fireOnUserJoined() {
+        // Fire all the events for all the Users!
+        for ( UserJoinedListener listener: mUserJoinedListener) {
+            listener.onUserJoined();
+            Log.v(TAG, "Firing: On User Joined!");
+        }
+
+        mFlag_User_Joined = false;
+    }
+
+    private void fireOnFirebaseConnected() {
+        mFlag_User_connected = true;
+        for ( FirebaseConnectedListener listener: mFirebaseConnectedListeners) {
+            Log.v(TAG, "Firing: onFirebaseConnected");
+            listener.onConnected();
+        }
+    }
 
     /**
      * @return Returns if the local client is connected to Firebase.
@@ -172,6 +186,8 @@ public class RoomAdapter implements Parcelable{
     public RoomAdapter() {
         mRoom = null;
         mRef = null;
+        mFlag_User_connected = false;
+        mFlag_User_Joined = false;
      }
 
      /**
@@ -270,6 +286,8 @@ public class RoomAdapter implements Parcelable{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+
                 // Get the serialized data from Firebase
                 String roomJson = dataSnapshot.getValue(String.class);
                 Gson gson = new Gson();
@@ -312,12 +330,16 @@ public class RoomAdapter implements Parcelable{
             }
         }
 
-        if(mRoom.isDoneWithVoting()){
+        if(mRoom.isDoneWithVoting())
             fireOnVoteReady();
-        }
 
         if(mRoom.Flag_User_Joined)
-            fireOnVoteReady();
+            fireOnUserJoined();
+
+
+        // Set to true if we are connected!
+        if(mFlag_User_connected == false)
+            fireOnFirebaseConnected();
     }
 
     /**
@@ -427,10 +449,14 @@ public class RoomAdapter implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(mRoom, flags);
+        dest.writeByte((byte)(mFlag_User_connected ? 1 : 0));
+        dest.writeByte((byte)(mFlag_User_Joined ? 1 : 0));
     }
 
     protected RoomAdapter(Parcel in) {
         mRoom = in.readParcelable(Room.class.getClassLoader());
+        mFlag_User_connected = in.readByte() != 0;
+        mFlag_User_Joined = in.readByte() != 0;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mRef = database.getReference(MASTERLIST).child(mRoom.getID());
         addEventListener(mRef);
