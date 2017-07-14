@@ -5,41 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context="com.qd8s.werewolf2.MainActivity"
+    tools:context="com.qd8s.werewolf2.GameMenu"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
 
     <Button
         android:id="@+id/howToPlayButton"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="@string/How_To_Play"
         android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/How_To_Play"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/joinGameButton"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:onClick="startJoinGame"
         android:text="@string/Join_Game_Text"
+        app:layout_constraintBottom_toTopOf="@+id/howToPlayButton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/howToPlayButton" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/hostGameButton"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:onClick="startHostGame"
         android:text="@string/Host_Game_Text"
+        app:layout_constraintBottom_toTopOf="@+id/joinGameButton"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/welcomeView"
+        android:layout_width="240dp"
+        android:layout_height="158dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/Error_Msg"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="40sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/joinGameButton" />
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

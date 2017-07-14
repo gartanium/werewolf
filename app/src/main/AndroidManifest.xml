@@ -9,18 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".HostGame" />
         <activity android:name=".JoinGame" />
-        <activity android:name=".GameLobby" />
-        <activity android:name=".DayNight"/>
-        <activity android:name=".RoleDescription"/>
+        <activity android:launchMode="singleInstance"
+                  android:name=".GameLobby" />
+        <activity android:launchMode="singleInstance"
+                  android:name=".RoleDescription" />
+        <activity android:name=".GameMenu" />
+        <activity android:name=".NightDoc" />
+        <activity android:name=".NightVillager" />
+        <activity android:name=".NightWolf" />
+        <activity android:name=".WinScreen" />
+        <activity android:name=".DayMain" />
+        <activity android:name=".DaySecond"/>
+        <activity android:name=".LoseScreen"/>
     </application>
 
 </manifest>
