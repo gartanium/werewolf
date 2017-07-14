@@ -53,7 +53,7 @@ public class DaySecond extends AppCompatActivity {
                 currentPlayer.setTarget(target);
                 Log.d("Listener", currentPlayer.getTarget().getName());
                 for (int i = 0; i < aliveUsers.size(); i++) {
-                    if (currentPlayer.getName() == aliveUsers.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
+                    if (currentPlayer.getName().equals(aliveUsers.get(i).getName()) && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
                         aliveUsers.get(i).setTarget(currentPlayer.getTarget());
                         aliveUsers.get(i).set_voteReady(true);
                     }

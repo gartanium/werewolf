@@ -95,7 +95,7 @@ public class GameLobby extends AppCompatActivity {
 
                 numPlayers = players.size();
                 //doc = true;
-                numWolfs = numPlayers / 4;
+                numWolfs = numPlayers / 3;
                 //randomNum = new Random();
                 numAssignedRoles = 0;
                 //int count = 0;

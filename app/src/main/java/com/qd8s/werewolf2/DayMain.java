@@ -53,9 +53,15 @@ public class DayMain extends AppCompatActivity {
                 currentPlayer.setTarget(target);
                 Log.d("Listener", currentPlayer.getTarget().getName());
                 for (int i = 0; i < aliveUsers.size(); i++) {
-                    if (currentPlayer.getName() == aliveUsers.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
+                    Log.v("Testing inside forloop", aliveUsers.get(i).getName());
+                    Log.v("Testing vote Ready", String.valueOf(currentPlayer.is_voteReady()));
+                    Log.v("Testing Is Alive", String.valueOf(currentPlayer.isAlive()));
+                    if (currentPlayer.getName().equals(aliveUsers.get(i).getName()) && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
+                        Log.v("Testing inside if", aliveUsers.get(i).getName());
                         aliveUsers.get(i).setTarget(currentPlayer.getTarget());
                         aliveUsers.get(i).set_voteReady(true);
+                        Log.v("Testing User", currentPlayer.getName());
+                        Log.v("Testing Target", currentPlayer.getTarget().getName());
                     }
                 }
                 for (int i = 0; i < userList.size(); i++){

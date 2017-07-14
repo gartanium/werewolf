@@ -53,7 +53,7 @@ public class NightDoc extends AppCompatActivity {
                 mUser.setTarget(target);
                 Log.d("Listener", mUser.getTarget().getName());
                 for (int i = 0; i < aliveUsers.size(); i++) {
-                    if (mUser.getName() == aliveUsers.get(i).getName() && mUser.is_voteReady() == false && mUser.isAlive() == true) {
+                    if (mUser.getName().equals(aliveUsers.get(i).getName()) && mUser.is_voteReady() == false && mUser.isAlive() == true) {
                         aliveUsers.get(i).setTarget(mUser.getTarget());
                         aliveUsers.get(i).set_voteReady(true);
                     }
