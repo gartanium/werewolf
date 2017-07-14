@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.qd8s.werewolf2.User;
 
-//Google Inc. All Rights Reserved.
+//got help from google inc. and android studio.com
 public class Authentication extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = "firebase";
@@ -49,7 +49,6 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
         super.onStart();
         // Check if mUser is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
 
     }
 
@@ -67,14 +66,16 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
                             // Sign in success, update UI with the signed-in mUser's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            //goes to the next activity
+                            startGameMenu();
+
 
                         } else {
                             // If sign in fails, display a message to the mUser.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(Authentication.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+
 
                         }
 
@@ -96,15 +97,14 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
                             // Sign in success, update UI with the signed-in mUser's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            //goes to the next activity
+                            startGameMenu();
 
                         } else {
                             // If sign in fails, display a message to the mUser.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Authentication.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-
                         }
 
                         // [START_EXCLUDE]
@@ -119,6 +119,7 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
     private boolean validateForm() {
         boolean valid = true;
 
+        //checks if the email is empty
         String email = userEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
             userEmail.setError("Required.");
@@ -127,6 +128,7 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
             userEmail.setError(null);
             }
 
+        //checks if the password is empty
         String password = userPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
             userPassword.setError("Required.");
@@ -135,6 +137,7 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
             userPassword.setError(null);
         }
 
+        //checks if the username is empty
         String name = userName.getText().toString();
         if (TextUtils.isEmpty(name)){
             userName.setError("required.");
@@ -157,28 +160,6 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
         startActivity(intent);
     }
 
-    private void updateUI(FirebaseUser user) {
-        /*hideProgressDialog();
-        if (mUser != null) {
-            mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-                    mUser.getEmail(), mUser.isEmailVerified()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, mUser.getUid()));
-
-            findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
-            findViewById(R.id.email_password_fields).setVisibility(View.GONE);
-            findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
-
-            findViewById(R.id.verify_email_button).setEnabled(!mUser.isEmailVerified());
-        } else {
-            mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
-
-            findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
-            findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
-            findViewById(R.id.signed_in_buttons).setVisibility(View.GONE);
-        }*/
-    }
-
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -189,14 +170,17 @@ public class Authentication extends AppCompatActivity implements View.OnClickLis
         if (i == R.id.newUser) {
             createAccount(userEmail.getText().toString(), userPassword.getText().toString());
             System.out.println("i am here new account");
-            if ( !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
-                startGameMenu();}
+
+            /*if ( !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)){
+                //startGameMenu();
+            }*/
         } else if (i == R.id.Authenticate_Button) {
             signIn(userEmail.getText().toString(), userPassword.getText().toString());
             System.out.println("i am here exsisting account");
-            if ( !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)) {
-                startGameMenu();
-            }
+
+            /*if ( !TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(email)) {
+                //startGameMenu();
+            }*/
         }
     }
 

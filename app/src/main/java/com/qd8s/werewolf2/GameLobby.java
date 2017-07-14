@@ -133,7 +133,7 @@ public class GameLobby extends AppCompatActivity {
 
                 Log.v("RoleAssigner", "Attempting to update RoleDescriptions!");
                 mRoom.updateUsers(players);
-                
+
             }
 
 
