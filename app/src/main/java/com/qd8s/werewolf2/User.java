@@ -107,7 +107,8 @@ public class User implements Parcelable {
         _activityLocation = ActivityLocation.valueOf(in.readString());
         _immune = in.readByte() != 0;
         _actDone = in.readByte() != 0;
-        _target = in.readParcelable(User.class.getClassLoader());
+        //_target = in.readParcelable(User.class.getClassLoader());
+        _target = null;
         _isAlpha = in.readByte() != 0;
         _voteReady = in.readByte() != 0;
         _isHost = in.readByte() != 0;
@@ -225,7 +226,7 @@ public class User implements Parcelable {
         dest.writeString(_activityLocation.name());
         dest.writeByte((byte) (_immune ? 1 : 0));
         dest.writeByte((byte) (_actDone ? 1 : 0));
-        dest.writeParcelable(_target, flags);
+//        dest.writeParcelable(_target, flags);
         dest.writeByte((byte) (_isAlpha ? 1 : 0));
         dest.writeByte((byte) (_voteReady ? 1 : 0));
         dest.writeByte((byte) (_isHost ? 1 : 0));
