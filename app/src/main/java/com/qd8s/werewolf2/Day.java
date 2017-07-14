@@ -31,22 +31,22 @@ public class Day {
     public Map<User, Integer> getTopNominees(Map<User, Integer> nominees) {
         Map<User, Integer> topNominees = new HashMap<>();
         Integer topFirst = 0;
-        Integer topSecond = 0;
+        //Integer topSecond = 0;
         User topUser = new User();
-        User secondUser = new User();
+        //User secondUser = new User();
         for (Map.Entry<User, Integer> entry : nominees.entrySet()) {
             if (entry.getValue() >= topFirst) {
-                topSecond = topFirst;
+                //topSecond = topFirst;
                 topFirst = entry.getValue();
-                secondUser = topUser;
+                //secondUser = topUser;
                 topUser = entry.getKey();
-            } else if (entry.getValue() < topFirst & entry.getValue() > topSecond) {
+            } /*else if (entry.getValue() < topFirst & entry.getValue() > topSecond) {
                 topSecond = entry.getValue();
                 secondUser = entry.getKey();
-            }
+            }*/
         }
         topNominees.put(topUser, topFirst);
-        topNominees.put(secondUser, topSecond);
+        //topNominees.put(secondUser, topSecond);
         return topNominees;
     }
 

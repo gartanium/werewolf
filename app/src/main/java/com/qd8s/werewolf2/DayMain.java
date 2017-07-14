@@ -18,6 +18,7 @@ import java.util.Map;
 public class DayMain extends AppCompatActivity {
     private List<User> userList;
     private List<User> aliveUsers;
+    private Map<User, Integer> topMap;
     private User currentPlayer;
     private RoomAdapter mRoom;
     private User target;
@@ -68,6 +69,14 @@ public class DayMain extends AppCompatActivity {
     }
 
     public void onReadyDaySecond(View view) {
+        Day nextDay = new Day();
+        topMap = nextDay.voteCounter(aliveUsers);
+        topMap = nextDay.getTopNominees(topMap);
+        for (Map.Entry<User, Integer> entry : topMap.entrySet())
+        {
+            Log.v("Map Test", entry.getKey().getName() + "/" + entry.getValue());
+        }
+
 
         //currentPlayer.setState(User.UserState.DoneWithNight);
         Log.v(TAG, "Entering onReadyDaySecond");
