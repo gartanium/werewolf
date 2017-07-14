@@ -24,6 +24,8 @@ public class Room implements Parcelable {
     private final String ERROR_USER_ALREADY_IN_ROOM = "ERROR: User already in the room!";
     private final String ERROR_USER_ISNT_HOST = "ERROR: Only the host can start the room!";
 
+    public boolean Flag_User_Joined;
+
     /**
      * Returns a copy of the players data in the Room.
      * @return
@@ -104,6 +106,7 @@ public class Room implements Parcelable {
         mID = in.readString();
         mMaxPlayers = in.readInt();
         mReadyToStart = in.readByte() != 0;
+        Flag_User_Joined = in.readByte() != 0;
     }
 
     public static final Creator<Room> CREATOR = new Creator<Room>() {
@@ -127,6 +130,7 @@ public class Room implements Parcelable {
         mUsers = new ArrayList<User>();
         mID = "default_name";
         mReadyToStart = false;
+        Flag_User_Joined = false;
     }
 
     /**
@@ -139,6 +143,7 @@ public class Room implements Parcelable {
         mMaxPlayers = maxPlayers;
         mID = ID;
         mReadyToStart = false;
+        Flag_User_Joined = false;
     }
 
     /**
@@ -236,6 +241,7 @@ public class Room implements Parcelable {
         }
         else {
             mUsers.add(user);
+            Flag_User_Joined = true;
         }
     }
 
@@ -322,6 +328,7 @@ public class Room implements Parcelable {
         dest.writeString(mID);
         dest.writeInt(mMaxPlayers);
         dest.writeByte((byte) (mReadyToStart ? 1 : 0));
+        dest.writeByte((byte) (Flag_User_Joined ? 1 : 0));
     }
 
     public boolean isDoneWithVoting() {
