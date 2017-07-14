@@ -49,6 +49,7 @@ public class User implements Parcelable {
     private boolean _isHost;
     private UserState _state;
     private ActivityLocation _activityLocation;
+    private boolean _isNominated;
 
     //non-default constructor
     public User(String id, boolean alive, String role, String name, boolean immune, boolean actDone, User target, boolean isAlpha) {
@@ -81,6 +82,7 @@ public class User implements Parcelable {
         _id = "";
         this._state = UserState.Idle;
         this._activityLocation = ActivityLocation.Authentication;
+        _isNominated = false;
     }
 
     public User(String id, String name) {
@@ -96,6 +98,7 @@ public class User implements Parcelable {
         _id = id;
         this._state = UserState.Idle;
         this._activityLocation = ActivityLocation.Authentication;
+        _isNominated = false;
     }
 
     protected User(Parcel in) {
@@ -186,6 +189,9 @@ public class User implements Parcelable {
         return _actDone;
     }
 
+    public boolean isNominated() {
+        return _isNominated;
+    }
     public void setActDone(boolean actDone) {
         this._actDone = actDone;
     }
@@ -200,6 +206,10 @@ public class User implements Parcelable {
 
     public boolean is_voteReady() {
         return _voteReady;
+    }
+
+    public void setNominate(boolean _isNominated) {
+        this._isNominated = _isNominated;
     }
 
     public void set_voteReady(boolean _voteReady) {

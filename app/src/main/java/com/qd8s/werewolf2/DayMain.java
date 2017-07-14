@@ -72,12 +72,20 @@ public class DayMain extends AppCompatActivity {
         Day nextDay = new Day();
         topMap = nextDay.voteCounter(aliveUsers);
         topMap = nextDay.getTopNominees(topMap);
+        User testUser = null;
         for (Map.Entry<User, Integer> entry : topMap.entrySet())
         {
             Log.v("Map Test", entry.getKey().getName() + "/" + entry.getValue());
+            testUser = entry.getKey();
+            Log.v("Test User", testUser.getName());
         }
-
-
+        for (int i = 0; i < aliveUsers.size(); i++) {
+            if (testUser.getName().equals(aliveUsers.get(i).getName())) {
+                aliveUsers.get(i).setNominate(true);
+                Log.v("Test nominate", aliveUsers.get(i).getName() + aliveUsers.get(i).isNominated());
+            }
+        }
+        mRoom.updateUsers(aliveUsers);
         //currentPlayer.setState(User.UserState.DoneWithNight);
         Log.v(TAG, "Entering onReadyDaySecond");
         // NOTE!!!!!!!!!!!!!!!!!!

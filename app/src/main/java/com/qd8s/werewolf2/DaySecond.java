@@ -41,6 +41,7 @@ public class DaySecond extends AppCompatActivity {
         final ArrayList<User> aliveUsers = new ArrayList<>();
         for (int i = 0; i < userList.size(); i++)
         {
+            Log.v("Testing the stupid", userList.get(i).getName() + String.valueOf(userList.get(i).isNominated()));
             if (userList.get(i).isAlive())
             {
                 aliveUsers.add(userList.get(i));
