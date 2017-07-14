@@ -270,7 +270,7 @@ public class RoomAdapter implements Parcelable{
         catch (IllegalStateException e) {
             Log.e(TAG, e.getMessage(), e);
         }
-    }
+     }
 
     /**
      * Connect to a room in firebase
@@ -363,9 +363,7 @@ public class RoomAdapter implements Parcelable{
                     mRoom.addUser(user);
 
                     // Serialize it, and send it up to Firebase.
-                    Gson gson = new Gson();
-                    String dataToFirebase = gson.toJson(mRoom);
-                    mRef.setValue(dataToFirebase);
+                    updateFirebase();
 
                     // Log for allowing us to know that the room updated.
                     logUserUpdateMsg("joining room!", user);
