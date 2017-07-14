@@ -86,7 +86,7 @@ public class DayMain extends AppCompatActivity {
         Intent intent = new Intent(this, DaySecond.class);
         intent.putExtra("Client_Data", currentPlayer);
         intent.putExtra("Room_Data", mRoom);
-        intent.putExtra("Map", (Parcelable) topMap);
+        //intent.putExtra("Map", topMap);
         Log.v(TAG, "Starting day second");
         startActivity(intent);
 

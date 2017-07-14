@@ -19,26 +19,36 @@
 
     <TextView
         android:id="@+id/userRole"
-        android:layout_width="104dp"
-        android:layout_height="20dp"
+        android:layout_width="236dp"
+        android:layout_height="90dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="40sp"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="52dp"
+        tools:text="Doc" />
 
     <TextView
         android:id="@+id/description"
-        android:layout_width="199dp"
-        android:layout_height="216dp"
+        android:layout_width="240dp"
+        android:layout_height="272dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/enterTownButton"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userRole" />
+        app:layout_constraintTop_toBottomOf="@+id/userRole"
+        tools:layout_editor_absoluteX="52dp"
+        tools:text="Lorem ipsum dolor sit amet, nulla lobortis nibh justo eget, porttitor fusce massa donec eu nulla, eu rhoncus, dui integer, urna morbi perferendis mauris nec eleifend pede. Auctor sed, amet sapien lorem ac a, odio sed lacinia in, id vestibulum blandit et mauris suscipit. Sed purus nulla. Interdum et luctus orci volutpat non at" />
 </android.support.constraint.ConstraintLayout>
