@@ -19,7 +19,7 @@ public class NightDoc extends AppCompatActivity {
     private User mUser;
     private RoomAdapter mRoom;
     private User target;
-    private final String TAG = "NightDoc";
+    private final String TAG = "NightDocActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,35 +64,33 @@ public class NightDoc extends AppCompatActivity {
         });
 
 
-        /*mRoom.addListener(new NightFinishedListener() {
+        mRoom.addListener(new NightFinishedListener() {
             @Override
             public void onNightFinished() {
+
+                // NOTE!!!!!!!!!!!!!!!!!!
+                // When ever the User updates,
+                // Because of our event up above,
+                // A check goes to see if everyone is ready.
+                // If everyone is ready, then it moves to the next Lobby!
+                // I hope.
                 Intent intent = new Intent(getBaseContext(), DayMain.class);
                 intent.putExtra("Client_Data", mUser);
                 intent.putExtra("Room_Data", mRoom);
+                Log.v(TAG, "Starting day for the doctor ");
                 startActivity(intent);
             }
-        });*/
+        });
     }
     //TODO:an onclick that sets the target of the given user to the user they click on
 
 
     // TODO: Put logic here for when the User hits the ready button.
     public void onReadyButton(View view) {
-       // mUser.setState(User.UserState.DoneWithNight);
 
-        // NOTE!!!!!!!!!!!!!!!!!!
-        // When ever the User updates,
-        // Because of our event up above,
-        // A check goes to see if everyone is ready.
-        // If everyone is ready, then it moves to the next Lobby!
-        // I hope.
+        mUser.setState(User.UserState.DoneWithNight);
         mRoom.updateUser(mUser);
-        Intent intent = new Intent(this, DayMain.class);
-        intent.putExtra("Client_Data", mUser);
-        intent.putExtra("Room_Data", mRoom);
-        Log.v(TAG, "Starting day for the doctor ");
-        startActivity(intent);
+        mRoom.finishNight(mUser);
 
     }
 

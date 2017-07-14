@@ -25,6 +25,8 @@ public class Room implements Parcelable {
     private final String ERROR_USER_ISNT_HOST = "ERROR: Only the host can start the room!";
 
     public boolean Flag_User_Joined;
+    public boolean Flag_Move_To_Day;
+    public boolean Flag_Move_To_Night;
 
     /**
      * Returns a copy of the players data in the Room.
@@ -107,6 +109,8 @@ public class Room implements Parcelable {
         mMaxPlayers = in.readInt();
         mReadyToStart = in.readByte() != 0;
         Flag_User_Joined = in.readByte() != 0;
+        Flag_Move_To_Day = in.readByte() != 0;
+        Flag_Move_To_Night = in.readByte() != 0;
     }
 
     public static final Creator<Room> CREATOR = new Creator<Room>() {
@@ -329,6 +333,8 @@ public class Room implements Parcelable {
         dest.writeInt(mMaxPlayers);
         dest.writeByte((byte) (mReadyToStart ? 1 : 0));
         dest.writeByte((byte) (Flag_User_Joined ? 1 : 0));
+        dest.writeByte((byte) (Flag_Move_To_Day ? 1 : 0));
+        dest.writeByte((byte) (Flag_Move_To_Night ? 1 : 0));
     }
 
     public boolean isDoneWithVoting() {

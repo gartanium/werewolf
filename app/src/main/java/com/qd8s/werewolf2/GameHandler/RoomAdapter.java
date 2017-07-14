@@ -117,6 +117,16 @@ public class RoomAdapter implements Parcelable{
         }
     }
 
+    private void fireOnNightFinshed() {
+
+        for ( NightFinishedListener listener : mNightFinishedListeners) {
+            listener.onNightFinished();
+        }
+
+        mRoom.Flag_Move_To_Night = false;
+    }
+
+
     /**
      * @return Returns if the local client is connected to Firebase.
      */
@@ -323,11 +333,9 @@ public class RoomAdapter implements Parcelable{
         }
 
         // If everyone in the Room is finished with Night, fire the event!
-        if(mRoom.isDoneWithNight())
+        if(mRoom.Flag_Move_To_Night)
         {
-            for (NightFinishedListener listener: mNightFinishedListeners) {
-                listener.onNightFinished();
-            }
+            fireOnNightFinshed();
         }
 
         if(mRoom.isDoneWithVoting())
@@ -431,6 +439,22 @@ public class RoomAdapter implements Parcelable{
     }
 
     /**
+     * Attempts to finish the night cycle. Requires that user is a host.
+     * @param user
+     */
+    public void finishNight(User user) {
+        if(user.isHost()) {
+            // Fire event, on night finished.
+            if(mRoom.isDoneWithNight()) {
+                mRoom.Flag_Move_To_Night = true;
+                updateFirebase();
+            }
+
+        }
+    }
+
+
+    /**
      * Check to see if all the players are ready to transition to the next activity!
      * @return
      */
@@ -482,5 +506,16 @@ public class RoomAdapter implements Parcelable{
      */
     private void logUserUpdateMsg(String msg, User user) {
         Log.v(TAG, "Room: " + mRoom.getID() + " User: " + user.getID() + " " + msg);
+    }
+
+    /**
+     * Updates the data to firebase.
+     */
+    private void updateFirebase() {
+        Gson gson = new Gson();
+        String data = gson.toJson(mRoom);
+        mRef.setValue(data);
+
+
     }
 }
