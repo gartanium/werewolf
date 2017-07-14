@@ -63,15 +63,8 @@ public class NightWolf extends AppCompatActivity {
                         aliveUsers.get(i).set_voteReady(true);
                     }
                 }
-                for (int i = 0; i < userList.size(); i++){
-                    for (int j = 0; j < aliveUsers.size(); j++){
-                        if (userList.get(i).getName().equals(aliveUsers.get(j).getName())) {
-                            userList.set(i, aliveUsers.get(j));
-                            break;
-                        }
-                    }
-                }
-                mRoom.updateUsers(userList);
+
+                mRoom.updateUsers(aliveUsers);
             }
         });
 
