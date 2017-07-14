@@ -33,12 +33,7 @@ public class DaySecond extends AppCompatActivity {
 
         currentPlayer = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
-//        topMap = getIntent().getExtras().getParcelable("Map");
-//
-//        for (Map.Entry<User, Integer> entry : topMap.entrySet())
-//        {
-//            Log.v("MAP!", entry.getKey().getName() + "/" + entry.getValue());
-//        }
+
 
         //getMap put it into an array list
         userList = mRoom.getUsers();
