@@ -51,28 +51,29 @@ public class RoleDescription extends AppCompatActivity {
         role.setText(user.getRole());
 
         if (user.getRole().equals("doc")){
-            des = "As Doc you will have the chance during each night to make" +
-                    " one person immune from death during the night." +
-                    " During the day you will trying to vote for and kill the wolfs" +
-                    " befeore wolfs win.";
+            des = "As the Doc you will have the chance every night to make" +
+                    " one person immune from death for only that night." +
+                    " During the day you will try to determine who the wolf is. " +
+                    " Your goal is to find all the wolves.";
 
             descriptions = (TextView) findViewById(R.id.description);
             descriptions.setText(des);
         }
         else if (user.getRole().equals("wolf"))
         {
-            des = "As a Wolf you and if there are other wolfs you will pick someone to kill" +
-                    " every night. During the day you will vote to trying to get them to kill" +
-                    " more villagers and not a wolf.";
+            des = "As a Wolf and any additional wolves will pick someone to kill" +
+                    " every night. During the day you will try to avert suspicion so" +
+                    " you won't be killed. Your goal is to have only the wolves survive.";
 
             descriptions = (TextView) findViewById(R.id.description);
             descriptions.setText(des);
         }
         else
         {
-            des = "As a villager during the night you will just click the button that" +
-                    " says you a villager. During the day will particapate in voting to try" +
-                    " to kill a wolf";
+            des = "As a villager you will want to say your prayers at night, that" +
+                    " is when the wolves come to attack. During the day will try to" +
+                    " figure out who the wolf is and vote them to be killed off." +
+                    " Your goal is to find all the wolves.";
             descriptions = (TextView) findViewById(R.id.description);
             descriptions.setText(des);
         }

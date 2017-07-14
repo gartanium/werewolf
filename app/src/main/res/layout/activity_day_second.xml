@@ -8,14 +8,14 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="230dp"
-        android:layout_height="68dp"
+        android:layout_width="267dp"
+        android:layout_height="61dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/Day_Second"
+        android:text="@string/Day_Text"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="45sp"
@@ -30,20 +30,22 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/Day_Second_Info_Text"
+        android:text="@string/Day_2_text"
         android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintHorizontal_bias="0.512" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:onClick="goToNight"
         android:text="@string/Day_Second_Button"
@@ -51,19 +53,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView3"
-        app:layout_constraintVertical_bias="0.555" />
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <ListView
         android:id="@+id/listView3"
-        android:layout_width="323dp"
-        android:layout_height="282dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="250dp"
+        android:layout_height="283dp"
         android:layout_marginTop="8dp"
         android:background="@color/Player_Listview_Color"
         android:divider="@color/common_google_signin_btn_text_dark_focused"
         android:dividerHeight="2sp"
-        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />

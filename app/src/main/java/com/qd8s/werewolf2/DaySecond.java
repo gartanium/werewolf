@@ -12,12 +12,14 @@ import com.qd8s.werewolf2.GameHandler.RoomAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DaySecond extends AppCompatActivity {
     private List<User> userList;
     private User currentPlayer;
     private RoomAdapter mRoom;
     private User target;
+    private Map<User, Integer> topMap;
     private final String TAG = "DaySecond";
 
     @Override
@@ -32,24 +34,36 @@ public class DaySecond extends AppCompatActivity {
         currentPlayer = getIntent().getExtras().getParcelable("Client_Data");
         mRoom = getIntent().getExtras().getParcelable("Room_Data");
 
+
+        //getMap put it into an array list
         userList = mRoom.getUsers();
+
+        final ArrayList<User> aliveUsers = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++)
+        {
+            if (userList.get(i).isAlive())
+            {
+                aliveUsers.add(userList.get(i));
+            }
+        }
 // get the mUser data from FireBase!
         ListView listview = (ListView) findViewById(R.id.listView3);
-        UserListAdapter adapter = new UserListAdapter(this, userList);
+        UserListAdapter adapter = new UserListAdapter(this, aliveUsers);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                target = userList.get(position);
+                target = aliveUsers.get(position);
                 currentPlayer.setTarget(target);
                 Log.d("Listener", currentPlayer.getTarget().getName());
-                for (int i = 0; i < userList.size(); i++) {
-                    if (currentPlayer.getName() == userList.get(i).getName() && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
-                        userList.get(i).setTarget(currentPlayer.getTarget());
-                        userList.get(i).set_voteReady(true);
+                for (int i = 0; i < aliveUsers.size(); i++) {
+                    if (currentPlayer.getName().equals(aliveUsers.get(i).getName()) && currentPlayer.is_voteReady() == false && currentPlayer.isAlive() == true) {
+                        aliveUsers.get(i).setTarget(currentPlayer.getTarget());
+                        aliveUsers.get(i).set_voteReady(true);
                     }
                 }
-                mRoom.updateUsers(userList);
+
+                mRoom.updateUsers(aliveUsers);
             }
         });
     }

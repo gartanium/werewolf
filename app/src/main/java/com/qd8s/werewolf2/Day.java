@@ -2,6 +2,7 @@ package com.qd8s.werewolf2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Map;
  */
 //
 public class Day {
-    public Map<User, Integer> voteCounter(ArrayList<User> userList) {
+    public Map<User, Integer> voteCounter(List<User> userList) {
         Map<User, Integer> userVotes = new HashMap<>();
         User nominee = new User();
         for (int i = 0; i < userList.size(); i++) {

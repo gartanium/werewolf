@@ -12,7 +12,7 @@
 
     <Button
         android:id="@+id/howToPlayButton"
-        android:layout_width="@dimen/default_button_width"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/How_To_Play"
@@ -22,7 +22,7 @@
 
     <Button
         android:id="@+id/joinGameButton"
-        android:layout_width="@dimen/default_button_width"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:onClick="startJoinGame"
@@ -33,7 +33,7 @@
 
     <Button
         android:id="@+id/hostGameButton"
-        android:layout_width="@dimen/default_button_width"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:onClick="startHostGame"
@@ -45,11 +45,13 @@
 
     <TextView
         android:id="@+id/welcomeView"
-        android:layout_width="@dimen/default_button_width"
-        android:layout_height="@dimen/Text_Box_Size"
-        android:layout_marginTop="16dp"
+        android:layout_width="240dp"
+        android:layout_height="158dp"
+        android:layout_marginTop="56dp"
         android:text="@string/Error_Msg"
-        android:textSize="@dimen/Text_View_Font_Size"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="40sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

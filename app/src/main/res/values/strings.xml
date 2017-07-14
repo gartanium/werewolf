@@ -35,6 +35,13 @@
     <string name="Night_Vil_button">Yes, I am a Villager.</string>
     <string name="Download_Lobby">Download Lobby</string>
     <string name="Day_Second">Day Second</string>
+    <string name="Day_Text">Day</string>
+    <string name="Day_2_text">This is your last chance to choose correctly!</string>
+    <string name="Day_m_text">Nominate who you think is the wolf. Choose carefully!</string>
+    <string name="Night_Text">Night</string>
+    <string name="Night_Doc_Text">Pick a lucky soul you will save tonight.</string>
+    <string name="Night_Vill_Text">Sleep tight, and don\'t let the werewolves bite!</string>
+    <string name="Night_Wolf_Text">Let the hunt begin! Who will be gone by morning?</string>
 </resources>
 
 
