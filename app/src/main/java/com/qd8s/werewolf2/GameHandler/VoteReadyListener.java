@@ -5,4 +5,5 @@ package com.qd8s.werewolf2.GameHandler;
  */
 
 public interface VoteReadyListener {
+    public void onVoteReady();
 }

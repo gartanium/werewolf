@@ -31,6 +31,7 @@ public class RoomAdapter implements Parcelable{
     // Updates.
     private List<RoomStartListener> mRoomStartListeners = new ArrayList<RoomStartListener>();
 
+    private List<VotingEventListener> mVotingEventListeners = new ArrayList<>();
     /**
      * A list of listeners for whenever every user is done with the Night.
      */
@@ -56,6 +57,26 @@ public class RoomAdapter implements Parcelable{
      * @param listener
      */
     public void addListener(UserJoinedListener listener) { mUserJoinedListener.add(listener);}
+
+    public void addListener(VotingEventListener listener) { mVotingEventListeners.add(listener);}
+
+    public void fireOnRoomStart() {
+
+    }
+    public void fireOnVoteReady(){
+        for(VotingEventListener listener: mVotingEventListeners) {
+            listener.onVoteFinished();
+        }
+
+        List<User> users = mRoom.getUsers();
+
+        for(User u : users) {
+            u.set_voteReady(false);
+        }
+
+        mRoom.updateUsers(users);
+    }
+
 
     // A reference to the room in Firebase
     private DatabaseReference mRef;
@@ -297,6 +318,10 @@ public class RoomAdapter implements Parcelable{
             for (NightFinishedListener listener: mNightFinishedListeners) {
                 listener.onNightFinished();
             }
+        }
+
+        if(mRoom.isDoneWithVoting()){
+            fireOnVoteReady();
         }
     }
 
