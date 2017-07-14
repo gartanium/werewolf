@@ -45,8 +45,8 @@
 
     <TextView
         android:id="@+id/welcomeView"
-        android:layout_width="@dimen/default_button_width"
-        android:layout_height="@dimen/Text_Box_Size"
+        android:layout_width="254dp"
+        android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:text="@string/Error_Msg"
         android:textSize="@dimen/Text_View_Font_Size"

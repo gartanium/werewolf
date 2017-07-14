@@ -50,7 +50,7 @@ public class RoleDescription extends AppCompatActivity {
         role = (TextView) findViewById(R.id.userRole);
         role.setText(user.getRole());
 
-        if (user.getRole().equals("doc")){
+        if (user.getRole().equals("Doctor")) {
             des = "As Doc you will have the chance during each night to make" +
                     " one person immune from death during the night." +
                     " During the day you will trying to vote for and kill the wolfs" +
@@ -58,8 +58,7 @@ public class RoleDescription extends AppCompatActivity {
 
             descriptions = (TextView) findViewById(R.id.description);
             descriptions.setText(des);
-        }
-        else if (user.getRole().equals("wolf"))
+        } else if (user.getRole().equals("Werewolf"))
         {
             des = "As a Wolf you and if there are other wolfs you will pick someone to kill" +
                     " every night. During the day you will vote to trying to get them to kill" +
@@ -83,21 +82,21 @@ public class RoleDescription extends AppCompatActivity {
     public void startDayNight(View view) {
 
 
-        if (user.getRole().equals("wolf")) {
+        if (user.getRole().equals("Werewolf")) {
             Intent intent = new Intent(this, NightWolf.class);
             intent.putExtra("Client_Data", user);
             intent.putExtra("Room_Data", mRoom);
             Log.v(TAG, "Starting night for wolf!");
             startActivity(intent);
         }
-        if (user.getRole().equals("doc")) {
+        if (user.getRole().equals("Doctor")) {
             Intent intent = new Intent(this, NightDoc.class);
             intent.putExtra("Client_Data", user);
             intent.putExtra("Room_Data", mRoom);
             Log.v(TAG, "Starting night for doc!");
             startActivity(intent);
         }
-        if (user.getRole().equals("villager")) {
+        if (user.getRole().equals("Villager")) {
             Intent intent = new Intent(this, NightVillager.class);
             intent.putExtra("Client_Data", user);
             intent.putExtra("Room_Data", mRoom);

@@ -102,16 +102,16 @@ public class GameLobby extends AppCompatActivity {
 
                 //adds wolf role
                 for (int i = 0; i < numWolfs; i++) {
-                    roles.add("wolf");
+                    roles.add("Werewolf");
                     numAssignedRoles++;
                 }
                 //add doc role
-                roles.add("doc");
+                roles.add("Doctor");
                 numAssignedRoles++;
 
                 //adds villagers role
                 for (int i = numAssignedRoles; i < numPlayers; i++) {
-                    roles.add("villager");
+                    roles.add("Villager");
                     numAssignedRoles++;
                 }
 

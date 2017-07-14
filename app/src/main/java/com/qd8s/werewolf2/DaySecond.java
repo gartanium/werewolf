@@ -58,36 +58,28 @@ public class DaySecond extends AppCompatActivity {
                         aliveUsers.get(i).set_voteReady(true);
                     }
                 }
-                for (int i = 0; i < userList.size(); i++){
-                    for (int j = 0; j < aliveUsers.size(); j++){
-                        if (userList.get(i).getName().equals(aliveUsers.get(j).getName())) {
-                            userList.set(i, aliveUsers.get(j));
-                            break;
-                        }
-                    }
-                }
-                mRoom.updateUsers(userList);
+                mRoom.updateUsers(aliveUsers);
             }
         });
     }
 
     public void goToNight(View view) {
         Log.v(TAG, "In go to Night");
-        if (currentPlayer.getRole().equals("wolf")) {
+        if (currentPlayer.getRole().equals("Werewolf")) {
             Intent intent = new Intent(this, NightWolf.class);
             intent.putExtra("Client_Data", currentPlayer);
             intent.putExtra("Room_Data", mRoom);
             Log.v(TAG, "Starting night for wolf!");
             startActivity(intent);
         }
-        if (currentPlayer.getRole().equals("doc")) {
+        if (currentPlayer.getRole().equals("Doctor")) {
             Intent intent = new Intent(this, NightDoc.class);
             intent.putExtra("Client_Data", currentPlayer);
             intent.putExtra("Room_Data", mRoom);
             Log.v(TAG, "Starting night for doc!");
             startActivity(intent);
         }
-        if (currentPlayer.getRole().equals("villager")) {
+        if (currentPlayer.getRole().equals("Villager")) {
             Intent intent = new Intent(this, NightVillager.class);
             intent.putExtra("Client_Data", currentPlayer);
             intent.putExtra("Room_Data", mRoom);

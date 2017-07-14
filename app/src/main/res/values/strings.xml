@@ -22,11 +22,11 @@
     <string name="Master_List_Name">Master List</string>
     <string name="Day_Count_Main_Text">Day</string>
     <string name="Day_Count_Second_Text">Day</string>
-    <string name="Night_Count_Text">Night X</string>
+    <string name="Night_Count_Text">Night</string>
     <string name="Day_Main_Info_Text">Click on who you think the werewolf is.</string>
     <string name="Day_Second_Info_Text">Click on who you think the wolf is. If they have the most votes they will die.</string>
-    <string name="Night_Doc_Info_Text">Doc Instructions.</string>
-    <string name="Night_Wolf_Info_text">Wolf Insctructions</string>
+    <string name="Night_Doc_Info_Text">Choose someone to heal tonight.</string>
+    <string name="Night_Wolf_Info_text">Who will you hunt tonight? Choose someone to kill.</string>
     <string name="Night_Vil_Info_Text">Are You A Villager?</string>
     <string name="Day_Main_Button">Accept</string>
     <string name="Day_Second_Button">Accept</string>
