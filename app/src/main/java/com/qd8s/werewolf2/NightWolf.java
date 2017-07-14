@@ -84,21 +84,10 @@ public class NightWolf extends AppCompatActivity {
 
     // TODO: Put logic here for when the User hits the ready button.
     public void onReadyButton(View view) {
+
         mUser.setState(User.UserState.DoneWithNight);
-
-        // NOTE!!!!!!!!!!!!!!!!!!
-        // When ever the User updates,
-        // Because of our event up above,
-        // A check goes to see if everyone is ready.
-        // If everyone is ready, then it moves to the next Lobby!
-        // I hope.
         mRoom.updateUser(mUser);
-        Intent intent = new Intent(this, DayMain.class);
-        intent.putExtra("Client_Data", mUser);
-        intent.putExtra("Room_Data", mRoom);
-        Log.v(TAG, "Starting day for the Wolf ");
-        startActivity(intent);
-
+        mRoom.finishNight(mUser);
 
     }
 }
