@@ -362,6 +362,7 @@ public class RoomAdapter implements Parcelable{
         try {
 
             logUserUpdateMsg("Attempting to update single User!", user);
+            Log.v(TAG, "USER: " + user.getID() + " role->" + user.getRole() + "Nominate " + user.isNominated());
             mRoom.updateUser(user);
             Gson gson = new Gson();
             String dataToFirebase = gson.toJson(mRoom);
@@ -381,10 +382,11 @@ public class RoomAdapter implements Parcelable{
     public void updateUsers(List<User> users) {
 
         for(User u: users) {
-            Log.v(TAG, "USER: " + u.getID() + " role->" + u.getRole());
+            Log.v(TAG, "USERS: " + u.getID() + " role->" + u.getRole() + "Nominate " + u.isNominated());
+            mRoom.updateUser(u);
         }
 
-        mRoom.updateUsers(users);
+        //mRoom.updateUsers(users);
 
         // Send the updated version to Firebase!
         Gson gson = new Gson();

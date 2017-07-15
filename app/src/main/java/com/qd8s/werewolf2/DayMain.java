@@ -83,9 +83,10 @@ public class DayMain extends AppCompatActivity {
             if (testUser.getName().equals(aliveUsers.get(i).getName())) {
                 aliveUsers.get(i).setNominate(true);
                 Log.v("Test nominate", aliveUsers.get(i).getName() + aliveUsers.get(i).isNominated());
+                mRoom.updateUser(aliveUsers.get(i));
             }
         }
-        mRoom.updateUsers(aliveUsers);
+        //mRoom.updateUsers(aliveUsers);
         //currentPlayer.setState(User.UserState.DoneWithNight);
         Log.v(TAG, "Entering onReadyDaySecond");
         // NOTE!!!!!!!!!!!!!!!!!!
